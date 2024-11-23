@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "lvgl_porting",
-    "project_version":    "55f6507-dirty",
+    "project_version":    "d645642-dirty",
     "project_path":       "/home/aimannajjar/Develop/azan-clock",
     "idf_path":           "/home/aimannajjar/Develop/esp-idf",
     "build_dir":          "/home/aimannajjar/Develop/azan-clock/build",
