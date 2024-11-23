@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "lvgl_porting",
-    "project_version":    "1",
+    "project_version":    "55f6507-dirty",
     "project_path":       "/home/aimannajjar/Develop/azan-clock",
     "idf_path":           "/home/aimannajjar/Develop/esp-idf",
     "build_dir":          "/home/aimannajjar/Develop/azan-clock/build",
@@ -895,7 +895,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/aimannajjar/Develop/azan-clock/build/esp-idf/esp_psram/libesp_psram.a",
-            "sources": [ "/home/aimannajjar/Develop/esp-idf/components/esp_psram/esp_psram.c", "/home/aimannajjar/Develop/esp-idf/components/esp_psram/mmu_psram_flash.c", "/home/aimannajjar/Develop/esp-idf/components/esp_psram/esp32s3/esp_psram_impl_quad.c" ],
+            "sources": [ "/home/aimannajjar/Develop/esp-idf/components/esp_psram/esp_psram.c", "/home/aimannajjar/Develop/esp-idf/components/esp_psram/mmu_psram_flash.c", "/home/aimannajjar/Develop/esp-idf/components/esp_psram/esp32s3/esp_psram_impl_octal.c" ],
             "include_dirs": [ "include" ]
         },
         "esp_ringbuf": {
