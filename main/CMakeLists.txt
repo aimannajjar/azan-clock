@@ -9,7 +9,8 @@ if (SIMULATOR)
     INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR})
 
     file(GLOB_RECURSE INCLUDES "azan_clock.h" "lv_drivers/*.h" "lvgl/*.h" )
-    file(GLOB_RECURSE SOURCES "azan_clock.c" "fonts/*.c" "lv_drivers/*.c" "lvgl/*.c")
+    file(GLOB_RECURSE SOURCES "azan_clock.c" "ui/*.c" "fonts/*.c" "lv_drivers/*.c" "lvgl/*.c")
+    add_subdirectory(ui)
 
     SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
     SET(CMAKE_CXX_FLAGS "-O3")

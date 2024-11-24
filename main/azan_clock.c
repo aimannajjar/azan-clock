@@ -1,24 +1,11 @@
 #include "lvgl/lvgl.h"
 #include "azan_clock.h"
+#include "ui/ui.h"
 
 LV_FONT_DECLARE(noto_naskh_80)
 
 void azan_clock() {
-
-    /*Create a style for the shadow*/
-    static lv_style_t style_shadow;
-    lv_style_init(&style_shadow);
-    lv_style_set_text_opa(&style_shadow, LV_OPA_30);
-    lv_style_set_text_color(&style_shadow, lv_color_black());
-
-    /*Create the main label*/
-    lv_obj_t * main_label = lv_label_create(lv_scr_act());
-    lv_label_set_text(main_label, "فجر " LV_SYMBOL_MUTE);
-    lv_obj_set_style_text_font(main_label, &noto_naskh_80, 0);
-
-    /*Position the main label*/
-    lv_obj_align(main_label, LV_ALIGN_CENTER, 0, 0);
-
+    ui_init();
 }
 
 
