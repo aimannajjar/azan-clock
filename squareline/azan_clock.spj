@@ -2077,6 +2077,12 @@
                                   255
                                 ],
                                 "InheritedType": 7
+                              },
+                              {
+                                "nid": 10450,
+                                "strtype": "_style/Text_Font",
+                                "strval": "montserrat_14",
+                                "InheritedType": 3
                               }
                             ],
                             "InheritedType": 1
@@ -5711,7 +5717,8 @@
                     "InheritedType": 11
                   }
                 ],
-                "saved_objtypeKey": "PANEL"
+                "saved_objtypeKey": "PANEL",
+                "tree_closed": true
               }
             ],
             "dont_export": false,
