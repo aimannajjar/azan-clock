@@ -5,7 +5,6 @@
  */
 
 #include "waveshare_rgb_lcd_port.h"
-#include "azan_clock.h"
 
 void app_main()
 {
@@ -16,6 +15,12 @@ void app_main()
     ESP_LOGI(TAG, "Display LVGL demos");
     // Lock the mutex due to the LVGL APIs are not thread-safe
     if (lvgl_port_lock(-1)) {
-        azan_clock();
+        // lv_demo_stress();
+        // lv_demo_benchmark();
+        // lv_demo_music();
+        lv_demo_widgets();
+        // example_lvgl_demo_ui();
+        // Release the mutex
+        lvgl_port_unlock();
     }
 }
