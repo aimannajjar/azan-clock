@@ -23,7 +23,7 @@ if (SIMULATOR)
     add_custom_target (run COMMAND ${EXECUTABLE_OUTPUT_PATH}/main)
 else()
     idf_component_register(
-        SRCS "waveshare_rgb_lcd_port.c" "main.c" "lvgl_port.c"
+        SRCS "waveshare_rgb_lcd_port.c" "lvgl_port.c" "main.c" "azan_clock.c" "ui/ui.c"
         INCLUDE_DIRS ".")
 
     idf_component_get_property(lvgl_lib lvgl__lvgl COMPONENT_LIB)
