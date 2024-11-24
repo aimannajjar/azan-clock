@@ -35,7 +35,7 @@ void ui_Screen_1_Print_screen_init(void)
     lv_obj_set_width(ui_Label_Header, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Label_Header, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Label_Header, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_Label_Header, "The squareline.gcode word file is being printed");
+    lv_label_set_text(ui_Label_Header, "Azan Clock");
     lv_label_set_recolor(ui_Label_Header, "true");
     lv_obj_set_style_text_color(ui_Label_Header, lv_color_hex(0x9098AA), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Label_Header, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
