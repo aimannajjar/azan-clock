@@ -5072,7 +5072,7 @@
                   {
                     "nid": 1030,
                     "strtype": "LABEL/Text",
-                    "strval": "",
+                    "strval": "",
                     "InheritedType": 10
                   },
                   {
@@ -5086,7 +5086,7 @@
                           {
                             "nid": 10450,
                             "strtype": "_style/Text_Font",
-                            "strval": "Small_Font",
+                            "strval": "FontAwesome_Regular_24",
                             "InheritedType": 3
                           }
                         ],
@@ -29866,7 +29866,7 @@
     "uiExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main/ui",
     "projectExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 5,
+    "backup_cnt": 6,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
