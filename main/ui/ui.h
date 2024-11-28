@@ -27,15 +27,9 @@ void ui_Main_Screen_screen_init(void);
 extern lv_obj_t * ui_Main_Screen;
 extern lv_obj_t * ui_Background;
 extern lv_obj_t * ui_Panel_Header;
-extern lv_obj_t * ui_Label_Header;
 extern lv_obj_t * ui_IMG_Wifi;
 extern lv_obj_t * ui_IMG_PC;
 extern lv_obj_t * ui_IMG_USB;
-extern lv_obj_t * ui_BTN_Menu_Print_S1;
-void ui_event_BTN_Menu_Move_S1(lv_event_t * e);
-extern lv_obj_t * ui_BTN_Menu_Move_S1;
-void ui_event_BTN_Menu_Setting_S1(lv_event_t * e);
-extern lv_obj_t * ui_BTN_Menu_Setting_S1;
 extern lv_obj_t * ui_S1_Content_Panel;
 extern lv_obj_t * ui_Display_Time_S1;
 extern lv_obj_t * ui_Label4;
@@ -56,6 +50,18 @@ extern lv_obj_t * ui_DT3_copy;
 extern lv_obj_t * ui_Label_Bed_Temp;
 extern lv_obj_t * ui_Label_Printing_Bed_Temp1;
 extern lv_obj_t * ui_Label3;
+extern lv_obj_t * ui_Panel5;
+extern lv_obj_t * ui_Label7;
+extern lv_obj_t * ui_Label8;
+extern lv_obj_t * ui_Label9;
+extern lv_obj_t * ui_Image4;
+extern lv_obj_t * ui_Panel4;
+extern lv_obj_t * ui_Button1;
+extern lv_obj_t * ui_Label1;
+extern lv_obj_t * ui_Button2;
+extern lv_obj_t * ui_Label5;
+extern lv_obj_t * ui_Button3;
+extern lv_obj_t * ui_Label6;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Screen_2_Move
@@ -172,14 +178,16 @@ extern lv_obj_t * ui_Switch_Fan_3;
 extern lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
-LV_IMG_DECLARE(ui_img_3d_printer_bg_png);    // assets/3d_printer_bg.png
+LV_IMG_DECLARE(ui_img_minaret_bg_png);    // assets/minaret_bg.png
 LV_IMG_DECLARE(ui_img_icn_wifi_png);    // assets/icn_wifi.png
 LV_IMG_DECLARE(ui_img_icn_pc_png);    // assets/icn_pc.png
 LV_IMG_DECLARE(ui_img_icn_usb_png);    // assets/icn_usb.png
+LV_IMG_DECLARE(ui_img_icn_time_2_png);    // assets/icn_time_2.png
+LV_IMG_DECLARE(ui_img_rainy_weather_png);    // assets/rainy_weather.png
+LV_IMG_DECLARE(ui_img_3d_printer_bg_png);    // assets/3d_printer_bg.png
 LV_IMG_DECLARE(ui_img_btn_print_png);    // assets/btn_print.png
 LV_IMG_DECLARE(ui_img_btn_move_png);    // assets/btn_move.png
 LV_IMG_DECLARE(ui_img_btn_setting_png);    // assets/btn_setting.png
-LV_IMG_DECLARE(ui_img_icn_time_2_png);    // assets/icn_time_2.png
 LV_IMG_DECLARE(ui_img_btn_z_botton_png);    // assets/btn_z_botton.png
 LV_IMG_DECLARE(ui_img_btn_z_top_png);    // assets/btn_z_top.png
 LV_IMG_DECLARE(ui_img_arrow_up_png);    // assets/arrow_up.png
@@ -195,6 +203,12 @@ LV_IMG_DECLARE(ui_img_icn_time_1_png);    // assets/icn_time_1.png
 
 // FONTS
 LV_FONT_DECLARE(ui_font_Small_Font);
+LV_FONT_DECLARE(ui_font_FontAwesome_Regular_24);
+LV_FONT_DECLARE(ui_font_FontAwesome_Brands_24);
+LV_FONT_DECLARE(ui_font_FontAwesome_Solid_24_1);
+LV_FONT_DECLARE(ui_font_FontAwesome_Solid_24_2);
+LV_FONT_DECLARE(ui_font_Montserrat_SemiBold_60);
+LV_FONT_DECLARE(ui_font_Montserrat_SemiBold_80);
 
 // UI INIT
 void ui_init(void);

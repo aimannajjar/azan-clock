@@ -4802,8 +4802,8 @@
                         "flags": 17,
                         "strtype": "OBJECT/Position",
                         "intarray": [
-                          -3,
-                          -88
+                          -6,
+                          -71
                         ],
                         "InheritedType": 7
                       },
@@ -31300,7 +31300,7 @@
     "uiExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main/ui",
     "projectExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 13,
+    "backup_cnt": 14,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

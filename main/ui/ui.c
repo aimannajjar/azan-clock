@@ -20,15 +20,9 @@ void ui_Main_Screen_screen_init(void);
 lv_obj_t * ui_Main_Screen;
 lv_obj_t * ui_Background;
 lv_obj_t * ui_Panel_Header;
-lv_obj_t * ui_Label_Header;
 lv_obj_t * ui_IMG_Wifi;
 lv_obj_t * ui_IMG_PC;
 lv_obj_t * ui_IMG_USB;
-lv_obj_t * ui_BTN_Menu_Print_S1;
-void ui_event_BTN_Menu_Move_S1(lv_event_t * e);
-lv_obj_t * ui_BTN_Menu_Move_S1;
-void ui_event_BTN_Menu_Setting_S1(lv_event_t * e);
-lv_obj_t * ui_BTN_Menu_Setting_S1;
 lv_obj_t * ui_S1_Content_Panel;
 lv_obj_t * ui_Display_Time_S1;
 lv_obj_t * ui_Label4;
@@ -49,6 +43,18 @@ lv_obj_t * ui_DT3_copy;
 lv_obj_t * ui_Label_Bed_Temp;
 lv_obj_t * ui_Label_Printing_Bed_Temp1;
 lv_obj_t * ui_Label3;
+lv_obj_t * ui_Panel5;
+lv_obj_t * ui_Label7;
+lv_obj_t * ui_Label8;
+lv_obj_t * ui_Label9;
+lv_obj_t * ui_Image4;
+lv_obj_t * ui_Panel4;
+lv_obj_t * ui_Button1;
+lv_obj_t * ui_Label1;
+lv_obj_t * ui_Button2;
+lv_obj_t * ui_Label5;
+lv_obj_t * ui_Button3;
+lv_obj_t * ui_Label6;
 // CUSTOM VARIABLES
 
 
@@ -312,24 +318,6 @@ void ScreenOut_Animation(lv_obj_t * TargetObject, int delay)
 }
 
 ///////////////////// FUNCTIONS ////////////////////
-void ui_event_BTN_Menu_Move_S1(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Screen_2_Move, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Screen_2_Move_screen_init);
-    }
-}
-
-void ui_event_BTN_Menu_Setting_S1(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Screen_3_Setting, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, &ui_Screen_3_Setting_screen_init);
-    }
-}
-
 void ui_event_BTN_Menu_Print_S2(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
