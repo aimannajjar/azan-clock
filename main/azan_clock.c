@@ -2,12 +2,16 @@
 #include "azan_clock.h"
 #include "ui/ui.h"
 
+void set_wifi_dropdown() {
+    lv_dropdown_set_options(ui_WiFi_Networks, "Dummy\nWiFi\nNetworks");    
+}
+
 LV_FONT_DECLARE(noto_naskh_80)
 
 void azan_clock() {
     ui_init();
+    set_wifi_dropdown();
 }
-
 
 static void btn_event_cb(lv_event_t * e)
 {

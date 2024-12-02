@@ -20,6 +20,7 @@ if (SIMULATOR)
     add_executable(main main_simulator.c mouse_cursor_icon.c ${SOURCES} ${INCLUDES})
     add_compile_definitions(LV_CONF_INCLUDE_SIMPLE)
     target_link_libraries(main PRIVATE SDL2 )
+    add_compile_definitions(SIMULATOR)
     add_custom_target (run COMMAND ${EXECUTABLE_OUTPUT_PATH}/main)
 else()
 
