@@ -51,7 +51,7 @@ extern lv_obj_t * ui_Label_Bed_Temp;
 extern lv_obj_t * ui_Label_Printing_Bed_Temp1;
 extern lv_obj_t * ui_Label3;
 extern lv_obj_t * ui_Panel5;
-extern lv_obj_t * ui_Label7;
+extern lv_obj_t * ui_Current_Time;
 extern lv_obj_t * ui_Label8;
 extern lv_obj_t * ui_Label9;
 extern lv_obj_t * ui_Image4;

@@ -8,7 +8,7 @@
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "wifi.h"
-
+#include "clock.h"
 
 #define TAG "Main"
 
@@ -27,6 +27,7 @@ void azan_clock() {
 
     bool setup_mode = !wifi_init();
     ui_init();
+    clock_init();
 
     if (setup_mode) {
         lv_scr_load(ui_Setup_Screen);

@@ -1,3 +1,5 @@
+#include "lvgl/lvgl.h"
+
 #ifndef _AZAN_CLOCK_
 #define _AZAN_CLOCK_
 
@@ -6,6 +8,5 @@
 
 void azan_clock(void);
 void entry(void);
-static void btn_event_cb(lv_event_t*);
 
 #endif

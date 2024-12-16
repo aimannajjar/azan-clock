@@ -44,7 +44,7 @@ lv_obj_t * ui_Label_Bed_Temp;
 lv_obj_t * ui_Label_Printing_Bed_Temp1;
 lv_obj_t * ui_Label3;
 lv_obj_t * ui_Panel5;
-lv_obj_t * ui_Label7;
+lv_obj_t * ui_Current_Time;
 lv_obj_t * ui_Label8;
 lv_obj_t * ui_Label9;
 lv_obj_t * ui_Image4;
