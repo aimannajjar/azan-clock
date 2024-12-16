@@ -12,7 +12,6 @@
 
 #define NTP_SERVER_COUNT 4
 const char *ntp_servers[NTP_SERVER_COUNT] = {
-    "192.168.50.243",
     "time.google.com",
     "pool.ntp.org",
     "time.nist.gov",
@@ -25,11 +24,11 @@ TaskHandle_t time_update_task_handle = NULL; // Add this line
 static void sync_time_with_ntp(lv_obj_t *sync_msgbox) {
     ESP_LOGI(TAG, "Initializing SNTP...");
 
-    esp_sntp_set_sync_mode(SNTP_SYNC_MODE_SMOOTH);
+    esp_sntp_set_sync_mode(SNTP_SYNC_MODE_IMMED);
 
     int server_index = 0;
     int retry = 0;
-    const int retry_count = 5;
+    const int retry_count = 10;
     bool sync_successful = false;
 
     while (server_index < NTP_SERVER_COUNT && !sync_successful) {
@@ -40,8 +39,20 @@ static void sync_time_with_ntp(lv_obj_t *sync_msgbox) {
         retry = 0;
         while (sntp_get_sync_status() == SNTP_SYNC_STATUS_RESET && ++retry < retry_count) {
             ESP_LOGI(TAG, "Waiting for system time to be set (%s)... (%d/%d)", ntp_servers[server_index], retry, retry_count);
-            vTaskDelay(1000 / portTICK_PERIOD_MS); // Reduced delay to 1 second
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
         }
+
+        ESP_LOGI(TAG, "SNTP STATUS: %d", sntp_get_sync_status());
+
+        if (sntp_get_sync_status() == SNTP_SYNC_STATUS_IN_PROGRESS) {
+            retry = 0;
+            while (sntp_get_sync_status() == SNTP_SYNC_STATUS_IN_PROGRESS && ++retry < retry_count) {
+                ESP_LOGI(TAG, "Sync completed. Waiting for system time to adjust");
+                vTaskDelay(1000 / portTICK_PERIOD_MS);
+            }    
+        }
+
+        ESP_LOGI(TAG, "SNTP STATUS: %d", sntp_get_sync_status());
 
         if (sntp_get_sync_status() == SNTP_SYNC_STATUS_COMPLETED) {
             ESP_LOGI(TAG, "System time synchronized successfully with server: %s", ntp_servers[server_index]);
