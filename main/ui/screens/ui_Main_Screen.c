@@ -473,5 +473,6 @@ void ui_Main_Screen_screen_init(void)
     lv_label_set_text(ui_Label6, "");
     lv_obj_set_style_text_font(ui_Label6, &ui_font_FontAwesome_Solid_24_1, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    lv_obj_add_event_cb(ui_Button2, ui_event_Button2, LV_EVENT_ALL, NULL);
 
 }

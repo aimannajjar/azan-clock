@@ -51,6 +51,7 @@ lv_obj_t * ui_Image4;
 lv_obj_t * ui_Panel4;
 lv_obj_t * ui_Button1;
 lv_obj_t * ui_Label1;
+void ui_event_Button2(lv_event_t * e);
 lv_obj_t * ui_Button2;
 lv_obj_t * ui_Label5;
 lv_obj_t * ui_Button3;
@@ -67,6 +68,7 @@ lv_obj_t * ui_IMG_Wifi1;
 lv_obj_t * ui_IMG_PC1;
 lv_obj_t * ui_IMG_USB1;
 lv_obj_t * ui_Panel8;
+void ui_event_Button4(lv_event_t * e);
 lv_obj_t * ui_Button4;
 lv_obj_t * ui_Label16;
 lv_obj_t * ui_Button5;
@@ -233,6 +235,26 @@ void ScreenOut_Animation(lv_obj_t * TargetObject, int delay)
 }
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_Button2(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Setup_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Setup_Screen_screen_init);
+        start_scan_task(e);
+    }
+}
+
+void ui_event_Button4(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Main_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Main_Screen_screen_init);
+        stop_scan_task(e);
+    }
+}
+
 void ui_event_ConnectButton(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);

@@ -16,6 +16,8 @@ static char password[64];
 static void save_connection_params(const char *ssid, const char *password);
 static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, size_t password_size);
 
+volatile bool scanning = false;
+
 static void show_message_box(const char *text) {
     if (lv_scr_act() != ui_Setup_Screen)
         return;
@@ -157,21 +159,32 @@ bool wifi_init() {
     } else {
         ESP_LOGI(TAG, "No saved Wi-Fi parameters found. Waiting for user input.");
         ESP_ERROR_CHECK(esp_wifi_start());
-        start_scan_task();
+        start_scan_task(NULL);
         return false;
     }
 }
 
-void start_scan_task() {
-    ui_update_queue = xQueueCreate(5, sizeof(char *));
-    if (!ui_update_queue) {
-        ESP_LOGE(TAG, "Failed to create queue for UI updates");
+void start_scan_task(lv_event_t *e) {
+
+    if (scanning)
         return;
+    scanning = true;
+
+    if (ui_update_queue == NULL) {
+        ui_update_queue = xQueueCreate(5, sizeof(char *));
+        if (!ui_update_queue) {
+            ESP_LOGE(TAG, "Failed to create queue for UI updates");
+            return;
+        }
     }
 
     // Create tasks
     xTaskCreate(wifi_scan_task, "wifi_scan_task", 8192, NULL, 5, NULL);
     xTaskCreate(lvgl_task, "lvgl_task", 4096, NULL, 5, NULL);
+}
+
+void stop_scan_task(lv_event_t *e) {
+    scanning = false;
 }
 
 char *generate_wifi_list() {
@@ -206,7 +219,7 @@ char *generate_wifi_list() {
 }
 
 void wifi_scan_task(void *param) {
-    while (1) {
+    while (scanning) {
         wifi_scan_config_t scan_config = {
             .ssid = NULL,
             .bssid = NULL,
@@ -222,14 +235,15 @@ void wifi_scan_task(void *param) {
             xQueueSend(ui_update_queue, &dropdown_options, portMAX_DELAY);
         }
 
-        vTaskDelay(pdMS_TO_TICKS(30000));
+        vTaskDelay(pdMS_TO_TICKS(10000));
     }
+    vTaskDelete(NULL); // Task deletes itself
 }
 
 void lvgl_task(void *param) {
     char *dropdown_options;
 
-    while (1) {
+    while (scanning) {
         if (xQueueReceive(ui_update_queue, &dropdown_options, portMAX_DELAY)) {
             lv_dropdown_set_options(ui_WiFi_Networks, dropdown_options);
             free(dropdown_options);
@@ -238,6 +252,7 @@ void lvgl_task(void *param) {
         lv_task_handler();
         vTaskDelay(pdMS_TO_TICKS(10));
     }
+    vTaskDelete(NULL); // Task deletes itself
 }
 
 void connect_wifi(lv_event_t *e) {

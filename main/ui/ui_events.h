@@ -10,6 +10,8 @@
 extern "C" {
 #endif
 
+void start_scan_task(lv_event_t * e);
+void stop_scan_task(lv_event_t * e);
 void connect_wifi(lv_event_t * e);
 
 #ifdef __cplusplus
