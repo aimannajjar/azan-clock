@@ -11,6 +11,8 @@
 
 extern lv_obj_t *ui_WiFi_Networks;
 extern lv_obj_t *ui_WiFi_Password;
+extern lv_obj_t *ui_Main_Screen;
+extern lv_obj_t *ui_Setup_Screen;
 extern QueueHandle_t ui_update_queue;
 
 void wifi_scan_task(void *param);

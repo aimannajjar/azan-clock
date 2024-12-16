@@ -27,7 +27,7 @@ void azan_clock() {
 
     // Initialize Wi-Fi
     wifi_init();
-    
+
     ui_init();
 
     ui_update_queue = xQueueCreate(5, sizeof(char *));

@@ -6,18 +6,129 @@
 #define MAX_NETWORKS 20
 #define MAX_OPTION_SIZE 33
 
+static lv_obj_t *modal_msgbox = NULL; // Message box object
+
+static void show_message_box(const char *text) {
+    if (!modal_msgbox) {
+        modal_msgbox = lv_msgbox_create(NULL, text, text, NULL, false);
+        lv_obj_align(modal_msgbox, LV_ALIGN_CENTER, 0, 0);
+    } else {
+        // Locate the internal label and update its text
+        lv_obj_t *label = lv_msgbox_get_text(modal_msgbox);
+        lv_label_set_text(label, text);
+    }
+    lv_obj_set_style_bg_color(modal_msgbox, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN);
+}
+
+static void close_message_box_cb(lv_timer_t *timer) {
+    if (modal_msgbox) {
+        lv_obj_del(lv_obj_get_parent(modal_msgbox));
+        modal_msgbox = NULL;
+    }
+    lv_timer_del(timer);
+}
+
+static void connected(lv_timer_t *timer) {
+    if (modal_msgbox) {
+        lv_obj_del(lv_obj_get_parent(modal_msgbox));
+        modal_msgbox = NULL;
+    }
+    lv_scr_load(ui_Main_Screen);
+    lv_timer_del(timer);
+}
+
 static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
-        ESP_LOGI(TAG, "Wi-Fi STA started, attempting to connect...");
+        // scanning or connecting
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_CONNECTED) {
         ESP_LOGI(TAG, "Wi-Fi connected to the network.");
+        show_message_box("Connected");
+        lv_timer_create(connected, 2000, NULL); // Close after 2 seconds
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         ESP_LOGI(TAG, "Wi-Fi disconnected. Retrying...");
-        esp_wifi_connect();
+        show_message_box("Failed to connect...");
+        lv_timer_create(close_message_box_cb, 2000, NULL); // Close after 2 seconds
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
         ESP_LOGI(TAG, "Got IP Address: " IPSTR, IP2STR(&event->ip_info.ip));
     }
+}
+
+#include "nvs.h"
+#include "nvs_flash.h"
+
+#define NVS_NAMESPACE "wifi"
+
+// Save connection parameters to NVS
+static void save_connection_params(const char *ssid, const char *password) {
+    nvs_handle_t nvs_handle;
+    esp_err_t err = nvs_open(NVS_NAMESPACE, NVS_READWRITE, &nvs_handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error opening NVS: %s", esp_err_to_name(err));
+        return;
+    }
+
+    // Write SSID and password
+    nvs_set_str(nvs_handle, "ssid", ssid);
+    nvs_set_str(nvs_handle, "password", password);
+
+    // Commit changes
+    nvs_commit(nvs_handle);
+    nvs_close(nvs_handle);
+
+    ESP_LOGI(TAG, "Connection parameters saved to NVS");
+}
+
+// Load connection parameters from NVS
+static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, size_t password_size) {
+    nvs_handle_t nvs_handle;
+    esp_err_t err = nvs_open(NVS_NAMESPACE, NVS_READONLY, &nvs_handle);
+    if (err != ESP_OK) {
+        ESP_LOGW(TAG, "No saved Wi-Fi parameters in NVS");
+        return ESP_ERR_NVS_NOT_FOUND;
+    }
+
+    // Read SSID and password
+    err = nvs_get_str(nvs_handle, "ssid", ssid, &ssid_size);
+    if (err != ESP_OK) {
+        nvs_close(nvs_handle);
+        return err;
+    }
+
+    err = nvs_get_str(nvs_handle, "password", password, &password_size);
+    if (err != ESP_OK) {
+        nvs_close(nvs_handle);
+        return err;
+    }
+
+    nvs_close(nvs_handle);
+    ESP_LOGI(TAG, "Loaded Wi-Fi parameters from NVS: SSID=%s", ssid);
+    return ESP_OK;
+}
+
+void wifi_init() {
+    // Initialize the TCP/IP stack
+    ESP_ERROR_CHECK(esp_netif_init());
+
+    // Create the default event loop
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+
+    // Create the default Wi-Fi station interface
+    esp_netif_create_default_wifi_sta();
+
+    // Initialize the Wi-Fi driver with default config
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+
+    // Set Wi-Fi mode to STA (station)
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+
+    // Register Wi-Fi and IP event handlers (only once)
+    ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL));
+    ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL));
+
+    // Start the Wi-Fi driver
+    ESP_ERROR_CHECK(esp_wifi_start());
 }
 
 char *generate_wifi_list() {
@@ -50,32 +161,6 @@ char *generate_wifi_list() {
     free(ap_records);
     return dropdown_options;
 }
-
-void wifi_init() {
-    // Initialize the TCP/IP stack
-    ESP_ERROR_CHECK(esp_netif_init());
-
-    // Create the default event loop
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
-
-    // Create the default Wi-Fi station interface
-    esp_netif_create_default_wifi_sta();
-
-    // Initialize the Wi-Fi driver with default config
-    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
-
-    // Set Wi-Fi mode to STA (station)
-    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
-
-    // Register Wi-Fi and IP event handlers (only once)
-    ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL));
-    ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL));
-
-    // Start the Wi-Fi driver
-    ESP_ERROR_CHECK(esp_wifi_start());
-}
-
 
 void wifi_scan_task(void *param) {
     while (1) {
@@ -134,6 +219,7 @@ void connect_wifi(lv_event_t *e) {
     strncpy((char *)wifi_config.sta.password, password, sizeof(wifi_config.sta.password));
 
     ESP_LOGI(TAG, "Connecting to SSID: %s", ssid);
+    show_message_box("Connecting...");
 
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_connect());
