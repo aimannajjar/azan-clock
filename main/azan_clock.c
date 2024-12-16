@@ -25,20 +25,15 @@ void azan_clock() {
     }
     ESP_ERROR_CHECK( ret );
 
-    // Initialize Wi-Fi
-    wifi_init();
-
-    ui_init();
-
-    ui_update_queue = xQueueCreate(5, sizeof(char *));
-    if (!ui_update_queue) {
-        ESP_LOGE(TAG, "Failed to create queue for UI updates");
-        return;
+    char ssid[33] = {0};
+    char password[64] = {0};
+    if (load_connection_params(ssid, sizeof(ssid), password, sizeof(password)) == ESP_OK) {
+        wifi_init(ssid, password);
+    } else {
+        wifi_init(NULL, NULL);
     }
 
-    // Create tasks
-    xTaskCreate(wifi_scan_task, "wifi_scan_task", 8192, NULL, 5, NULL);
-    xTaskCreate(lvgl_task, "lvgl_task", 4096, NULL, 5, NULL);
+    ui_init();
 
 }
 

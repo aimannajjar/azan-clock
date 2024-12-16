@@ -1,14 +1,21 @@
 #include "wifi.h"
 #include <string.h>
 #include <stdlib.h>
+#include "nvs.h"
+#include "nvs_flash.h"
 
 #define TAG "WiFi"
 #define MAX_NETWORKS 20
 #define MAX_OPTION_SIZE 33
+#define NVS_NAMESPACE "wifi"
 
 static lv_obj_t *modal_msgbox = NULL; // Message box object
+static char ssid[33];
+static char password[64];
 
 static void show_message_box(const char *text) {
+    if (lv_scr_act() != ui_Setup_Screen)
+        return;
     if (!modal_msgbox) {
         modal_msgbox = lv_msgbox_create(NULL, text, text, NULL, false);
         lv_obj_align(modal_msgbox, LV_ALIGN_CENTER, 0, 0);
@@ -33,6 +40,10 @@ static void connected(lv_timer_t *timer) {
         lv_obj_del(lv_obj_get_parent(modal_msgbox));
         modal_msgbox = NULL;
     }
+
+    // Save the parameters on successful connection
+    save_connection_params(ssid, password);
+
     lv_scr_load(ui_Main_Screen);
     lv_timer_del(timer);
 }
@@ -45,7 +56,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
         show_message_box("Connected");
         lv_timer_create(connected, 2000, NULL); // Close after 2 seconds
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
-        ESP_LOGI(TAG, "Wi-Fi disconnected. Retrying...");
+        ESP_LOGI(TAG, "Wi-Fi connection failed.");
         show_message_box("Failed to connect...");
         lv_timer_create(close_message_box_cb, 2000, NULL); // Close after 2 seconds
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
@@ -53,11 +64,6 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
         ESP_LOGI(TAG, "Got IP Address: " IPSTR, IP2STR(&event->ip_info.ip));
     }
 }
-
-#include "nvs.h"
-#include "nvs_flash.h"
-
-#define NVS_NAMESPACE "wifi"
 
 // Save connection parameters to NVS
 static void save_connection_params(const char *ssid, const char *password) {
@@ -80,7 +86,7 @@ static void save_connection_params(const char *ssid, const char *password) {
 }
 
 // Load connection parameters from NVS
-static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, size_t password_size) {
+esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, size_t password_size) {
     nvs_handle_t nvs_handle;
     esp_err_t err = nvs_open(NVS_NAMESPACE, NVS_READONLY, &nvs_handle);
     if (err != ESP_OK) {
@@ -93,6 +99,9 @@ static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *pass
     if (err != ESP_OK) {
         nvs_close(nvs_handle);
         return err;
+    } else if (ssid[0] == '\0') {
+        ESP_LOGW(TAG, "SSID is empty");
+        return ESP_ERR_NOT_FOUND;
     }
 
     err = nvs_get_str(nvs_handle, "password", password, &password_size);
@@ -106,7 +115,7 @@ static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *pass
     return ESP_OK;
 }
 
-void wifi_init() {
+void wifi_init(char *ssid, char *password) {
     // Initialize the TCP/IP stack
     ESP_ERROR_CHECK(esp_netif_init());
 
@@ -127,8 +136,36 @@ void wifi_init() {
     ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL));
     ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL));
 
-    // Start the Wi-Fi driver
-    ESP_ERROR_CHECK(esp_wifi_start());
+    if (ssid != NULL) {
+        wifi_config_t wifi_config = {
+            .sta = {
+                .threshold.authmode = WIFI_AUTH_WPA2_PSK,
+            },
+        };
+        strncpy((char *)wifi_config.sta.ssid, ssid, sizeof(wifi_config.sta.ssid));
+        strncpy((char *)wifi_config.sta.password, password, sizeof(wifi_config.sta.password));
+
+        ESP_LOGI(TAG, "Using saved Wi-Fi parameters to connect...");
+        ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
+        ESP_ERROR_CHECK(esp_wifi_start());
+        ESP_ERROR_CHECK(esp_wifi_connect());            
+    } else {
+        ESP_LOGI(TAG, "No saved Wi-Fi parameters found. Waiting for user input.");
+        ESP_ERROR_CHECK(esp_wifi_start());
+        start_scan_task();
+    }
+}
+
+void start_scan_task() {
+    ui_update_queue = xQueueCreate(5, sizeof(char *));
+    if (!ui_update_queue) {
+        ESP_LOGE(TAG, "Failed to create queue for UI updates");
+        return;
+    }
+
+    // Create tasks
+    xTaskCreate(wifi_scan_task, "wifi_scan_task", 8192, NULL, 5, NULL);
+    xTaskCreate(lvgl_task, "lvgl_task", 4096, NULL, 5, NULL);
 }
 
 char *generate_wifi_list() {
@@ -198,9 +235,6 @@ void lvgl_task(void *param) {
 }
 
 void connect_wifi(lv_event_t *e) {
-    char ssid[33];
-    char password[64];
-
     // Get the selected Wi-Fi SSID from the dropdown
     lv_dropdown_get_selected_str(ui_WiFi_Networks, ssid, sizeof(ssid));
 
