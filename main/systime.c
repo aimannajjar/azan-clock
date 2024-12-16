@@ -18,6 +18,7 @@
 
 static const char *TAG = "SYSTIME";
 extern lv_obj_t *ui_Main_Screen;
+extern SemaphoreHandle_t lvgl_mutex;
 
 #ifndef INET6_ADDRSTRLEN
 #define INET6_ADDRSTRLEN 48
@@ -113,5 +114,7 @@ static void obtain_time(void)
 
     esp_netif_sntp_deinit();
 
+    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
     lv_scr_load(ui_Main_Screen);
+    xSemaphoreGive(lvgl_mutex);
 }
