@@ -13,6 +13,8 @@
 #include "lwip/ip_addr.h"
 #include "esp_sntp.h"
 #include "lvgl/lvgl.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 static const char *TAG = "SYSTIME";
 extern lv_obj_t *ui_Main_Screen;
@@ -28,7 +30,7 @@ void time_sync_notification_cb(struct timeval *tv)
     ESP_LOGI(TAG, "Notification of a time synchronization event");
 }
 
-void systime_init(void)
+void systime_task(void *pvParameters)
 {
     time_t now;
     struct tm timeinfo;
@@ -55,12 +57,17 @@ void systime_init(void)
         while (sntp_get_sync_status() == SNTP_SYNC_STATUS_IN_PROGRESS) {
             adjtime(NULL, &outdelta);
             ESP_LOGI(TAG, "Waiting for adjusting time ... outdelta = %jd sec: %li ms: %li us",
-                        (intmax_t)outdelta.tv_sec,
-                        outdelta.tv_usec/1000,
-                        outdelta.tv_usec%1000);
+                     (intmax_t)outdelta.tv_sec, (long)outdelta.tv_usec / 1000, (long)outdelta.tv_usec % 1000);
             vTaskDelay(2000 / portTICK_PERIOD_MS);
         }
     }
+
+    vTaskDelete(NULL); // Delete the task once time synchronization is done
+}
+
+void systime_init(void)
+{
+    xTaskCreate(systime_task, "systime_task", 4096, NULL, 5, NULL);
 }
 
 static void print_servers(void)
