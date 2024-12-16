@@ -3,8 +3,11 @@
 
 #include <stdbool.h>
 #include "lvgl/lvgl.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 extern lv_obj_t *ui_Current_Time;
+extern TaskHandle_t time_update_task_handle; // Add this line
 
 // Initialize the clock module
 void clock_init(void);

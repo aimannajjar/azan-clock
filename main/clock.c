@@ -12,6 +12,7 @@
 #define DEFAULT_TIMEZONE "EST5EDT" // Default timezone for America/New_York
 
 static char current_timezone[64] = DEFAULT_TIMEZONE;
+TaskHandle_t time_update_task_handle = NULL; // Add this line
 
 // Function to synchronize time with NTP server
 static void sync_time_with_ntp(void) {
@@ -23,7 +24,7 @@ static void sync_time_with_ntp(void) {
     time_t now = 0;
     struct tm timeinfo = { 0 };
     int retry = 0;
-    const int retry_count = 10;
+    const int retry_count = 20;
 
     while (timeinfo.tm_year < (1970 - 1900) && ++retry < retry_count) {
         ESP_LOGI(TAG, "Waiting for system time to be set... (%d/%d)", retry, retry_count);
@@ -41,33 +42,32 @@ static void sync_time_with_ntp(void) {
 
 // Updates time in UI
 static void update_time() {
-        time_t now;
-        struct tm timeinfo;
-        char time_str[64];
+    time_t now;
+    struct tm timeinfo;
+    char time_str[64];
 
-        time(&now);
-        localtime_r(&now, &timeinfo);
+    time(&now);
+    localtime_r(&now, &timeinfo);
 
-        if (timeinfo.tm_hour >= 12) {
-            snprintf(time_str, sizeof(time_str), "%02d:%02d\nPM",
-                     timeinfo.tm_hour > 12 ? timeinfo.tm_hour - 12 : timeinfo.tm_hour,
-                     timeinfo.tm_min);
-        } else {
-            snprintf(time_str, sizeof(time_str), "%02d:%02d\nAM",
-                     timeinfo.tm_hour == 0 ? 12 : timeinfo.tm_hour,
-                     timeinfo.tm_min);
-        }
+    if (timeinfo.tm_hour >= 12) {
+        snprintf(time_str, sizeof(time_str), "%02d:%02d\nPM",
+                 timeinfo.tm_hour > 12 ? timeinfo.tm_hour - 12 : timeinfo.tm_hour,
+                 timeinfo.tm_min);
+    } else {
+        snprintf(time_str, sizeof(time_str), "%02d:%02d\nAM",
+                 timeinfo.tm_hour == 0 ? 12 : timeinfo.tm_hour,
+                 timeinfo.tm_min);
+    }
 
-        lv_label_set_text(ui_Current_Time, time_str); // Update LVGL label
-        ESP_LOGI(TAG, "Time updated: %s", time_str);
+    lv_label_set_text(ui_Current_Time, time_str); // Update LVGL label
+    ESP_LOGI(TAG, "Time updated: %s", time_str);
 }
-
 
 // Task to periodically sync with NTP server every 4 hours
 static void ntp_sync_task(void *arg) {
     while (true) {
         sync_time_with_ntp();
-        update_time();
+        xTaskNotifyGive(time_update_task_handle); // Notify the time update task
         vTaskDelay(pdMS_TO_TICKS(14400000)); // 4 hours
     }
 }
@@ -76,7 +76,7 @@ static void ntp_sync_task(void *arg) {
 static void time_update_task(void *arg) {
     while (true) {
         update_time();
-        vTaskDelay(pdMS_TO_TICKS(60000)); // 1 minute
+        ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(60000)); // Wait for notification or 1 minute
     }
 }
 
@@ -102,5 +102,5 @@ void clock_init(void) {
 
     // Start the tasks
     xTaskCreate(ntp_sync_task, "ntp_sync_task", 4096, NULL, 5, NULL);
-    xTaskCreate(time_update_task, "time_update_task", 4096, NULL, 5, NULL);
+    xTaskCreate(time_update_task, "time_update_task", 4096, NULL, 5, &time_update_task_handle); // Pass the handle
 }

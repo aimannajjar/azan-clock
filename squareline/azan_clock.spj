@@ -2937,8 +2937,7 @@
                     "InheritedType": 11
                   }
                 ],
-                "saved_objtypeKey": "PANEL",
-                "tree_closed": true
+                "saved_objtypeKey": "PANEL"
               },
               {
                 "guid": "GUID43476433-38651S2000357",
@@ -12227,7 +12226,7 @@
     "uiExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main/ui",
     "projectExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 31,
+    "backup_cnt": 35,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
