@@ -8,8 +8,15 @@
 #include "freertos/task.h"
 
 #define TAG "Clock"
-#define NTP_SERVER "pool.ntp.org"
 #define DEFAULT_TIMEZONE "EST5EDT" // Default timezone for America/New_York
+
+#define NTP_SERVER_COUNT 4
+const char *ntp_servers[NTP_SERVER_COUNT] = {
+    "192.168.50.243",
+    "time.google.com",
+    "pool.ntp.org",
+    "time.nist.gov",
+};
 
 static char current_timezone[64] = DEFAULT_TIMEZONE;
 TaskHandle_t time_update_task_handle = NULL; // Add this line
@@ -17,27 +24,38 @@ TaskHandle_t time_update_task_handle = NULL; // Add this line
 // Function to synchronize time with NTP server
 static void sync_time_with_ntp(lv_obj_t *sync_msgbox) {
     ESP_LOGI(TAG, "Initializing SNTP...");
-    sntp_setoperatingmode(SNTP_OPMODE_POLL);
-    sntp_setservername(0, NTP_SERVER);
-    sntp_init();
 
-    time_t now = 0;
-    struct tm timeinfo = { 0 };
+    esp_sntp_set_sync_mode(SNTP_SYNC_MODE_SMOOTH);
+
+    int server_index = 0;
     int retry = 0;
-    const int retry_count = 20;
+    const int retry_count = 5;
+    bool sync_successful = false;
 
-    while (timeinfo.tm_year < (1970 - 1900) && ++retry < retry_count) {
-        ESP_LOGI(TAG, "Waiting for system time to be set... (%d/%d)", retry, retry_count);
-        vTaskDelay(2000 / portTICK_PERIOD_MS);
-        time(&now);
-        localtime_r(&now, &timeinfo);
+    while (server_index < NTP_SERVER_COUNT && !sync_successful) {
+        ESP_LOGI(TAG, "Trying NTP server: %s", ntp_servers[server_index]);
+        esp_sntp_setservername(0, ntp_servers[server_index]);
+        esp_sntp_init();
+
+        retry = 0;
+        while (sntp_get_sync_status() == SNTP_SYNC_STATUS_RESET && ++retry < retry_count) {
+            ESP_LOGI(TAG, "Waiting for system time to be set (%s)... (%d/%d)", ntp_servers[server_index], retry, retry_count);
+            vTaskDelay(1000 / portTICK_PERIOD_MS); // Reduced delay to 1 second
+        }
+
+        if (sntp_get_sync_status() == SNTP_SYNC_STATUS_COMPLETED) {
+            ESP_LOGI(TAG, "System time synchronized successfully with server: %s", ntp_servers[server_index]);
+            sync_successful = true;
+            lv_obj_del(sync_msgbox); // Remove the synchronization messagebox
+        } else {
+            ESP_LOGE(TAG, "Failed to synchronize time with NTP server: %s", ntp_servers[server_index]);
+            esp_sntp_stop(); // Stop SNTP before trying the next server
+            server_index++;
+        }
     }
 
-    if (timeinfo.tm_year >= (1970 - 1900)) {
-        ESP_LOGI(TAG, "System time synchronized successfully.");
-        lv_obj_del(sync_msgbox); // Remove the synchronization messagebox
-    } else {
-        ESP_LOGE(TAG, "Failed to synchronize time with NTP.");
+    if (!sync_successful) {
+        ESP_LOGE(TAG, "Failed to synchronize time with all NTP servers.");
     }
 }
 
