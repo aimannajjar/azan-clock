@@ -22,32 +22,6 @@ void MenuIn_Animation(lv_obj_t * TargetObject, int delay);
 void MenuOut_Animation(lv_obj_t * TargetObject, int delay);
 void ScreenOut_Animation(lv_obj_t * TargetObject, int delay);
 
-// SCREEN: ui_Setup_Screen
-void ui_Setup_Screen_screen_init(void);
-extern lv_obj_t * ui_Setup_Screen;
-extern lv_obj_t * ui_Background1;
-extern lv_obj_t * ui_Panel_Header1;
-extern lv_obj_t * ui_IMG_Wifi1;
-extern lv_obj_t * ui_IMG_PC1;
-extern lv_obj_t * ui_IMG_USB1;
-extern lv_obj_t * ui_Panel8;
-extern lv_obj_t * ui_Button4;
-extern lv_obj_t * ui_Label16;
-extern lv_obj_t * ui_Button5;
-extern lv_obj_t * ui_Label17;
-extern lv_obj_t * ui_Button6;
-extern lv_obj_t * ui_Label18;
-extern lv_obj_t * ui_WiFi_Networks;
-extern lv_obj_t * ui_WiFi_Password;
-extern lv_obj_t * ui_Spinner1;
-void ui_event_ConnectButton(lv_event_t * e);
-extern lv_obj_t * ui_ConnectButton;
-void ui_event_Label10(lv_event_t * e);
-extern lv_obj_t * ui_Label10;
-extern lv_obj_t * ui_Label11;
-extern lv_obj_t * ui_Keyboard1;
-// CUSTOM VARIABLES
-
 // SCREEN: ui_Main_Screen
 void ui_Main_Screen_screen_init(void);
 extern lv_obj_t * ui_Main_Screen;
@@ -88,6 +62,32 @@ extern lv_obj_t * ui_Button2;
 extern lv_obj_t * ui_Label5;
 extern lv_obj_t * ui_Button3;
 extern lv_obj_t * ui_Label6;
+// CUSTOM VARIABLES
+
+// SCREEN: ui_Setup_Screen
+void ui_Setup_Screen_screen_init(void);
+extern lv_obj_t * ui_Setup_Screen;
+extern lv_obj_t * ui_Background1;
+extern lv_obj_t * ui_Panel_Header1;
+extern lv_obj_t * ui_IMG_Wifi1;
+extern lv_obj_t * ui_IMG_PC1;
+extern lv_obj_t * ui_IMG_USB1;
+extern lv_obj_t * ui_Panel8;
+extern lv_obj_t * ui_Button4;
+extern lv_obj_t * ui_Label16;
+extern lv_obj_t * ui_Button5;
+extern lv_obj_t * ui_Label17;
+extern lv_obj_t * ui_Button6;
+extern lv_obj_t * ui_Label18;
+extern lv_obj_t * ui_WiFi_Networks;
+extern lv_obj_t * ui_WiFi_Password;
+extern lv_obj_t * ui_Spinner1;
+void ui_event_ConnectButton(lv_event_t * e);
+extern lv_obj_t * ui_ConnectButton;
+void ui_event_Label10(lv_event_t * e);
+extern lv_obj_t * ui_Label10;
+extern lv_obj_t * ui_Label11;
+extern lv_obj_t * ui_Keyboard1;
 // CUSTOM VARIABLES
 
 // EVENTS

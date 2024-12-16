@@ -15,33 +15,6 @@ void MenuOut_Animation(lv_obj_t * TargetObject, int delay);
 void ScreenOut_Animation(lv_obj_t * TargetObject, int delay);
 
 
-// SCREEN: ui_Setup_Screen
-void ui_Setup_Screen_screen_init(void);
-lv_obj_t * ui_Setup_Screen;
-lv_obj_t * ui_Background1;
-lv_obj_t * ui_Panel_Header1;
-lv_obj_t * ui_IMG_Wifi1;
-lv_obj_t * ui_IMG_PC1;
-lv_obj_t * ui_IMG_USB1;
-lv_obj_t * ui_Panel8;
-lv_obj_t * ui_Button4;
-lv_obj_t * ui_Label16;
-lv_obj_t * ui_Button5;
-lv_obj_t * ui_Label17;
-lv_obj_t * ui_Button6;
-lv_obj_t * ui_Label18;
-lv_obj_t * ui_WiFi_Networks;
-lv_obj_t * ui_WiFi_Password;
-lv_obj_t * ui_Spinner1;
-void ui_event_ConnectButton(lv_event_t * e);
-lv_obj_t * ui_ConnectButton;
-void ui_event_Label10(lv_event_t * e);
-lv_obj_t * ui_Label10;
-lv_obj_t * ui_Label11;
-lv_obj_t * ui_Keyboard1;
-// CUSTOM VARIABLES
-
-
 // SCREEN: ui_Main_Screen
 void ui_Main_Screen_screen_init(void);
 lv_obj_t * ui_Main_Screen;
@@ -82,6 +55,33 @@ lv_obj_t * ui_Button2;
 lv_obj_t * ui_Label5;
 lv_obj_t * ui_Button3;
 lv_obj_t * ui_Label6;
+// CUSTOM VARIABLES
+
+
+// SCREEN: ui_Setup_Screen
+void ui_Setup_Screen_screen_init(void);
+lv_obj_t * ui_Setup_Screen;
+lv_obj_t * ui_Background1;
+lv_obj_t * ui_Panel_Header1;
+lv_obj_t * ui_IMG_Wifi1;
+lv_obj_t * ui_IMG_PC1;
+lv_obj_t * ui_IMG_USB1;
+lv_obj_t * ui_Panel8;
+lv_obj_t * ui_Button4;
+lv_obj_t * ui_Label16;
+lv_obj_t * ui_Button5;
+lv_obj_t * ui_Label17;
+lv_obj_t * ui_Button6;
+lv_obj_t * ui_Label18;
+lv_obj_t * ui_WiFi_Networks;
+lv_obj_t * ui_WiFi_Password;
+lv_obj_t * ui_Spinner1;
+void ui_event_ConnectButton(lv_event_t * e);
+lv_obj_t * ui_ConnectButton;
+void ui_event_Label10(lv_event_t * e);
+lv_obj_t * ui_Label10;
+lv_obj_t * ui_Label11;
+lv_obj_t * ui_Keyboard1;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -259,8 +259,8 @@ void ui_init(void)
     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
                                                false, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
-    ui_Setup_Screen_screen_init();
     ui_Main_Screen_screen_init();
+    ui_Setup_Screen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
-    lv_disp_load_scr(ui_Setup_Screen);
+    lv_disp_load_scr(ui_Main_Screen);
 }

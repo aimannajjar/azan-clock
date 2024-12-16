@@ -13,6 +13,9 @@ static lv_obj_t *modal_msgbox = NULL; // Message box object
 static char ssid[33];
 static char password[64];
 
+static void save_connection_params(const char *ssid, const char *password);
+static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, size_t password_size);
+
 static void show_message_box(const char *text) {
     if (lv_scr_act() != ui_Setup_Screen)
         return;
@@ -82,7 +85,7 @@ static void save_connection_params(const char *ssid, const char *password) {
     nvs_commit(nvs_handle);
     nvs_close(nvs_handle);
 
-    ESP_LOGI(TAG, "Connection parameters saved to NVS");
+    ESP_LOGI(TAG, "Connection parameters saved to NVS (%s, %s)", ssid, password);
 }
 
 // Load connection parameters from NVS
@@ -115,7 +118,8 @@ esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, s
     return ESP_OK;
 }
 
-void wifi_init(char *ssid, char *password) {
+// returns true if previous connection params was restored from flash, false otherwise
+bool wifi_init() {
     // Initialize the TCP/IP stack
     ESP_ERROR_CHECK(esp_netif_init());
 
@@ -136,7 +140,7 @@ void wifi_init(char *ssid, char *password) {
     ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL));
     ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL));
 
-    if (ssid != NULL) {
+    if (load_connection_params(ssid, sizeof(ssid), password, sizeof(password)) == ESP_OK) {
         wifi_config_t wifi_config = {
             .sta = {
                 .threshold.authmode = WIFI_AUTH_WPA2_PSK,
@@ -148,11 +152,13 @@ void wifi_init(char *ssid, char *password) {
         ESP_LOGI(TAG, "Using saved Wi-Fi parameters to connect...");
         ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
         ESP_ERROR_CHECK(esp_wifi_start());
-        ESP_ERROR_CHECK(esp_wifi_connect());            
+        ESP_ERROR_CHECK(esp_wifi_connect());
+        return true;
     } else {
         ESP_LOGI(TAG, "No saved Wi-Fi parameters found. Waiting for user input.");
         ESP_ERROR_CHECK(esp_wifi_start());
         start_scan_task();
+        return false;
     }
 }
 

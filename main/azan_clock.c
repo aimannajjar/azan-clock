@@ -25,15 +25,12 @@ void azan_clock() {
     }
     ESP_ERROR_CHECK( ret );
 
-    char ssid[33] = {0};
-    char password[64] = {0};
-    if (load_connection_params(ssid, sizeof(ssid), password, sizeof(password)) == ESP_OK) {
-        wifi_init(ssid, password);
-    } else {
-        wifi_init(NULL, NULL);
-    }
-
+    bool setup_mode = !wifi_init();
     ui_init();
+
+    if (setup_mode) {
+        lv_scr_load(ui_Setup_Screen);
+    }
 
 }
 
