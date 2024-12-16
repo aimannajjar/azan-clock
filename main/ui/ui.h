@@ -22,6 +22,25 @@ void MenuIn_Animation(lv_obj_t * TargetObject, int delay);
 void MenuOut_Animation(lv_obj_t * TargetObject, int delay);
 void ScreenOut_Animation(lv_obj_t * TargetObject, int delay);
 
+// SCREEN: ui_Loading_Screen
+void ui_Loading_Screen_screen_init(void);
+extern lv_obj_t * ui_Loading_Screen;
+extern lv_obj_t * ui_Background2;
+extern lv_obj_t * ui_Panel_Header2;
+extern lv_obj_t * ui_IMG_Wifi2;
+extern lv_obj_t * ui_IMG_PC2;
+extern lv_obj_t * ui_IMG_USB2;
+extern lv_obj_t * ui_Panel2;
+void ui_event_Button7(lv_event_t * e);
+extern lv_obj_t * ui_Button7;
+extern lv_obj_t * ui_Label7;
+extern lv_obj_t * ui_Button8;
+extern lv_obj_t * ui_Label12;
+extern lv_obj_t * ui_Button9;
+extern lv_obj_t * ui_Label13;
+extern lv_obj_t * ui_Spinner2;
+// CUSTOM VARIABLES
+
 // SCREEN: ui_Main_Screen
 void ui_Main_Screen_screen_init(void);
 extern lv_obj_t * ui_Main_Screen;

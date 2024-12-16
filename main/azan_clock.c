@@ -10,6 +10,9 @@
 #include "wifi.h"
 #include "clock.h"
 
+// System Time
+#include "systime.h"
+
 #define TAG "Main"
 
 LV_FONT_DECLARE(noto_naskh_80)
@@ -24,15 +27,17 @@ void azan_clock() {
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK( ret );
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
 
     bool setup_mode = !wifi_init();
     ui_init();
-    clock_init();
 
     if (setup_mode) {
         lv_scr_load(ui_Setup_Screen);
     }
-
+    clock_init();
+    systime_init();    
 }
 
 static void btn_event_cb(lv_event_t * e)

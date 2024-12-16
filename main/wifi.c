@@ -48,8 +48,6 @@ static void connected(lv_timer_t *timer) {
 
     // Save the parameters on successful connection
     save_connection_params(ssid, password);
-
-    lv_scr_load(ui_Main_Screen);
     lv_timer_del(timer);
 }
 
@@ -122,12 +120,6 @@ esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, s
 
 // returns true if previous connection params was restored from flash, false otherwise
 bool wifi_init() {
-    // Initialize the TCP/IP stack
-    ESP_ERROR_CHECK(esp_netif_init());
-
-    // Create the default event loop
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
-
     // Create the default Wi-Fi station interface
     esp_netif_create_default_wifi_sta();
 
