@@ -93,7 +93,7 @@ static void obtain_time(void)
     ESP_LOGI(TAG, "Initializing and starting SNTP");
 
     esp_sntp_config_t config = ESP_NETIF_SNTP_DEFAULT_CONFIG_MULTIPLE(5,
-                               ESP_SNTP_SERVER_LIST("time.cloudflare.com", "time.nist.gov", "time.aws.com", "pool.ntp.org", "time.google.com" ) );
+                               ESP_SNTP_SERVER_LIST("time.nist.gov", "time.cloudflare.com", "time.aws.com", "pool.ntp.org", "time.google.com" ) );
     config.sync_cb = time_sync_notification_cb; // Note: This is only needed if we want
 
 

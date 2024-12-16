@@ -20,6 +20,12 @@ LV_FONT_DECLARE(noto_naskh_80)
 QueueHandle_t ui_update_queue;
 SemaphoreHandle_t lvgl_mutex;
 
+static void ip_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
+    if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+        systime_init();
+    }
+}
+
 void azan_clock() {
     // Initialize NVS (needed for Wi-Fi)
     esp_err_t ret = nvs_flash_init();
@@ -30,6 +36,7 @@ void azan_clock() {
     ESP_ERROR_CHECK( ret );
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
+    ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &ip_event_handler, NULL));
 
     bool setup_mode = !wifi_init();
     ui_init();
@@ -40,7 +47,6 @@ void azan_clock() {
         lv_scr_load(ui_Setup_Screen);
     }
     clock_init();
-    systime_init();
 }
 
 static void btn_event_cb(lv_event_t * e)
