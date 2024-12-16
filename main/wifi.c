@@ -51,17 +51,33 @@ char *generate_wifi_list() {
     return dropdown_options;
 }
 
-void wifi_scan_task(void *param) {
+void wifi_init() {
+    // Initialize the TCP/IP stack
+    ESP_ERROR_CHECK(esp_netif_init());
+
+    // Create the default event loop
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+
+    // Create the default Wi-Fi station interface
+    esp_netif_create_default_wifi_sta();
+
+    // Initialize the Wi-Fi driver with default config
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+
+    // Set Wi-Fi mode to STA (station)
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
 
     // Register Wi-Fi and IP event handlers (only once)
     ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL));
     ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL));
 
+    // Start the Wi-Fi driver
     ESP_ERROR_CHECK(esp_wifi_start());
+}
 
+
+void wifi_scan_task(void *param) {
     while (1) {
         wifi_scan_config_t scan_config = {
             .ssid = NULL,

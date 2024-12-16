@@ -15,6 +15,7 @@ extern QueueHandle_t ui_update_queue;
 
 void wifi_scan_task(void *param);
 void lvgl_task(void *param);
+void wifi_init();
 void connect_wifi();
 
 #endif // WIFI_H
