@@ -29,7 +29,7 @@ else()
     list(TRANSFORM UI_SOURCES PREPEND "ui/")
 
     idf_component_register(
-        SRCS "waveshare_rgb_lcd_port.c" "lvgl_port.c" "main.c" "azan_clock.c" ${UI_SOURCES}
+        SRCS "wifi.c" "waveshare_rgb_lcd_port.c" "lvgl_port.c" "main.c" "azan_clock.c" ${UI_SOURCES}
         INCLUDE_DIRS ".")
 
     idf_component_get_property(lvgl_lib lvgl__lvgl COMPONENT_LIB)

@@ -2,15 +2,44 @@
 #include "azan_clock.h"
 #include "ui/ui.h"
 
-void set_wifi_dropdown() {
-    lv_dropdown_set_options(ui_WiFi_Networks, "Dummy\nWiFi\nNetworks");    
-}
+// Wi-FI
+#include "freertos/FreeRTOS.h"
+#include "freertos/queue.h"
+#include "esp_log.h"
+#include "nvs_flash.h"
+#include "wifi.h"
+
+
+#define TAG "Main"
 
 LV_FONT_DECLARE(noto_naskh_80)
 
+QueueHandle_t ui_update_queue;
+
 void azan_clock() {
+    // Initialize NVS (needed for Wi-Fi)
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK( ret );
+
+    // Initialize Wi-Fi
+    wifi_init();
+    
     ui_init();
-    set_wifi_dropdown();
+
+    ui_update_queue = xQueueCreate(5, sizeof(char *));
+    if (!ui_update_queue) {
+        ESP_LOGE(TAG, "Failed to create queue for UI updates");
+        return;
+    }
+
+    // Create tasks
+    xTaskCreate(wifi_scan_task, "wifi_scan_task", 8192, NULL, 5, NULL);
+    xTaskCreate(lvgl_task, "lvgl_task", 4096, NULL, 5, NULL);
+
 }
 
 static void btn_event_cb(lv_event_t * e)

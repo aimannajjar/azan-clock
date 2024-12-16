@@ -23,7 +23,6 @@ lv_obj_t * ui_Panel_Header1;
 lv_obj_t * ui_IMG_Wifi1;
 lv_obj_t * ui_IMG_PC1;
 lv_obj_t * ui_IMG_USB1;
-lv_obj_t * ui_S1_Content_Panel1;
 lv_obj_t * ui_Panel8;
 lv_obj_t * ui_Button4;
 lv_obj_t * ui_Label16;
@@ -32,6 +31,14 @@ lv_obj_t * ui_Label17;
 lv_obj_t * ui_Button6;
 lv_obj_t * ui_Label18;
 lv_obj_t * ui_WiFi_Networks;
+lv_obj_t * ui_WiFi_Password;
+lv_obj_t * ui_Spinner1;
+void ui_event_ConnectButton(lv_event_t * e);
+lv_obj_t * ui_ConnectButton;
+void ui_event_Label10(lv_event_t * e);
+lv_obj_t * ui_Label10;
+lv_obj_t * ui_Label11;
+lv_obj_t * ui_Keyboard1;
 // CUSTOM VARIABLES
 
 
@@ -226,6 +233,23 @@ void ScreenOut_Animation(lv_obj_t * TargetObject, int delay)
 }
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_ConnectButton(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        connect_wifi(e);
+    }
+}
+
+void ui_event_Label10(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        connect_wifi(e);
+    }
+}
 
 ///////////////////// SCREENS ////////////////////
 

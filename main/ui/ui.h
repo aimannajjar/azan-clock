@@ -30,7 +30,6 @@ extern lv_obj_t * ui_Panel_Header1;
 extern lv_obj_t * ui_IMG_Wifi1;
 extern lv_obj_t * ui_IMG_PC1;
 extern lv_obj_t * ui_IMG_USB1;
-extern lv_obj_t * ui_S1_Content_Panel1;
 extern lv_obj_t * ui_Panel8;
 extern lv_obj_t * ui_Button4;
 extern lv_obj_t * ui_Label16;
@@ -39,6 +38,14 @@ extern lv_obj_t * ui_Label17;
 extern lv_obj_t * ui_Button6;
 extern lv_obj_t * ui_Label18;
 extern lv_obj_t * ui_WiFi_Networks;
+extern lv_obj_t * ui_WiFi_Password;
+extern lv_obj_t * ui_Spinner1;
+void ui_event_ConnectButton(lv_event_t * e);
+extern lv_obj_t * ui_ConnectButton;
+void ui_event_Label10(lv_event_t * e);
+extern lv_obj_t * ui_Label10;
+extern lv_obj_t * ui_Label11;
+extern lv_obj_t * ui_Keyboard1;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Main_Screen
@@ -96,13 +103,13 @@ LV_IMG_DECLARE(ui_img_rainy_weather_png);    // assets/rainy_weather.png
 LV_IMG_DECLARE(ui_img_icn_time_1_png);    // assets/icn_time_1.png
 
 // FONTS
-LV_FONT_DECLARE(ui_font_Small_Font);
-LV_FONT_DECLARE(ui_font_FontAwesome_Regular_24);
 LV_FONT_DECLARE(ui_font_FontAwesome_Brands_24);
+LV_FONT_DECLARE(ui_font_FontAwesome_Regular_24);
 LV_FONT_DECLARE(ui_font_FontAwesome_Solid_24_1);
 LV_FONT_DECLARE(ui_font_FontAwesome_Solid_24_2);
 LV_FONT_DECLARE(ui_font_Montserrat_SemiBold_60);
 LV_FONT_DECLARE(ui_font_Montserrat_SemiBold_80);
+LV_FONT_DECLARE(ui_font_Small_Font);
 
 // UI INIT
 void ui_init(void);
