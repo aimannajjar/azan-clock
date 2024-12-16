@@ -98,7 +98,7 @@ void ui_Main_Screen_screen_init(void)
     lv_obj_set_x(ui_Label4, 0);
     lv_obj_set_y(ui_Label4, -5);
     lv_obj_set_align(ui_Label4, LV_ALIGN_BOTTOM_MID);
-    lv_label_set_text(ui_Label4, "");
+    lv_label_set_text(ui_Label4, "till Azan");
     lv_obj_set_style_text_color(ui_Label4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Label4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Label4, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -183,7 +183,7 @@ void ui_Main_Screen_screen_init(void)
     lv_obj_set_x(ui_Label_Time_2, 10);
     lv_obj_set_y(ui_Label_Time_2, -8);
     lv_obj_set_align(ui_Label_Time_2, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_Label_Time_2, "");
+    lv_label_set_text(ui_Label_Time_2, "08:25 PM");
     lv_obj_set_style_text_color(ui_Label_Time_2, lv_color_hex(0xDBE6FF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Label_Time_2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Label_Time_2, &lv_font_montserrat_26, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -194,7 +194,7 @@ void ui_Main_Screen_screen_init(void)
     lv_obj_set_x(ui_Label2, -5);
     lv_obj_set_y(ui_Label2, 12);
     lv_obj_set_align(ui_Label2, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label2, "");
+    lv_label_set_text(ui_Label2, "5:00");
     lv_obj_set_style_text_color(ui_Label2, lv_color_hex(0xFFFCCA), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Label2, &lv_font_montserrat_42, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -323,7 +323,7 @@ void ui_Main_Screen_screen_init(void)
     lv_obj_set_x(ui_Current_Time, -6);
     lv_obj_set_y(ui_Current_Time, -71);
     lv_obj_set_align(ui_Current_Time, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Current_Time, "");
+    lv_label_set_text(ui_Current_Time, "02:00\nPM");
     lv_obj_set_style_text_color(ui_Current_Time, lv_color_hex(0x9F4400), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Current_Time, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_letter_space(ui_Current_Time, 0, LV_PART_MAIN | LV_STATE_DEFAULT);

@@ -15,7 +15,7 @@ static char current_timezone[64] = DEFAULT_TIMEZONE;
 TaskHandle_t time_update_task_handle = NULL; // Add this line
 
 // Function to synchronize time with NTP server
-static void sync_time_with_ntp(void) {
+static void sync_time_with_ntp(lv_obj_t *sync_msgbox) {
     ESP_LOGI(TAG, "Initializing SNTP...");
     sntp_setoperatingmode(SNTP_OPMODE_POLL);
     sntp_setservername(0, NTP_SERVER);
@@ -35,6 +35,7 @@ static void sync_time_with_ntp(void) {
 
     if (timeinfo.tm_year >= (1970 - 1900)) {
         ESP_LOGI(TAG, "System time synchronized successfully.");
+        lv_obj_del(sync_msgbox); // Remove the synchronization messagebox
     } else {
         ESP_LOGE(TAG, "Failed to synchronize time with NTP.");
     }
@@ -65,13 +66,13 @@ static void update_time() {
 
 // Task to periodically sync with NTP server every 4 hours
 static void ntp_sync_task(void *arg) {
+    lv_obj_t *sync_msgbox = (lv_obj_t *)arg;
     while (true) {
-        sync_time_with_ntp();
+        sync_time_with_ntp(sync_msgbox);
         xTaskNotifyGive(time_update_task_handle); // Notify the time update task
         vTaskDelay(pdMS_TO_TICKS(14400000)); // 4 hours
     }
 }
-
 // Task to update the LVGL label every minute
 static void time_update_task(void *arg) {
     while (true) {
@@ -100,7 +101,14 @@ void clock_init(void) {
     // Set the default timezone
     clock_set_timezone(DEFAULT_TIMEZONE);
 
+    // Create the synchronization messagebox
+    lv_obj_t *sync_msgbox = lv_msgbox_create(NULL, "Synchronizing ...", NULL, NULL, true);
+    lv_obj_set_size(sync_msgbox, LV_HOR_RES, LV_VER_RES);
+    lv_obj_set_style_bg_opa(sync_msgbox, LV_OPA_50, 0);
+    lv_obj_set_style_bg_color(sync_msgbox, lv_color_black(), 0);
+    lv_obj_center(sync_msgbox);
+
     // Start the tasks
-    xTaskCreate(ntp_sync_task, "ntp_sync_task", 4096, NULL, 5, NULL);
+    xTaskCreate(ntp_sync_task, "ntp_sync_task", 4096, sync_msgbox, 5, NULL);
     xTaskCreate(time_update_task, "time_update_task", 4096, NULL, 5, &time_update_task_handle); // Pass the handle
 }
