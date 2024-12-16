@@ -1,5 +1,4 @@
 #include "clock.h"
-#include "azan_clock.h" // Include for the externally declared LVGL label ui_Current_Time
 #include <time.h>
 #include <sys/time.h>
 #include <esp_log.h>
@@ -9,6 +8,9 @@
 
 #define TAG "Clock"
 #define NTP_SERVER "pool.ntp.org"
+#define DEFAULT_TIMEZONE "EST5EDT" // Default timezone for America/New_York
+
+static char current_timezone[64] = DEFAULT_TIMEZONE;
 
 // Function to synchronize time with NTP server
 static void sync_time_with_ntp(void) {
@@ -71,7 +73,27 @@ static void time_update_task(void *arg) {
     }
 }
 
+// Function to set the timezone
+void clock_set_timezone(const char *timezone) {
+    if (timezone && strlen(timezone) < sizeof(current_timezone)) {
+        strcpy(current_timezone, timezone);
+        ESP_LOGI(TAG, "Timezone set to: %s", current_timezone);
+    } else {
+        ESP_LOGW(TAG, "Invalid timezone specified. Using default timezone: %s", DEFAULT_TIMEZONE);
+        strcpy(current_timezone, DEFAULT_TIMEZONE);
+    }
+
+    // Apply the timezone
+    setenv("TZ", current_timezone, 1);
+    tzset();
+}
+
+// Function to initialize the clock module
 void clock_init(void) {
+    // Set the default timezone
+    clock_set_timezone(DEFAULT_TIMEZONE);
+
+    // Start the tasks
     xTaskCreate(ntp_sync_task, "ntp_sync_task", 4096, NULL, 5, NULL);
     xTaskCreate(time_update_task, "time_update_task", 4096, NULL, 5, NULL);
 }
