@@ -192,9 +192,8 @@ void start_scan_task(lv_event_t *e) {
         }
     }
 
-    // Create tasks
+    // Create the scan task
     xTaskCreate(wifi_scan_task, "wifi_scan_task", 8192, NULL, 5, NULL);
-    xTaskCreate(lvgl_task, "lvgl_task", 4096, NULL, 5, NULL);
 }
 
 void stop_scan_task(lv_event_t *e) {
@@ -246,27 +245,13 @@ void wifi_scan_task(void *param) {
 
         char *dropdown_options = generate_wifi_list();
         if (dropdown_options) {
-            xQueueSend(ui_update_queue, &dropdown_options, portMAX_DELAY);
-        }
-
-        vTaskDelay(pdMS_TO_TICKS(10000));
-    }
-    vTaskDelete(NULL); // Task deletes itself
-}
-
-void lvgl_task(void *param) {
-    char *dropdown_options;
-
-    while (scanning) {
-        if (xQueueReceive(ui_update_queue, &dropdown_options, portMAX_DELAY)) {
             xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
             lv_dropdown_set_options(ui_WiFi_Networks, dropdown_options);
             xSemaphoreGive(lvgl_mutex);
             free(dropdown_options);
         }
 
-        lv_task_handler();
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(10000));
     }
     vTaskDelete(NULL); // Task deletes itself
 }
