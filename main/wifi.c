@@ -19,9 +19,9 @@ extern lv_obj_t *ui_Main_Screen;
 extern lv_obj_t *ui_Setup_Screen;
 extern lv_obj_t *ui_Loading_Screen;
 extern lv_obj_t *ui_Loading_Status_Text;
-volatile bool scanning = false;
 static lv_obj_t *modal_msgbox = NULL; // Message box object
 extern SemaphoreHandle_t lvgl_mutex;
+static TaskHandle_t wifi_scan_task_handle = NULL;
 
 static void save_connection_params(const char *ssid, const char *password);
 static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, size_t password_size);
@@ -165,9 +165,9 @@ void connect_wifi(lv_event_t *e) {
     strncpy((char *)wifi_config.sta.ssid, ssid, sizeof(wifi_config.sta.ssid));
     strncpy((char *)wifi_config.sta.password, password, sizeof(wifi_config.sta.password));
 
-    ESP_LOGI(TAG, "Connecting to SSID: %s", ssid);
     lock_and_show_message_box("Connecting...");
 
+    ESP_LOGI(TAG, "Connecting to SSID: %s", ssid);
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_connect());
 }
@@ -177,17 +177,16 @@ void connect_wifi(lv_event_t *e) {
 // Functions to scan Wi-Fi networks
 // ---------------------------------------------------
 void start_scan_task(lv_event_t *e) {
-
-    if (scanning)
+    if (wifi_scan_task_handle != NULL)
         return;
-    scanning = true;
 
-    // Create the scan task
-    xTaskCreate(wifi_scan_task, "wifi_scan_task", 8192, NULL, 5, NULL);
+    xTaskCreate(wifi_scan_task, "wifi_scan_task", 8192, NULL, 5, &wifi_scan_task_handle);
 }
 
 void stop_scan_task(lv_event_t *e) {
-    scanning = false;
+    if (wifi_scan_task_handle != NULL) {
+        xTaskNotifyGive(wifi_scan_task_handle);
+    }
 }
 
 char *generate_wifi_list() {
@@ -222,7 +221,7 @@ char *generate_wifi_list() {
 }
 
 void wifi_scan_task(void *param) {
-    while (scanning) {
+    while (true) {
         wifi_scan_config_t scan_config = {
             .ssid = NULL,
             .bssid = NULL,
@@ -241,9 +240,14 @@ void wifi_scan_task(void *param) {
             free(dropdown_options);
         }
 
-        vTaskDelay(pdMS_TO_TICKS(10000));
+        // Wait for either timeout or notification
+        if (ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(10000))) {
+            // If we received a notification, exit the task
+            break;
+        }
     }
-    vTaskDelete(NULL); // Task deletes itself
+    wifi_scan_task_handle = NULL;
+    vTaskDelete(NULL);
 }
 
 // ---------------------------------------------------
