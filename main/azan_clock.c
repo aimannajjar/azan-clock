@@ -56,3 +56,13 @@ void set_system_initialized() {
 bool is_system_initialized() {
     return state.initialized;
 }
+
+void take_ui_mutex(const char *caller) {
+    ESP_LOGI(TAG, "UI Mutex: Taking from %s", caller);
+    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+}
+
+void give_ui_mutex(const char *caller) {
+    ESP_LOGI(TAG, "UI Mutex: Giving from %s", caller);
+    xSemaphoreGive(lvgl_mutex);
+}

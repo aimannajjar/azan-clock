@@ -17,6 +17,7 @@
 #include "freertos/task.h"
 #include "azan_clock.h"
 #include "clock.h"
+#include "ui/ui_helpers.h"
 
 static const char *TAG = "SYSTIME";
 extern lv_obj_t *ui_Main_Screen;
@@ -36,9 +37,9 @@ void time_sync_notification_cb(struct timeval *tv)
 
 void systime_init(void)
 {
-    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+    take_ui_mutex("systime_init");
     lv_label_set_text(ui_Loading_Status_Text, "Synchronizing System Time...");
-    xSemaphoreGive(lvgl_mutex);
+    give_ui_mutex("systime_init");
     xTaskCreate(systime_task, "systime_task", 4096, NULL, 5, NULL);
 }
 
@@ -120,7 +121,7 @@ static void obtain_time(void)
     esp_netif_sntp_deinit();
 
     clock_init();
-    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
-    lv_scr_load(ui_Main_Screen);
-    xSemaphoreGive(lvgl_mutex);
+    take_ui_mutex("obtain_time");
+    _ui_screen_change(&ui_Main_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Main_Screen_screen_init);
+    give_ui_mutex("obtain_time");
 }

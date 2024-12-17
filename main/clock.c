@@ -40,9 +40,9 @@ static void update_time_ui() {
 // Task to update the LVGL label every minute
 static void time_update_task(void *arg) {
     while (true) {
-        xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+        take_ui_mutex("time_update_task");
         update_time_ui();
-        xSemaphoreGive(lvgl_mutex);
+        give_ui_mutex("time_update_task");
         ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(1000)); // Wait for notification or 1 minute
     }
 }

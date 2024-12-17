@@ -32,9 +32,9 @@ static void connect_to_saved_wifi();
 static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data);
 
 void wifi_init() {
-    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+    take_ui_mutex("wifi_init");
     lv_label_set_text(ui_Loading_Status_Text, "Connecting to Wi-Fi...");
-    xSemaphoreGive(lvgl_mutex);
+    give_ui_mutex("wifi_init");
 
     // Initialize WiFI stack
     esp_netif_create_default_wifi_sta();
@@ -73,7 +73,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
             lv_timer_create(lock_and_close_message_box_cb, 2000, NULL); // Close after 2 seconds    
         }
 
-        xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+        take_ui_mutex("wifi_event_handler");
         if (!is_system_initialized()) {
             // If system has not been initialized
             // show the loading screen, that's because we are still waiting for IP address
@@ -85,7 +85,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
             // TODO: Update the Wi-Fi status icon on the main screen
             lv_scr_load(ui_Main_Screen);
         }
-        xSemaphoreGive(lvgl_mutex);
+        give_ui_mutex("wifi_event_handler");
 
         // Next event that will take place is IP address assignment
         // proceed tracing in the IP event handler branch below
@@ -137,9 +137,9 @@ static void connect_to_saved_wifi() {
 // ---------------------------------------------------
 // Helper function to show the Wi-Fi setup screen
 static void lock_and_wifi_setup_mode() {
-    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+    take_ui_mutex("lock_and_wifi_setup_mode");
     lv_scr_load(ui_Setup_Screen);
-    xSemaphoreGive(lvgl_mutex);
+    give_ui_mutex("lock_and_wifi_setup_mode");
     ESP_ERROR_CHECK(esp_wifi_start());
     start_scan_task(NULL);
 }
@@ -235,9 +235,9 @@ void wifi_scan_task(void *param) {
 
         char *dropdown_options = generate_wifi_list();
         if (dropdown_options) {
-            xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+            take_ui_mutex("wifi_scan_task");
             lv_dropdown_set_options(ui_WiFi_Networks, dropdown_options);
-            xSemaphoreGive(lvgl_mutex);
+            give_ui_mutex("wifi_scan_task");
             free(dropdown_options);
         }
 
@@ -305,7 +305,7 @@ esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, s
 static void lock_and_show_message_box(const char *text) {
     if (lv_scr_act() != ui_Setup_Screen)
         return;
-    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+    take_ui_mutex("lock_and_show_message_box");
     if (!modal_msgbox) {
         modal_msgbox = lv_msgbox_create(NULL, text, text, NULL, false);
         lv_obj_align(modal_msgbox, LV_ALIGN_CENTER, 0, 0);
@@ -315,15 +315,15 @@ static void lock_and_show_message_box(const char *text) {
         lv_label_set_text(label, text);
     }
     lv_obj_set_style_bg_color(modal_msgbox, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN);
-    xSemaphoreGive(lvgl_mutex);
+    give_ui_mutex("lock_and_show_message_box");
 }
 
 static void lock_and_close_message_box_cb(lv_timer_t *timer) {
-    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+    take_ui_mutex("lock_and_close_message_box_cb");
     if (modal_msgbox) {
         lv_obj_del(lv_obj_get_parent(modal_msgbox));
         modal_msgbox = NULL;
     }
-    xSemaphoreGive(lvgl_mutex);
+    give_ui_mutex("lock_and_close_message_box_cb");
     lv_timer_del(timer);
 }
