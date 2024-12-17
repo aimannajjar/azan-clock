@@ -1,14 +1,12 @@
 #include "lvgl/lvgl.h"
 #include "azan_clock.h"
 #include "ui/ui.h"
-
-// Wi-FI
+#include <sys/time.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "wifi.h"
-#include "clock.h"
 
 #define TAG "Main"
 
@@ -58,11 +56,15 @@ bool is_system_initialized() {
 }
 
 void take_ui_mutex(const char *caller) {
-    ESP_LOGI(TAG, "UI Mutex: Taking from %s", caller);
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    ESP_LOGI(TAG, "[%lld.%06ld] UI Mutex: Taking from %s", (long long)tv.tv_sec, (long)tv.tv_usec, caller);
     xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
 }
 
 void give_ui_mutex(const char *caller) {
-    ESP_LOGI(TAG, "UI Mutex: Giving from %s", caller);
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    ESP_LOGI(TAG, "[%lld.%06ld] UI Mutex: Giving from %s", (long long)tv.tv_sec, (long)tv.tv_usec, caller);
     xSemaphoreGive(lvgl_mutex);
 }

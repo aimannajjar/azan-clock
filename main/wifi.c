@@ -22,6 +22,7 @@ extern lv_obj_t *ui_Loading_Status_Text;
 static lv_obj_t *modal_msgbox = NULL; // Message box object
 extern SemaphoreHandle_t lvgl_mutex;
 static TaskHandle_t wifi_scan_task_handle = NULL;
+static bool is_scanning = false; // Add this global variable
 
 static void save_connection_params(const char *ssid, const char *password);
 static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, size_t password_size);
@@ -105,6 +106,9 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
             // If system had already been initialized and we lost connection 
             // TODO: Update wi-ifi status icon on the main screen
         }
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE) {
+        is_scanning = false; // Update scanning state
+        ESP_LOGI(TAG, "Wi-Fi scan complete.");
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         // Whenever we get a new IP address, (re-)initialize the system time
         ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
@@ -146,6 +150,9 @@ static void lock_and_wifi_setup_mode() {
 
 // Connect button callback
 void connect_wifi(lv_event_t *e) {
+    // Disconnect from any existing connection first
+    esp_wifi_disconnect();
+    
     // This gets called when the "Connect" button is pressed
     // Get the selected Wi-Fi SSID from the dropdown
     lv_dropdown_get_selected_str(ui_WiFi_Networks, ssid, sizeof(ssid));
@@ -155,19 +162,27 @@ void connect_wifi(lv_event_t *e) {
     strncpy(password, password_text, sizeof(password) - 1);
     password[sizeof(password) - 1] = '\0'; // Ensure null termination
 
+    // Stop scanning before configuring new connection
+    stop_scan_task(NULL);
+
+    // Wait for any ongoing scan operation to complete
+    while (is_scanning) {
+        ESP_LOGI(TAG, "Waiting for scan operation to complete...");
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
+
     // Configure Wi-Fi connection
     wifi_config_t wifi_config = {
         .sta = {
             .threshold.authmode = WIFI_AUTH_WPA2_PSK,
         },
     };
-    stop_scan_task(NULL);
     strncpy((char *)wifi_config.sta.ssid, ssid, sizeof(wifi_config.sta.ssid));
     strncpy((char *)wifi_config.sta.password, password, sizeof(wifi_config.sta.password));
 
+    ESP_LOGI(TAG, "Connecting to SSID: %s", ssid);
     lock_and_show_message_box("Connecting...");
 
-    ESP_LOGI(TAG, "Connecting to SSID: %s", ssid);
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_connect());
 }
@@ -185,6 +200,7 @@ void start_scan_task(lv_event_t *e) {
 
 void stop_scan_task(lv_event_t *e) {
     if (wifi_scan_task_handle != NULL) {
+        ESP_LOGI(TAG, "Stopping Wi-Fi scan task...");
         xTaskNotifyGive(wifi_scan_task_handle);
     }
 }
@@ -229,8 +245,8 @@ void wifi_scan_task(void *param) {
             .show_hidden = false
         };
 
+        is_scanning = true; // Update scanning state
         ESP_ERROR_CHECK(esp_wifi_scan_start(&scan_config, true));
-        ESP_LOGI(TAG, "Wi-Fi scan complete");
 
         char *dropdown_options = generate_wifi_list();
         if (dropdown_options) {
