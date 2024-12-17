@@ -56,9 +56,3 @@ void set_system_initialized() {
 bool is_system_initialized() {
     return state.initialized;
 }
-
-void update_status_text(const char *text) {
-    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
-    lv_label_set_text(ui_Loading_Status_Text, text);
-    xSemaphoreGive(lvgl_mutex);
-}

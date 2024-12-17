@@ -18,22 +18,24 @@ extern lv_obj_t *ui_WiFi_Password;
 extern lv_obj_t *ui_Main_Screen;
 extern lv_obj_t *ui_Setup_Screen;
 extern lv_obj_t *ui_Loading_Screen;
-static QueueHandle_t ui_update_queue;
+extern lv_obj_t *ui_Loading_Status_Text;
 volatile bool scanning = false;
 static lv_obj_t *modal_msgbox = NULL; // Message box object
 extern SemaphoreHandle_t lvgl_mutex;
 
 static void save_connection_params(const char *ssid, const char *password);
 static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, size_t password_size);
-static void wifi_setup_mode();
-static void close_message_box_cb(lv_timer_t *timer);
-static void show_message_box(const char *text);
+static void lock_and_wifi_setup_mode();
+static void lock_and_close_message_box_cb(lv_timer_t *timer);
+static void lock_and_show_message_box(const char *text);
 static void del_message_box_timer(lv_timer_t *timer);
 static void connect_to_saved_wifi();
 static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data);
 
 void wifi_init() {
-    update_status_text("Connecting to Wi-Fi...");
+    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+    lv_label_set_text(ui_Loading_Status_Text, "Connecting to Wi-Fi...");
+    xSemaphoreGive(lvgl_mutex);
 
     // Initialize WiFI stack
     esp_netif_create_default_wifi_sta();
@@ -52,7 +54,7 @@ void wifi_init() {
     } else {
         // First time setup, show the Wi-Fi setup screen
         ESP_LOGI(TAG, "No saved Wi-Fi parameters found. Show Wi-Fi setup screen.");
-        wifi_setup_mode();
+        lock_and_wifi_setup_mode();
     }
 }
 
@@ -67,27 +69,24 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
         // Save the parameters on successful connection
         save_connection_params(ssid, password);
 
-        // If we are on the setup screen, show a message box
         if (lv_scr_act() == ui_Setup_Screen) {
-            show_message_box("Connected");
+            lock_and_show_message_box("Connected");
             lv_timer_create(del_message_box_timer, 2000, NULL); // Close after 2 seconds    
         }
 
+        xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
         if (!is_system_initialized()) {
             // If system has not been initialized
             // show the loading screen, that's because we are still waiting for IP address
-            update_status_text("Requesting IP address...");
-            xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+            lv_label_set_text(ui_Loading_Status_Text, "Requesting IP address...");
             lv_scr_load(ui_Loading_Screen);
-            xSemaphoreGive(lvgl_mutex);
             set_system_initialized();
         } else {
             // If system has already been initialized
             // TODO: Update the Wi-Fi status icon on the main screen
-            xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
             lv_scr_load(ui_Main_Screen);
-            xSemaphoreGive(lvgl_mutex);
         }
+        xSemaphoreGive(lvgl_mutex);
 
         // Next event that will take place is IP address assignment
         // proceed tracing in the IP event handler branch below
@@ -97,12 +96,12 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
         if (lv_scr_act() != ui_Setup_Screen && !is_system_initialized()) {
             // If we are not on the setup screen already and system has not been initialized
             // this means we failed to connect during boot, so show the setup screen
-            wifi_setup_mode();
+            lock_and_wifi_setup_mode();
         } else if (lv_scr_act() == ui_Setup_Screen) {
             // if we are already on setup screen, show a message box
-            show_message_box("Failed to connect...");
+            lock_and_show_message_box("Failed to connect...");
             start_scan_task(NULL);
-            lv_timer_create(close_message_box_cb, 2000, NULL); // Close after 2 seconds    
+            lv_timer_create(lock_and_close_message_box_cb, 2000, NULL); // Close after 2 seconds    
         } else {
             // If system had already been initialized and we lost connection 
             // TODO: Update wi-ifi status icon on the main screen
@@ -138,7 +137,7 @@ static void connect_to_saved_wifi() {
 // Wi-Fi Setup Mode functions
 // ---------------------------------------------------
 // Helper function to show the Wi-Fi setup screen
-static void wifi_setup_mode() {
+static void lock_and_wifi_setup_mode() {
     xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
     lv_scr_load(ui_Setup_Screen);
     xSemaphoreGive(lvgl_mutex);
@@ -168,7 +167,7 @@ void connect_wifi(lv_event_t *e) {
     strncpy((char *)wifi_config.sta.password, password, sizeof(wifi_config.sta.password));
 
     ESP_LOGI(TAG, "Connecting to SSID: %s", ssid);
-    show_message_box("Connecting...");
+    lock_and_show_message_box("Connecting...");
 
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_connect());
@@ -183,14 +182,6 @@ void start_scan_task(lv_event_t *e) {
     if (scanning)
         return;
     scanning = true;
-
-    if (ui_update_queue == NULL) {
-        ui_update_queue = xQueueCreate(5, sizeof(char *));
-        if (!ui_update_queue) {
-            ESP_LOGE(TAG, "Failed to create queue for UI updates");
-            return;
-        }
-    }
 
     // Create the scan task
     xTaskCreate(wifi_scan_task, "wifi_scan_task", 8192, NULL, 5, NULL);
@@ -312,7 +303,7 @@ esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, s
 // ----------------------------------------
 // Helper Functions to show/hide message box
 // ----------------------------------------
-static void show_message_box(const char *text) {
+static void lock_and_show_message_box(const char *text) {
     if (lv_scr_act() != ui_Setup_Screen)
         return;
     xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
@@ -328,7 +319,7 @@ static void show_message_box(const char *text) {
     xSemaphoreGive(lvgl_mutex);
 }
 
-static void close_message_box_cb(lv_timer_t *timer) {
+static void lock_and_close_message_box_cb(lv_timer_t *timer) {
     xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
     if (modal_msgbox) {
         lv_obj_del(lv_obj_get_parent(modal_msgbox));

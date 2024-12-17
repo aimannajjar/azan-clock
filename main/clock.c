@@ -9,14 +9,9 @@
 #include "freertos/task.h"
 
 #define TAG "Clock"
-#define DEFAULT_TIMEZONE "EST5EDT" // Default timezone for America/New_York
-
-#define NTP_SERVER_COUNT 3
-#define NTP_SERVERS "time.google.com", "time.nist.gov", "pool.ntp.org"
-
-static char current_timezone[64] = DEFAULT_TIMEZONE;
 
 extern SemaphoreHandle_t lvgl_mutex;
+static bool clock_initialized = false;
 
 // Updates time in UI
 static void update_time_ui() {
@@ -37,9 +32,7 @@ static void update_time_ui() {
                  timeinfo.tm_min);
     }
 
-    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
     lv_label_set_text(ui_Current_Time, time_str); // Update LVGL label
-    xSemaphoreGive(lvgl_mutex);
 
     ESP_LOGI(TAG, "Time updated: %s", time_str);
 }
@@ -47,12 +40,21 @@ static void update_time_ui() {
 // Task to update the LVGL label every minute
 static void time_update_task(void *arg) {
     while (true) {
+        xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
         update_time_ui();
+        xSemaphoreGive(lvgl_mutex);
         ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(1000)); // Wait for notification or 1 minute
     }
 }
 
 // Function to initialize the clock module
 void clock_init(void) {
-    xTaskCreate(time_update_task, "time_update_task", 4096, NULL, 5, NULL); // Pass the handle
+    if (clock_initialized) {
+        ESP_LOGI(TAG, "Clock already initialized, skipping...");
+        return;
+    }
+    
+    xTaskCreate(time_update_task, "time_update_task", 4096, NULL, 5, NULL);
+    clock_initialized = true;
+    ESP_LOGI(TAG, "Clock initialized successfully");
 }

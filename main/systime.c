@@ -20,6 +20,7 @@
 
 static const char *TAG = "SYSTIME";
 extern lv_obj_t *ui_Main_Screen;
+extern lv_obj_t *ui_Loading_Status_Text;
 extern SemaphoreHandle_t lvgl_mutex;
 
 #ifndef INET6_ADDRSTRLEN
@@ -35,7 +36,9 @@ void time_sync_notification_cb(struct timeval *tv)
 
 void systime_init(void)
 {
-    update_status_text("Synchronizing System Time...");
+    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+    lv_label_set_text(ui_Loading_Status_Text, "Synchronizing System Time...");
+    xSemaphoreGive(lvgl_mutex);
     xTaskCreate(systime_task, "systime_task", 4096, NULL, 5, NULL);
 }
 
@@ -99,7 +102,6 @@ static void obtain_time(void)
                                ESP_SNTP_SERVER_LIST("time.nist.gov", "time.cloudflare.com", "time.aws.com", "pool.ntp.org", "time.google.com" ) );
     config.sync_cb = time_sync_notification_cb; // Note: This is only needed if we want
 
-
     esp_netif_sntp_init(&config);
 
     print_servers();
@@ -117,7 +119,6 @@ static void obtain_time(void)
 
     esp_netif_sntp_deinit();
 
-    // Successfully initailzed
     clock_init();
     xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
     lv_scr_load(ui_Main_Screen);
