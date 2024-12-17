@@ -316,6 +316,7 @@ void ui_Main_Screen_screen_init(void)
     lv_obj_clear_flag(ui_Panel5, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_bg_color(ui_Panel5, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Panel5, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(ui_Panel5, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Current_Time = lv_label_create(ui_Panel5);
     lv_obj_set_width(ui_Current_Time, LV_SIZE_CONTENT);   /// 1

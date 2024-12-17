@@ -17,7 +17,6 @@
 #include "freertos/task.h"
 #include "azan_clock.h"
 #include "clock.h"
-#include "ui/ui_helpers.h"
 
 static const char *TAG = "SYSTIME";
 extern lv_obj_t *ui_Main_Screen;
@@ -122,6 +121,6 @@ static void obtain_time(void)
 
     clock_init();
     take_ui_mutex("obtain_time");
-    _ui_screen_change(&ui_Main_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Main_Screen_screen_init);
+    lv_scr_load(ui_Main_Screen);
     give_ui_mutex("obtain_time");
 }
