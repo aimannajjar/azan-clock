@@ -11,7 +11,6 @@
 #define TAG "Clock"
 
 extern SemaphoreHandle_t lvgl_mutex;
-static bool clock_initialized = false;
 
 // Updates time in UI
 static void update_time_ui() {
@@ -49,12 +48,12 @@ static void time_update_task(void *arg) {
 
 // Function to initialize the clock module
 void clock_init(void) {
-    if (clock_initialized) {
+    if (is_clock_initialized()) {
         ESP_LOGI(TAG, "Clock already initialized, skipping...");
         return;
     }
     
     xTaskCreate(time_update_task, "time_update_task", 4096, NULL, 5, NULL);
-    clock_initialized = true;
+    set_clock_initialized();
     ESP_LOGI(TAG, "Clock initialized successfully");
 }

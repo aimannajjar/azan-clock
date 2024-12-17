@@ -74,12 +74,12 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
         }
 
         take_ui_mutex("wifi_event_handler");
-        if (!is_system_initialized()) {
+        if (!is_wifi_previously_connected()) {
             // If system has not been initialized
             // show the loading screen, that's because we are still waiting for IP address
             lv_label_set_text(ui_Loading_Status_Text, "Requesting IP address...");
             lv_scr_load(ui_Loading_Screen);
-            set_system_initialized();
+            set_wifi_previously_connected();
         } else {
             // If system has already been initialized
             // TODO: Update the Wi-Fi status icon on the main screen
@@ -92,7 +92,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         ESP_LOGI(TAG, "Wi-Fi connection failed.");
 
-        if (lv_scr_act() != ui_Setup_Screen && !is_system_initialized()) {
+        if (lv_scr_act() != ui_Setup_Screen && !is_wifi_previously_connected()) {
             // If we are not on the setup screen already and system has not been initialized
             // this means we failed to connect during boot, so show the setup screen
             lock_and_wifi_setup_mode();

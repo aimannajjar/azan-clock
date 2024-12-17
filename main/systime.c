@@ -10,6 +10,7 @@
 #include "esp_sntp.h"
 #include "azan_clock.h"
 #include "clock.h"
+#include "weather.h"
 
 static const char *TAG = "SYSTIME";
 extern lv_obj_t *ui_Main_Screen;
@@ -113,6 +114,7 @@ static void obtain_time(void)
     esp_netif_sntp_deinit();
 
     clock_init();
+    weather_init();
     take_ui_mutex("obtain_time");
     lv_scr_load(ui_Main_Screen);
     give_ui_mutex("obtain_time");

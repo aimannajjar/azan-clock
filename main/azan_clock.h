@@ -5,8 +5,12 @@
 
 void azan_clock(void);
 void update_status_text(const char *text);
-void set_system_initialized();
-bool is_system_initialized();
+void set_wifi_previously_connected();
+bool is_wifi_previously_connected();
+void set_clock_initialized();
+bool is_clock_initialized();
+void set_weather_initialized();
+bool is_weather_initialized();
 
 void take_ui_mutex(const char *caller);
 void give_ui_mutex(const char *caller);

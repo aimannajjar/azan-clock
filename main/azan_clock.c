@@ -5,6 +5,7 @@
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "wifi.h"
+#include "weather.h" // Include the weather header
 
 #define TAG "Main"
 
@@ -13,10 +14,12 @@ LV_FONT_DECLARE(noto_naskh_80)
 SemaphoreHandle_t lvgl_mutex;
 
 typedef struct {
-    bool initialized;
+    bool wifi_previously_connected;
+    bool clock_initialized;
+    bool weather_initialized;
 } state_t;
 
-state_t state = { .initialized = false };
+state_t state = { .wifi_previously_connected = false, .clock_initialized = false };
 
 extern lv_obj_t *ui_Loading_Status_Text;
 void azan_clock() {
@@ -45,12 +48,28 @@ void reset_nvs() {
     }
 }
 
-void set_system_initialized() {
-    state.initialized = true;
+void set_wifi_previously_connected() {
+    state.wifi_previously_connected = true;
 }
 
-bool is_system_initialized() {
-    return state.initialized;
+bool is_wifi_previously_connected() {
+    return state.wifi_previously_connected;
+}
+
+void set_clock_initialized() {
+    state.clock_initialized = true;
+}
+
+bool is_clock_initialized() {
+    return state.clock_initialized;
+}
+
+void set_weather_initialized() {
+    state.weather_initialized = true;
+}
+
+bool is_weather_initialized() {
+    return state.weather_initialized;
 }
 
 void take_ui_mutex(const char *caller) {
