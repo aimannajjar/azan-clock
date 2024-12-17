@@ -11,7 +11,7 @@
 
 LV_FONT_DECLARE(noto_naskh_80)
 
-SemaphoreHandle_t lvgl_mutex;
+extern SemaphoreHandle_t lvgl_mux;
 
 typedef struct {
     bool wifi_previously_connected;
@@ -34,7 +34,7 @@ void azan_clock() {
     ESP_ERROR_CHECK(esp_event_loop_create_default());
 
     ui_init();
-    lvgl_mutex = xSemaphoreCreateMutex();
+    // lvgl_mutex = xSemaphoreCreateMutex();
 
     wifi_init();
 }
@@ -76,12 +76,12 @@ void take_ui_mutex(const char *caller) {
     struct timeval tv;
     gettimeofday(&tv, NULL);
     ESP_LOGI(TAG, "[%lld.%06ld] UI Mutex: Taking from %s", (long long)tv.tv_sec, (long)tv.tv_usec, caller);
-    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+    xSemaphoreTake(lvgl_mux, portMAX_DELAY);
 }
 
 void give_ui_mutex(const char *caller) {
     struct timeval tv;
     gettimeofday(&tv, NULL);
     ESP_LOGI(TAG, "[%lld.%06ld] UI Mutex: Giving from %s", (long long)tv.tv_sec, (long)tv.tv_usec, caller);
-    xSemaphoreGive(lvgl_mutex);
+    xSemaphoreGive(lvgl_mux);
 }

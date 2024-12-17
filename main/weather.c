@@ -7,7 +7,7 @@
 #define TAG "Weather"
 #define WEATHER_API_URL "https://api.open-meteo.com/v1/forecast?latitude=%f&longitude=%f&current_weather=true"
 
-static char weather_info[256];
+static char weather_info[1024];
 
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
     switch (evt->event_id) {

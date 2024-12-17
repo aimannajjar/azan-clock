@@ -16,7 +16,7 @@
 #include "lvgl_port.h"
 
 static const char *TAG = "lv_port";                      // Tag for logging
-static SemaphoreHandle_t lvgl_mux;                       // LVGL mutex for synchronization
+SemaphoreHandle_t lvgl_mux;                       // LVGL mutex for synchronization
 static TaskHandle_t lvgl_task_handle = NULL;             // Handle for the LVGL task
 
 #if EXAMPLE_LVGL_PORT_ROTATION_DEGREE != 0

@@ -15,7 +15,6 @@
 static const char *TAG = "SYSTIME";
 extern lv_obj_t *ui_Main_Screen;
 extern lv_obj_t *ui_Loading_Status_Text;
-extern SemaphoreHandle_t lvgl_mutex;
 
 #ifndef INET6_ADDRSTRLEN
 #define INET6_ADDRSTRLEN 48

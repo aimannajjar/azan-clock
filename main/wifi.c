@@ -19,7 +19,6 @@ extern lv_obj_t *ui_Setup_Screen;
 extern lv_obj_t *ui_Loading_Screen;
 extern lv_obj_t *ui_Loading_Status_Text;
 static lv_obj_t *modal_msgbox = NULL; // Message box object
-extern SemaphoreHandle_t lvgl_mutex;
 static TaskHandle_t wifi_scan_task_handle = NULL;
 static bool is_scanning = false; // Add this global variable
 

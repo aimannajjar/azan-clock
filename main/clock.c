@@ -10,8 +10,6 @@
 
 #define TAG "Clock"
 
-extern SemaphoreHandle_t lvgl_mutex;
-
 // Updates time in UI
 static void update_time_ui() {
     time_t now;
