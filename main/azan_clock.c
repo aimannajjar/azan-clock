@@ -4,8 +4,12 @@
 #include <sys/time.h>
 #include "esp_log.h"
 #include "nvs_flash.h"
-#include "wifi.h"
+// #include "wifi.h"
 #include "weather.h" // Include the weather header
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/semphr.h"
+#include "freertos/task.h"
 
 #define TAG "Main"
 
@@ -30,13 +34,13 @@ void azan_clock() {
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK( ret );
-    ESP_ERROR_CHECK(esp_netif_init());
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    // ESP_ERROR_CHECK(esp_netif_init());
+    // ESP_ERROR_CHECK(esp_event_loop_create_default());
 
     ui_init();
     lvgl_mutex = xSemaphoreCreateMutex();
 
-    wifi_init();
+    // wifi_init();
 }
 
 void reset_nvs() {

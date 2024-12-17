@@ -1,4 +1,15 @@
 dependencies:
+  espressif/esp_lcd_qemu_rgb:
+    component_hash: e8981dd7399504a5ab647ce28a4876f8467c03b759895f50c24f0cb6095faaa0
+    dependencies:
+    - name: idf
+      registry_url: https://components.espressif.com
+      require: private
+      version: '>=5.3'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.0.2
   espressif/esp_lcd_touch:
     component_hash: 779b4ba2464a3ae85681e4b860caa5fdc35801458c23f3039ee761bae7f442a4
     dependencies:
@@ -37,9 +48,10 @@ dependencies:
       type: service
     version: 8.4.0
 direct_dependencies:
+- espressif/esp_lcd_qemu_rgb
 - espressif/esp_lcd_touch_gt911
 - idf
 - lvgl/lvgl
-manifest_hash: ff6b9c85c4cba9b288bc62b749c08da11285cc37c83363b208991fdbc25b0cf8
+manifest_hash: 82f06227ec6fb313063f1f379c429bddff8744c6a17c39e0efa8fe2309dd5b7a
 target: esp32s3
 version: 2.0.0
