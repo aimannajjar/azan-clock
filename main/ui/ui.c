@@ -32,6 +32,7 @@ lv_obj_t * ui_Label12;
 lv_obj_t * ui_Button9;
 lv_obj_t * ui_Label13;
 lv_obj_t * ui_Spinner2;
+lv_obj_t * ui_Loading_Status_Text;
 // CUSTOM VARIABLES
 
 

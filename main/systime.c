@@ -15,6 +15,8 @@
 #include "lvgl/lvgl.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "azan_clock.h"
+#include "clock.h"
 
 static const char *TAG = "SYSTIME";
 extern lv_obj_t *ui_Main_Screen;
@@ -29,6 +31,12 @@ static void obtain_time(void);
 void time_sync_notification_cb(struct timeval *tv)
 {
     ESP_LOGI(TAG, "Notification of a time synchronization event");
+}
+
+void systime_init(void)
+{
+    update_status_text("Synchronizing System Time...");
+    xTaskCreate(systime_task, "systime_task", 4096, NULL, 5, NULL);
 }
 
 void systime_task(void *pvParameters)
@@ -64,11 +72,6 @@ void systime_task(void *pvParameters)
     }
 
     vTaskDelete(NULL); // Delete the task once time synchronization is done
-}
-
-void systime_init(void)
-{
-    xTaskCreate(systime_task, "systime_task", 4096, NULL, 5, NULL);
 }
 
 static void print_servers(void)
@@ -114,6 +117,8 @@ static void obtain_time(void)
 
     esp_netif_sntp_deinit();
 
+    // Successfully initailzed
+    clock_init();
     xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
     lv_scr_load(ui_Main_Screen);
     xSemaphoreGive(lvgl_mutex);

@@ -172,6 +172,17 @@ void ui_Loading_Screen_screen_init(void)
     lv_obj_set_style_arc_color(ui_Spinner2, lv_color_hex(0xAF7017), LV_PART_INDICATOR | LV_STATE_DEFAULT);
     lv_obj_set_style_arc_opa(ui_Spinner2, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
 
+    ui_Loading_Status_Text = lv_label_create(ui_Loading_Screen);
+    lv_obj_set_width(ui_Loading_Status_Text, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Loading_Status_Text, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Loading_Status_Text, 43);
+    lv_obj_set_y(ui_Loading_Status_Text, -20);
+    lv_obj_set_align(ui_Loading_Status_Text, LV_ALIGN_BOTTOM_MID);
+    lv_label_set_text(ui_Loading_Status_Text, "Initializing...");
+    lv_obj_set_style_text_color(ui_Loading_Status_Text, lv_color_hex(0x633804), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Loading_Status_Text, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Loading_Status_Text, &lv_font_montserrat_24, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     lv_obj_add_event_cb(ui_Button7, ui_event_Button7, LV_EVENT_ALL, NULL);
 
 }

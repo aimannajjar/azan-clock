@@ -39,6 +39,7 @@ extern lv_obj_t * ui_Label12;
 extern lv_obj_t * ui_Button9;
 extern lv_obj_t * ui_Label13;
 extern lv_obj_t * ui_Spinner2;
+extern lv_obj_t * ui_Loading_Status_Text;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Main_Screen

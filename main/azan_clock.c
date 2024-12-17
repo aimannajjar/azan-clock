@@ -10,22 +10,19 @@
 #include "wifi.h"
 #include "clock.h"
 
-// System Time
-#include "systime.h"
-
 #define TAG "Main"
 
 LV_FONT_DECLARE(noto_naskh_80)
 
-QueueHandle_t ui_update_queue;
 SemaphoreHandle_t lvgl_mutex;
 
-static void ip_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
-    if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
-        systime_init();
-    }
-}
+typedef struct {
+    bool initialized;
+} state_t;
 
+state_t state = { .initialized = false };
+
+extern lv_obj_t *ui_Loading_Status_Text;
 void azan_clock() {
     // Initialize NVS (needed for Wi-Fi)
     esp_err_t ret = nvs_flash_init();
@@ -36,29 +33,32 @@ void azan_clock() {
     ESP_ERROR_CHECK( ret );
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
-    ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &ip_event_handler, NULL));
 
-    bool setup_mode = !wifi_init();
     ui_init();
-
     lvgl_mutex = xSemaphoreCreateMutex();
 
-    if (setup_mode) {
-        lv_scr_load(ui_Setup_Screen);
-    }
-    clock_init();
+    wifi_init();
 }
 
-static void btn_event_cb(lv_event_t * e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t * btn = lv_event_get_target(e);
-    if(code == LV_EVENT_CLICKED) {
-        static uint8_t cnt = 0;
-        cnt++;
-
-        /*Get the first child of the button which is the label and change its text*/
-        lv_obj_t * label = lv_obj_get_child(btn, 0);
-        lv_label_set_text_fmt(label, "Button: %d", cnt);
+void reset_nvs() {
+    esp_err_t ret = nvs_flash_erase();
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to erase NVS: %s", esp_err_to_name(ret));
+    } else {
+        ESP_LOGI(TAG, "NVS erased successfully");
     }
+}
+
+void set_system_initialized() {
+    state.initialized = true;
+}
+
+bool is_system_initialized() {
+    return state.initialized;
+}
+
+void update_status_text(const char *text) {
+    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
+    lv_label_set_text(ui_Loading_Status_Text, text);
+    xSemaphoreGive(lvgl_mutex);
 }
