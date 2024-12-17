@@ -28,7 +28,6 @@ static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *pass
 static void lock_and_wifi_setup_mode();
 static void lock_and_close_message_box_cb(lv_timer_t *timer);
 static void lock_and_show_message_box(const char *text);
-static void del_message_box_timer(lv_timer_t *timer);
 static void connect_to_saved_wifi();
 static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data);
 
@@ -71,7 +70,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
 
         if (lv_scr_act() == ui_Setup_Screen) {
             lock_and_show_message_box("Connected");
-            lv_timer_create(del_message_box_timer, 2000, NULL); // Close after 2 seconds    
+            lv_timer_create(lock_and_close_message_box_cb, 2000, NULL); // Close after 2 seconds    
         }
 
         xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
@@ -320,16 +319,6 @@ static void lock_and_show_message_box(const char *text) {
 }
 
 static void lock_and_close_message_box_cb(lv_timer_t *timer) {
-    xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
-    if (modal_msgbox) {
-        lv_obj_del(lv_obj_get_parent(modal_msgbox));
-        modal_msgbox = NULL;
-    }
-    lv_timer_del(timer);
-    xSemaphoreGive(lvgl_mutex);
-}
-
-static void del_message_box_timer(lv_timer_t *timer) {
     xSemaphoreTake(lvgl_mutex, portMAX_DELAY);
     if (modal_msgbox) {
         lv_obj_del(lv_obj_get_parent(modal_msgbox));
