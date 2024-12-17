@@ -2,8 +2,6 @@
 #include "azan_clock.h"
 #include "ui/ui.h"
 #include <sys/time.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/queue.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "wifi.h"

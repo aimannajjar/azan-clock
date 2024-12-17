@@ -1,10 +1,9 @@
 #include "wifi.h"
 #include <string.h>
-#include <stdlib.h>
 #include "nvs.h"
 #include "nvs_flash.h"
-#include "systime.h"
 #include "azan_clock.h"
+#include "systime.h"
 
 #define TAG "WiFi"
 #define MAX_NETWORKS 20
