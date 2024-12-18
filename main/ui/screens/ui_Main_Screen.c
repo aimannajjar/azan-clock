@@ -367,7 +367,7 @@ void ui_Main_Screen_screen_init(void)
     lv_obj_set_align(ui_Weather_Image, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_Weather_Image, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_Weather_Image, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_img_set_zoom(ui_Weather_Image, 600);
+    lv_img_set_zoom(ui_Weather_Image, 500);
 
     ui_Panel4 = lv_obj_create(ui_Main_Screen);
     lv_obj_set_width(ui_Panel4, 70);
