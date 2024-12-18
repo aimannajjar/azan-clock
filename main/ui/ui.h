@@ -121,7 +121,7 @@ LV_IMG_DECLARE(ui_img_icn_wifi_png);    // assets/icn_wifi.png
 LV_IMG_DECLARE(ui_img_icn_pc_png);    // assets/icn_pc.png
 LV_IMG_DECLARE(ui_img_icn_usb_png);    // assets/icn_usb.png
 LV_IMG_DECLARE(ui_img_icn_time_2_png);    // assets/icn_time_2.png
-LV_IMG_DECLARE(ui_img_day_overcast_png);    // assets/day_overcast.png
+LV_IMG_DECLARE(ui_img_day_partly_cloudy_png);    // assets/day_partly_cloudy.png
 LV_IMG_DECLARE(ui_img_arrow_down_png);    // assets/arrow_down.png
 LV_IMG_DECLARE(ui_img_arrow_left_png);    // assets/arrow_left.png
 LV_IMG_DECLARE(ui_img_arrow_right_png);    // assets/arrow_right.png
@@ -134,12 +134,9 @@ LV_IMG_DECLARE(ui_img_icn_time_1_png);    // assets/icn_time_1.png
 LV_IMG_DECLARE(ui_img_rainy_weather_png);    // assets/rainy_weather.png
 LV_IMG_DECLARE(ui_img_night_clear_png);    // assets/night_clear.png
 LV_IMG_DECLARE(ui_img_night_fog_png);    // assets/night_fog.png
-LV_IMG_DECLARE(ui_img_night_heavy_freezing_rain_png);    // assets/night_heavy_freezing_rain.png
 LV_IMG_DECLARE(ui_img_night_heavy_rain_png);    // assets/night_heavy_rain.png
 LV_IMG_DECLARE(ui_img_night_heavy_snowfall_png);    // assets/night_heavy_snowfall.png
 LV_IMG_DECLARE(ui_img_night_light_drizzle_png);    // assets/night_light_drizzle.png
-LV_IMG_DECLARE(ui_img_night_light_freezing_drizzle_png);    // assets/night_light_freezing_drizzle.png
-LV_IMG_DECLARE(ui_img_night_light_freezing_rain_png);    // assets/night_light_freezing_rain.png
 LV_IMG_DECLARE(ui_img_night_light_rain_png);    // assets/night_light_rain.png
 LV_IMG_DECLARE(ui_img_night_moderate_rain_png);    // assets/night_moderate_rain.png
 LV_IMG_DECLARE(ui_img_night_overcast_png);    // assets/night_overcast.png
@@ -153,7 +150,7 @@ LV_IMG_DECLARE(ui_img_day_heavy_snowfall_png);    // assets/day_heavy_snowfall.p
 LV_IMG_DECLARE(ui_img_day_light_drizzle_png);    // assets/day_light_drizzle.png
 LV_IMG_DECLARE(ui_img_day_light_rain_png);    // assets/day_light_rain.png
 LV_IMG_DECLARE(ui_img_day_moderate_rain_png);    // assets/day_moderate_rain.png
-LV_IMG_DECLARE(ui_img_day_partly_cloudy_png);    // assets/day_partly_cloudy.png
+LV_IMG_DECLARE(ui_img_day_overcast_png);    // assets/day_overcast.png
 LV_IMG_DECLARE(ui_img_day_rime_fog_png);    // assets/day_rime_fog.png
 LV_IMG_DECLARE(ui_img_day_snowflake_png);    // assets/day_snowflake.png
 LV_IMG_DECLARE(ui_img_day_thunderstorm_png);    // assets/day_thunderstorm.png

@@ -39,6 +39,7 @@ for file in *; do
         # Rename file if needed
         if [[ "$file" != "$newname" ]]; then
             mv -v "$file" "$newname"
+            convert $newname -quality 100 -resize 32x32 $newname
         fi
 
         # Check if the new name is in the allowed list, delete if not

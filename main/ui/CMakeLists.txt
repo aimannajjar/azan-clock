@@ -9,7 +9,7 @@ SET(SOURCES screens/ui_Loading_Screen.c
     images/ui_img_icn_pc_png.c
     images/ui_img_icn_usb_png.c
     images/ui_img_icn_time_2_png.c
-    images/ui_img_day_overcast_png.c
+    images/ui_img_day_partly_cloudy_png.c
     images/ui_img_arrow_down_png.c
     images/ui_img_arrow_left_png.c
     images/ui_img_arrow_right_png.c
@@ -22,12 +22,9 @@ SET(SOURCES screens/ui_Loading_Screen.c
     images/ui_img_rainy_weather_png.c
     images/ui_img_night_clear_png.c
     images/ui_img_night_fog_png.c
-    images/ui_img_night_heavy_freezing_rain_png.c
     images/ui_img_night_heavy_rain_png.c
     images/ui_img_night_heavy_snowfall_png.c
     images/ui_img_night_light_drizzle_png.c
-    images/ui_img_night_light_freezing_drizzle_png.c
-    images/ui_img_night_light_freezing_rain_png.c
     images/ui_img_night_light_rain_png.c
     images/ui_img_night_moderate_rain_png.c
     images/ui_img_night_overcast_png.c
@@ -41,7 +38,7 @@ SET(SOURCES screens/ui_Loading_Screen.c
     images/ui_img_day_light_drizzle_png.c
     images/ui_img_day_light_rain_png.c
     images/ui_img_day_moderate_rain_png.c
-    images/ui_img_day_partly_cloudy_png.c
+    images/ui_img_day_overcast_png.c
     images/ui_img_day_rime_fog_png.c
     images/ui_img_day_snowflake_png.c
     images/ui_img_day_thunderstorm_png.c
