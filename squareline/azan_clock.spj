@@ -8157,7 +8157,7 @@
                       {
                         "nid": 10,
                         "strtype": "OBJECT/Name",
-                        "strval": "Image1",
+                        "strval": "Weather Image",
                         "InheritedType": 10
                       },
                       {
@@ -8259,7 +8259,7 @@
                       {
                         "nid": 1020,
                         "strtype": "IMAGE/Asset",
-                        "strval": "assets/day_partly_cloudy.png",
+                        "strval": "assets/day_overcast.png",
                         "InheritedType": 5
                       },
                       {
@@ -15128,7 +15128,7 @@
     "uiExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main/ui",
     "projectExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 73,
+    "backup_cnt": 76,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

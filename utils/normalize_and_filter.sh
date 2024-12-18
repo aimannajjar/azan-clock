@@ -7,34 +7,25 @@
 # Set prefix from argument, default to "day" if not provided
 prefix=${1:-day}
 
+cd ~/Develop/Airycons
+rm -rf "./${prefix}_images"
 mkdir -p "./${prefix}_images"
 find . -type d -name "${prefix^}" -exec find {} -type f -name "*.png" \; | xargs -I{} cp {} ./${prefix}_images/
 
 # Allowed file names list
 allowed_files=(
-    "${prefix}-clear.png"
-    "${prefix}-mostly-clear.png"
-    "${prefix}-partly-cloudy.png"
-    "${prefix}-overcast.png"
-    "${prefix}-fog.png"
-    "${prefix}-rime-fog.png"
-    "${prefix}-light-drizzle.png"
-    "${prefix}-moderate-drizzle.png"
-    "${prefix}-dense-drizzle.png"
-    "${prefix}-light-rain.png"
-    "${prefix}-moderate-rain.png"
-    "${prefix}-heavy-rain.png"
-    "${prefix}-light-freezing-drizzle.png"
-    "${prefix}-dense-freezing-drizzle.png"
-    "${prefix}-light-freezing-rain.png"
-    "${prefix}-heavy-freezing-rain.png"
-    "${prefix}-slight-snowfall.png"
-    "${prefix}-moderate-snowfall.png"
-    "${prefix}-heavy-snowfall.png"
-    "${prefix}-snowflake.png"
-    "${prefix}-thunderstorm.png"
-    "${prefix}-thunderstorm-with-hail.png"
-    "${prefix}-unknown.png"
+    "${prefix}_clear.png"
+    "${prefix}_fog.png"
+    "${prefix}_heavy_rain.png"
+    "${prefix}_heavy_snowfall.png"
+    "${prefix}_light_drizzle.png"
+    "${prefix}_light_rain.png"
+    "${prefix}_moderate_rain.png"
+    "${prefix}_overcast.png"
+    "${prefix}_partly_cloudy.png"
+    "${prefix}_rime_fog.png"
+    "${prefix}_snowflake.png"
+    "${prefix}_thunderstorm.png"
 )
 
 # Normalize and check files
@@ -42,8 +33,8 @@ cd "${prefix}_images/"
 for file in *; do 
     if [[ -f "$file" ]]; then
         # Normalize the file name
-        newname=$(echo "$file" | sed 's/@32x\.png$/.png/' | tr '[:upper:]' '[:lower:]' | sed 's/[[:space:]]\+/-/g')
-        newname="${prefix}-${newname}"
+        newname=$(echo "$file" | sed 's/@32x\.png$/.png/' | tr '[:upper:]' '[:lower:]' | sed 's/[[:space:]]\+/_/g')
+        newname="${prefix}_${newname}"
 
         # Rename file if needed
         if [[ "$file" != "$newname" ]]; then
@@ -58,3 +49,7 @@ for file in *; do
     fi
 done
 
+# Copy to squareline assets
+cd ~/Develop/azan-clock
+rm -vf squareline/assets/${prefix}*.png
+cp -v ~/Develop/Airycons/${prefix}_images/${prefix}_*.png squareline/assets/
