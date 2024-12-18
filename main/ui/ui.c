@@ -19,10 +19,6 @@ void ScreenOut_Animation(lv_obj_t * TargetObject, int delay);
 void ui_Loading_Screen_screen_init(void);
 lv_obj_t * ui_Loading_Screen;
 lv_obj_t * ui_Background2;
-lv_obj_t * ui_Panel_Header2;
-lv_obj_t * ui_IMG_Wifi2;
-lv_obj_t * ui_IMG_PC2;
-lv_obj_t * ui_IMG_USB2;
 lv_obj_t * ui_Panel2;
 void ui_event_Button7(lv_event_t * e);
 lv_obj_t * ui_Button7;
@@ -58,7 +54,7 @@ lv_obj_t * ui_Current_Time;
 lv_obj_t * ui_Weather_Condition_Panel;
 lv_obj_t * ui_Weather_Image;
 lv_obj_t * ui_Weather_Condition_Panel1;
-lv_obj_t * ui_Label2;
+lv_obj_t * ui_Current_Date;
 lv_obj_t * ui_Left_Panel;
 lv_obj_t * ui_Button1;
 lv_obj_t * ui_Label1;
@@ -68,6 +64,7 @@ lv_obj_t * ui_Label5;
 lv_obj_t * ui_Button3;
 lv_obj_t * ui_Label6;
 lv_obj_t * ui_Container1;
+lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
 
 
@@ -76,9 +73,6 @@ void ui_Setup_Screen_screen_init(void);
 lv_obj_t * ui_Setup_Screen;
 lv_obj_t * ui_Background1;
 lv_obj_t * ui_Panel_Header1;
-lv_obj_t * ui_IMG_Wifi1;
-lv_obj_t * ui_IMG_PC1;
-lv_obj_t * ui_IMG_USB1;
 lv_obj_t * ui_Panel8;
 void ui_event_Button4(lv_event_t * e);
 lv_obj_t * ui_Button4;

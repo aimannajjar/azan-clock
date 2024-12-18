@@ -31,31 +31,6 @@ void ui_Setup_Screen_screen_init(void)
     lv_obj_set_style_bg_grad_stop(ui_Panel_Header1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_width(ui_Panel_Header1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_IMG_Wifi1 = lv_img_create(ui_Panel_Header1);
-    lv_img_set_src(ui_IMG_Wifi1, &ui_img_icn_wifi_png);
-    lv_obj_set_width(ui_IMG_Wifi1, LV_SIZE_CONTENT);   /// 100
-    lv_obj_set_height(ui_IMG_Wifi1, LV_SIZE_CONTENT);    /// 50
-    lv_obj_set_align(ui_IMG_Wifi1, LV_ALIGN_RIGHT_MID);
-    lv_obj_add_flag(ui_IMG_Wifi1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-
-    ui_IMG_PC1 = lv_img_create(ui_Panel_Header1);
-    lv_img_set_src(ui_IMG_PC1, &ui_img_icn_pc_png);
-    lv_obj_set_width(ui_IMG_PC1, LV_SIZE_CONTENT);   /// 100
-    lv_obj_set_height(ui_IMG_PC1, LV_SIZE_CONTENT);    /// 50
-    lv_obj_set_x(ui_IMG_PC1, -42);
-    lv_obj_set_y(ui_IMG_PC1, 0);
-    lv_obj_set_align(ui_IMG_PC1, LV_ALIGN_RIGHT_MID);
-    lv_obj_add_flag(ui_IMG_PC1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-
-    ui_IMG_USB1 = lv_img_create(ui_Panel_Header1);
-    lv_img_set_src(ui_IMG_USB1, &ui_img_icn_usb_png);
-    lv_obj_set_width(ui_IMG_USB1, LV_SIZE_CONTENT);   /// 100
-    lv_obj_set_height(ui_IMG_USB1, LV_SIZE_CONTENT);    /// 50
-    lv_obj_set_x(ui_IMG_USB1, -84);
-    lv_obj_set_y(ui_IMG_USB1, 0);
-    lv_obj_set_align(ui_IMG_USB1, LV_ALIGN_RIGHT_MID);
-    lv_obj_add_flag(ui_IMG_USB1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-
     ui_Panel8 = lv_obj_create(ui_Setup_Screen);
     lv_obj_set_width(ui_Panel8, 70);
     lv_obj_set_height(ui_Panel8, 480);

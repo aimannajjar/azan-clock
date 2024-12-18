@@ -18,44 +18,6 @@ void ui_Loading_Screen_screen_init(void)
     lv_obj_set_align(ui_Background2, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_Background2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
 
-    ui_Panel_Header2 = lv_obj_create(ui_Loading_Screen);
-    lv_obj_set_width(ui_Panel_Header2, 665);
-    lv_obj_set_height(ui_Panel_Header2, 39);
-    lv_obj_set_x(ui_Panel_Header2, -30);
-    lv_obj_set_y(ui_Panel_Header2, 0);
-    lv_obj_set_align(ui_Panel_Header2, LV_ALIGN_TOP_RIGHT);
-    lv_obj_clear_flag(ui_Panel_Header2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_bg_color(ui_Panel_Header2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_Panel_Header2, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_main_stop(ui_Panel_Header2, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_grad_stop(ui_Panel_Header2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_width(ui_Panel_Header2, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_IMG_Wifi2 = lv_img_create(ui_Panel_Header2);
-    lv_img_set_src(ui_IMG_Wifi2, &ui_img_icn_wifi_png);
-    lv_obj_set_width(ui_IMG_Wifi2, LV_SIZE_CONTENT);   /// 100
-    lv_obj_set_height(ui_IMG_Wifi2, LV_SIZE_CONTENT);    /// 50
-    lv_obj_set_align(ui_IMG_Wifi2, LV_ALIGN_RIGHT_MID);
-    lv_obj_add_flag(ui_IMG_Wifi2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-
-    ui_IMG_PC2 = lv_img_create(ui_Panel_Header2);
-    lv_img_set_src(ui_IMG_PC2, &ui_img_icn_pc_png);
-    lv_obj_set_width(ui_IMG_PC2, LV_SIZE_CONTENT);   /// 100
-    lv_obj_set_height(ui_IMG_PC2, LV_SIZE_CONTENT);    /// 50
-    lv_obj_set_x(ui_IMG_PC2, -42);
-    lv_obj_set_y(ui_IMG_PC2, 0);
-    lv_obj_set_align(ui_IMG_PC2, LV_ALIGN_RIGHT_MID);
-    lv_obj_add_flag(ui_IMG_PC2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-
-    ui_IMG_USB2 = lv_img_create(ui_Panel_Header2);
-    lv_img_set_src(ui_IMG_USB2, &ui_img_icn_usb_png);
-    lv_obj_set_width(ui_IMG_USB2, LV_SIZE_CONTENT);   /// 100
-    lv_obj_set_height(ui_IMG_USB2, LV_SIZE_CONTENT);    /// 50
-    lv_obj_set_x(ui_IMG_USB2, -84);
-    lv_obj_set_y(ui_IMG_USB2, 0);
-    lv_obj_set_align(ui_IMG_USB2, LV_ALIGN_RIGHT_MID);
-    lv_obj_add_flag(ui_IMG_USB2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-
     ui_Panel2 = lv_obj_create(ui_Loading_Screen);
     lv_obj_set_width(ui_Panel2, 70);
     lv_obj_set_height(ui_Panel2, 480);

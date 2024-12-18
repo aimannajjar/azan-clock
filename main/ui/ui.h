@@ -26,10 +26,6 @@ void ScreenOut_Animation(lv_obj_t * TargetObject, int delay);
 void ui_Loading_Screen_screen_init(void);
 extern lv_obj_t * ui_Loading_Screen;
 extern lv_obj_t * ui_Background2;
-extern lv_obj_t * ui_Panel_Header2;
-extern lv_obj_t * ui_IMG_Wifi2;
-extern lv_obj_t * ui_IMG_PC2;
-extern lv_obj_t * ui_IMG_USB2;
 extern lv_obj_t * ui_Panel2;
 void ui_event_Button7(lv_event_t * e);
 extern lv_obj_t * ui_Button7;
@@ -64,7 +60,7 @@ extern lv_obj_t * ui_Current_Time;
 extern lv_obj_t * ui_Weather_Condition_Panel;
 extern lv_obj_t * ui_Weather_Image;
 extern lv_obj_t * ui_Weather_Condition_Panel1;
-extern lv_obj_t * ui_Label2;
+extern lv_obj_t * ui_Current_Date;
 extern lv_obj_t * ui_Left_Panel;
 extern lv_obj_t * ui_Button1;
 extern lv_obj_t * ui_Label1;
@@ -74,6 +70,7 @@ extern lv_obj_t * ui_Label5;
 extern lv_obj_t * ui_Button3;
 extern lv_obj_t * ui_Label6;
 extern lv_obj_t * ui_Container1;
+extern lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Setup_Screen
@@ -81,9 +78,6 @@ void ui_Setup_Screen_screen_init(void);
 extern lv_obj_t * ui_Setup_Screen;
 extern lv_obj_t * ui_Background1;
 extern lv_obj_t * ui_Panel_Header1;
-extern lv_obj_t * ui_IMG_Wifi1;
-extern lv_obj_t * ui_IMG_PC1;
-extern lv_obj_t * ui_IMG_USB1;
 extern lv_obj_t * ui_Panel8;
 void ui_event_Button4(lv_event_t * e);
 extern lv_obj_t * ui_Button4;
@@ -108,10 +102,8 @@ extern lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
 LV_IMG_DECLARE(ui_img_minaret_bg_png);    // assets/minaret_bg.png
+LV_IMG_DECLARE(ui_img_night_heavy_rain_png);    // assets/night_heavy_rain.png
 LV_IMG_DECLARE(ui_img_icn_wifi_png);    // assets/icn_wifi.png
-LV_IMG_DECLARE(ui_img_icn_pc_png);    // assets/icn_pc.png
-LV_IMG_DECLARE(ui_img_icn_usb_png);    // assets/icn_usb.png
-LV_IMG_DECLARE(ui_img_day_partly_cloudy_png);    // assets/day_partly_cloudy.png
 LV_IMG_DECLARE(ui_img_arrow_down_png);    // assets/arrow_down.png
 LV_IMG_DECLARE(ui_img_arrow_left_png);    // assets/arrow_left.png
 LV_IMG_DECLARE(ui_img_arrow_right_png);    // assets/arrow_right.png
@@ -124,18 +116,20 @@ LV_IMG_DECLARE(ui_img_day_light_drizzle_png);    // assets/day_light_drizzle.png
 LV_IMG_DECLARE(ui_img_day_light_rain_png);    // assets/day_light_rain.png
 LV_IMG_DECLARE(ui_img_day_moderate_rain_png);    // assets/day_moderate_rain.png
 LV_IMG_DECLARE(ui_img_day_overcast_png);    // assets/day_overcast.png
+LV_IMG_DECLARE(ui_img_day_partly_cloudy_png);    // assets/day_partly_cloudy.png
 LV_IMG_DECLARE(ui_img_day_rime_fog_png);    // assets/day_rime_fog.png
 LV_IMG_DECLARE(ui_img_day_snowflake_png);    // assets/day_snowflake.png
 LV_IMG_DECLARE(ui_img_day_thunderstorm_png);    // assets/day_thunderstorm.png
 LV_IMG_DECLARE(ui_img_icn_bed_png);    // assets/icn_bed.png
 LV_IMG_DECLARE(ui_img_icn_head_png);    // assets/icn_head.png
 LV_IMG_DECLARE(ui_img_icn_pause_png);    // assets/icn_pause.png
+LV_IMG_DECLARE(ui_img_icn_pc_png);    // assets/icn_pc.png
 LV_IMG_DECLARE(ui_img_icn_stop_png);    // assets/icn_stop.png
 LV_IMG_DECLARE(ui_img_icn_time_1_png);    // assets/icn_time_1.png
 LV_IMG_DECLARE(ui_img_icn_time_2_png);    // assets/icn_time_2.png
+LV_IMG_DECLARE(ui_img_icn_usb_png);    // assets/icn_usb.png
 LV_IMG_DECLARE(ui_img_night_clear_png);    // assets/night_clear.png
 LV_IMG_DECLARE(ui_img_night_fog_png);    // assets/night_fog.png
-LV_IMG_DECLARE(ui_img_night_heavy_rain_png);    // assets/night_heavy_rain.png
 LV_IMG_DECLARE(ui_img_night_heavy_snowfall_png);    // assets/night_heavy_snowfall.png
 LV_IMG_DECLARE(ui_img_night_light_drizzle_png);    // assets/night_light_drizzle.png
 LV_IMG_DECLARE(ui_img_night_light_rain_png);    // assets/night_light_rain.png
