@@ -33,7 +33,7 @@ static void update_time_ui() {
 
     lv_label_set_text(ui_Current_Time, time_str); // Update LVGL label
 
-    lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT); // 0 to 255
+    // lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT); // 0 to 255 where 255 next prayer is in 1 minute
 
 
     ESP_LOGI(TAG, "Time updated: %s", time_str);
