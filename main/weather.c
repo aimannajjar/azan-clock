@@ -185,10 +185,6 @@ void get_weather_forecast(float latitude, float longitude) {
                 }
             }
             cJSON_Delete(json);
-
-            // take_ui_mutex("get_weather_forecast");
-            // lv_img_set_src(ui_Weather_Image, weather_image);
-            // give_ui_mutex("get_weather_forecast");
         }
     } else {
         ESP_LOGE(TAG, "HTTP GET request failed: %s", esp_err_to_name(err));
