@@ -4,13 +4,96 @@
 #include "esp_http_client.h"
 #include "cJSON.h"
 #include "ui/ui.h"
+#include "lvgl/lvgl.h"
 
 #define TAG "Weather"
 #define WEATHER_API_URL "https://api.open-meteo.com/v1/forecast?latitude=%f&longitude=%f&current_weather=true"
 
-static char weather_info[1024];
+static char weather_info[512];
 static size_t weather_info_len = 0; // Add this variable to keep track of buffer length
 extern lv_obj_t *ui_Weather_Image;
+
+// Define a structure for mapping weather codes to images
+typedef struct {
+    int code;
+    const lv_img_dsc_t* image;
+} WeatherCodeImageMap;
+
+// Create the WMO weather code mapping array
+static const WeatherCodeImageMap weather_map_day[] = {
+    { 0, &ui_img_day_clear_png },
+    { 1, &ui_img_day_mostly_clear_png },
+    { 2, &ui_img_day_partly_cloudy_png },
+    { 3, &ui_img_day_overcast_png },
+    { 45, &ui_img_day_fog_png },
+    { 48, &ui_img_day_rime_fog_png },
+    { 51, &ui_img_day_light_drizzle_png },
+    { 53, &ui_img_day_moderate_drizzle_png },
+    { 55, &ui_img_day_dense_drizzle_png },
+    { 56, &ui_img_day_light_freezing_drizzle_png },
+    { 57, &ui_img_day_dense_freezing_drizzle_png },
+    { 61, &ui_img_day_light_rain_png },
+    { 63, &ui_img_day_moderate_rain_png },
+    { 65, &ui_img_day_heavy_rain_png },
+    { 66, &ui_img_day_light_freezing_rain_png },
+    { 67, &ui_img_day_heavy_freezing_rain_png },
+    { 71, &ui_img_day_slight_snowfall_png },
+    { 73, &ui_img_day_moderate_snowfall_png },
+    { 75, &ui_img_day_heavy_snowfall_png },
+    { 77, &ui_img_day_snowflake_png },
+    { 80, &ui_img_day_light_rain_png },
+    { 81, &ui_img_day_moderate_rain_png },
+    { 82, &ui_img_day_heavy_rain_png },
+    { 85, &ui_img_day_slight_snowfall_png },
+    { 86, &ui_img_day_heavy_snowfall_png },
+    { 95, &ui_img_day_thunderstorm_png },
+    { 96, &ui_img_day_thunderstorm_with_hail_png },
+    { 99, &ui_img_day_thunderstorm_with_hail_png },
+};
+
+static const WeatherCodeImageMap weather_map_night[] = {
+    { 0, &ui_img_night_clear_png },
+    { 1, &ui_img_night_mostly_clear_png },
+    { 2, &ui_img_night_partly_cloudy_png },
+    { 3, &ui_img_night_overcast_png },
+    { 45, &ui_img_night_fog_png },
+    { 48, &ui_img_night_rime_fog_png },
+    { 51, &ui_img_night_light_drizzle_png },
+    { 53, &ui_img_night_moderate_drizzle_png },
+    { 55, &ui_img_night_dense_drizzle_png },
+    { 56, &ui_img_night_light_freezing_drizzle_png },
+    { 57, &ui_img_night_dense_freezing_drizzle_png },
+    { 61, &ui_img_night_light_rain_png },
+    { 63, &ui_img_night_moderate_rain_png },
+    { 65, &ui_img_night_heavy_rain_png },
+    { 66, &ui_img_night_light_freezing_rain_png },
+    { 67, &ui_img_night_heavy_freezing_rain_png },
+    { 71, &ui_img_night_slight_snowfall_png },
+    { 73, &ui_img_night_moderate_snowfall_png },
+    { 75, &ui_img_night_heavy_snowfall_png },
+    { 77, &ui_img_night_snowflake_png },
+    { 80, &ui_img_night_light_rain_png },
+    { 81, &ui_img_night_moderate_rain_png },
+    { 82, &ui_img_night_heavy_rain_png },
+    { 85, &ui_img_night_slight_snowfall_png },
+    { 86, &ui_img_night_heavy_snowfall_png },
+    { 95, &ui_img_night_thunderstorm_png },
+    { 96, &ui_img_night_thunderstorm_with_hail_png },
+    { 99, &ui_img_night_thunderstorm_with_hail_png },
+};
+
+// Function to get the image resource for a given weather code
+const lv_img_dsc_t* get_weather_image(int is_day, int weather_code) {
+    const WeatherCodeImageMap* weather_map = is_day ? weather_map_day : weather_map_night;
+    size_t map_size = sizeof(weather_map) / sizeof(weather_map[0]);
+    for (size_t i = 0; i < map_size; ++i) {
+        if (weather_map[i].code == weather_code) {
+            return weather_map[i].image;
+        }
+    }
+    // Return a default image if code not found
+    return &ui_img_day_partly_cloudy_png; // Use a default image as fallback
+}
 
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
     switch (evt->event_id) {
@@ -83,11 +166,21 @@ void get_weather_forecast(float latitude, float longitude) {
                 cJSON *temperature = cJSON_GetObjectItem(current_weather, "temperature");
                 cJSON *windspeed = cJSON_GetObjectItem(current_weather, "windspeed");
                 cJSON *weathercode = cJSON_GetObjectItem(current_weather, "weathercode");
-                if (temperature != NULL && windspeed != NULL) {
+                cJSON *is_day = cJSON_GetObjectItem(current_weather, "is_day");
+
+                if (temperature != NULL && windspeed != NULL && weathercode != NULL) {
                     ESP_LOGI(TAG, "Current temperature: %.2f°C", temperature->valuedouble);
                     ESP_LOGI(TAG, "Current windspeed: %.2f km/h", windspeed->valuedouble);
-                    ESP_LOGI(TAG, "Current weathercode: %d km/h", weathercode->valueint);
+                    ESP_LOGI(TAG, "Current weathercode: %d", weathercode->valueint);
+                    ESP_LOGI(TAG, "Current is_day: %d", is_day->valueint);
 
+                    // Get the image corresponding to the weather code
+                    const lv_img_dsc_t* weather_image = get_weather_image(is_day->valueint, weathercode->valueint);
+
+                    // Update the weather image on the UI
+                    take_ui_mutex("get_weather_forecast");
+                    lv_img_set_src(ui_Weather_Image, weather_image);
+                    give_ui_mutex("get_weather_forecast");
                 }
             }
             cJSON_Delete(json);
