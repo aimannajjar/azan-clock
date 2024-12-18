@@ -46,22 +46,12 @@ extern lv_obj_t * ui_Loading_Status_Text;
 void ui_Main_Screen_screen_init(void);
 extern lv_obj_t * ui_Main_Screen;
 extern lv_obj_t * ui_Background;
-extern lv_obj_t * ui_Panel_Header;
-extern lv_obj_t * ui_IMG_Wifi;
-extern lv_obj_t * ui_IMG_PC;
-extern lv_obj_t * ui_IMG_USB;
 extern lv_obj_t * ui_S1_Content_Panel;
-extern lv_obj_t * ui_Display_Time_S1;
-extern lv_obj_t * ui_Label4;
-extern lv_obj_t * ui_DT1;
-extern lv_obj_t * ui_Label_Printing_Time_1;
-extern lv_obj_t * ui_Label_Time_1;
-extern lv_obj_t * ui_Panel3;
-extern lv_obj_t * ui_DT2;
-extern lv_obj_t * ui_IMG_Tine_2;
-extern lv_obj_t * ui_Label_Time_2;
-extern lv_obj_t * ui_Label2;
-extern lv_obj_t * ui_Display_Heat_S1;
+extern lv_obj_t * ui_Next_Prayer_Panel;
+extern lv_obj_t * ui_Next_Prayer;
+extern lv_obj_t * ui_Next_Prayer_Remaining;
+extern lv_obj_t * ui_Next_Prayer_Time;
+extern lv_obj_t * ui_Date_Panel;
 extern lv_obj_t * ui_DT3;
 extern lv_obj_t * ui_Label_Head_Temp;
 extern lv_obj_t * ui_Label_Printing_Head_Temp_2;
@@ -70,12 +60,12 @@ extern lv_obj_t * ui_DT3_copy;
 extern lv_obj_t * ui_Label_Bed_Temp;
 extern lv_obj_t * ui_Label_Printing_Bed_Temp1;
 extern lv_obj_t * ui_Label3;
-extern lv_obj_t * ui_Panel5;
 extern lv_obj_t * ui_Current_Time;
-extern lv_obj_t * ui_Label8;
-extern lv_obj_t * ui_Label9;
+extern lv_obj_t * ui_Weather_Condition_Panel;
 extern lv_obj_t * ui_Weather_Image;
-extern lv_obj_t * ui_Panel4;
+extern lv_obj_t * ui_Weather_Condition_Panel1;
+extern lv_obj_t * ui_Label2;
+extern lv_obj_t * ui_Left_Panel;
 extern lv_obj_t * ui_Button1;
 extern lv_obj_t * ui_Label1;
 void ui_event_Button2(lv_event_t * e);
@@ -83,6 +73,7 @@ extern lv_obj_t * ui_Button2;
 extern lv_obj_t * ui_Label5;
 extern lv_obj_t * ui_Button3;
 extern lv_obj_t * ui_Label6;
+extern lv_obj_t * ui_Container1;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Setup_Screen
@@ -120,29 +111,11 @@ LV_IMG_DECLARE(ui_img_minaret_bg_png);    // assets/minaret_bg.png
 LV_IMG_DECLARE(ui_img_icn_wifi_png);    // assets/icn_wifi.png
 LV_IMG_DECLARE(ui_img_icn_pc_png);    // assets/icn_pc.png
 LV_IMG_DECLARE(ui_img_icn_usb_png);    // assets/icn_usb.png
-LV_IMG_DECLARE(ui_img_icn_time_2_png);    // assets/icn_time_2.png
 LV_IMG_DECLARE(ui_img_day_partly_cloudy_png);    // assets/day_partly_cloudy.png
 LV_IMG_DECLARE(ui_img_arrow_down_png);    // assets/arrow_down.png
 LV_IMG_DECLARE(ui_img_arrow_left_png);    // assets/arrow_left.png
 LV_IMG_DECLARE(ui_img_arrow_right_png);    // assets/arrow_right.png
 LV_IMG_DECLARE(ui_img_arrow_up_png);    // assets/arrow_up.png
-LV_IMG_DECLARE(ui_img_icn_bed_png);    // assets/icn_bed.png
-LV_IMG_DECLARE(ui_img_icn_head_png);    // assets/icn_head.png
-LV_IMG_DECLARE(ui_img_icn_pause_png);    // assets/icn_pause.png
-LV_IMG_DECLARE(ui_img_icn_stop_png);    // assets/icn_stop.png
-LV_IMG_DECLARE(ui_img_icn_time_1_png);    // assets/icn_time_1.png
-LV_IMG_DECLARE(ui_img_rainy_weather_png);    // assets/rainy_weather.png
-LV_IMG_DECLARE(ui_img_night_clear_png);    // assets/night_clear.png
-LV_IMG_DECLARE(ui_img_night_fog_png);    // assets/night_fog.png
-LV_IMG_DECLARE(ui_img_night_heavy_rain_png);    // assets/night_heavy_rain.png
-LV_IMG_DECLARE(ui_img_night_heavy_snowfall_png);    // assets/night_heavy_snowfall.png
-LV_IMG_DECLARE(ui_img_night_light_drizzle_png);    // assets/night_light_drizzle.png
-LV_IMG_DECLARE(ui_img_night_light_rain_png);    // assets/night_light_rain.png
-LV_IMG_DECLARE(ui_img_night_moderate_rain_png);    // assets/night_moderate_rain.png
-LV_IMG_DECLARE(ui_img_night_overcast_png);    // assets/night_overcast.png
-LV_IMG_DECLARE(ui_img_night_partly_cloudy_png);    // assets/night_partly_cloudy.png
-LV_IMG_DECLARE(ui_img_night_snowflake_png);    // assets/night_snowflake.png
-LV_IMG_DECLARE(ui_img_night_thunderstorm_png);    // assets/night_thunderstorm.png
 LV_IMG_DECLARE(ui_img_day_clear_png);    // assets/day_clear.png
 LV_IMG_DECLARE(ui_img_day_fog_png);    // assets/day_fog.png
 LV_IMG_DECLARE(ui_img_day_heavy_rain_png);    // assets/day_heavy_rain.png
@@ -154,14 +127,34 @@ LV_IMG_DECLARE(ui_img_day_overcast_png);    // assets/day_overcast.png
 LV_IMG_DECLARE(ui_img_day_rime_fog_png);    // assets/day_rime_fog.png
 LV_IMG_DECLARE(ui_img_day_snowflake_png);    // assets/day_snowflake.png
 LV_IMG_DECLARE(ui_img_day_thunderstorm_png);    // assets/day_thunderstorm.png
+LV_IMG_DECLARE(ui_img_icn_bed_png);    // assets/icn_bed.png
+LV_IMG_DECLARE(ui_img_icn_head_png);    // assets/icn_head.png
+LV_IMG_DECLARE(ui_img_icn_pause_png);    // assets/icn_pause.png
+LV_IMG_DECLARE(ui_img_icn_stop_png);    // assets/icn_stop.png
+LV_IMG_DECLARE(ui_img_icn_time_1_png);    // assets/icn_time_1.png
+LV_IMG_DECLARE(ui_img_icn_time_2_png);    // assets/icn_time_2.png
+LV_IMG_DECLARE(ui_img_night_clear_png);    // assets/night_clear.png
+LV_IMG_DECLARE(ui_img_night_fog_png);    // assets/night_fog.png
+LV_IMG_DECLARE(ui_img_night_heavy_rain_png);    // assets/night_heavy_rain.png
+LV_IMG_DECLARE(ui_img_night_heavy_snowfall_png);    // assets/night_heavy_snowfall.png
+LV_IMG_DECLARE(ui_img_night_light_drizzle_png);    // assets/night_light_drizzle.png
+LV_IMG_DECLARE(ui_img_night_light_rain_png);    // assets/night_light_rain.png
+LV_IMG_DECLARE(ui_img_night_moderate_rain_png);    // assets/night_moderate_rain.png
+LV_IMG_DECLARE(ui_img_night_overcast_png);    // assets/night_overcast.png
+LV_IMG_DECLARE(ui_img_night_partly_cloudy_png);    // assets/night_partly_cloudy.png
+LV_IMG_DECLARE(ui_img_night_snowflake_png);    // assets/night_snowflake.png
+LV_IMG_DECLARE(ui_img_night_thunderstorm_png);    // assets/night_thunderstorm.png
+LV_IMG_DECLARE(ui_img_rainy_weather_png);    // assets/rainy_weather.png
 
 // FONTS
 LV_FONT_DECLARE(ui_font_FontAwesome_Brands_24);
 LV_FONT_DECLARE(ui_font_FontAwesome_Regular_24);
 LV_FONT_DECLARE(ui_font_FontAwesome_Solid_24_1);
 LV_FONT_DECLARE(ui_font_FontAwesome_Solid_24_2);
+LV_FONT_DECLARE(ui_font_Montserrat_SemiBold_110);
 LV_FONT_DECLARE(ui_font_Montserrat_SemiBold_60);
 LV_FONT_DECLARE(ui_font_Montserrat_SemiBold_80);
+LV_FONT_DECLARE(ui_font_Montserrat_SemiBold_90);
 LV_FONT_DECLARE(ui_font_Small_Font);
 
 // UI INIT
