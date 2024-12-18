@@ -27,7 +27,8 @@ else()
     file(READ "../main/ui/filelist.txt" file_content)
     string(REGEX REPLACE "\n" ";" UI_SOURCES "${file_content}")
     list(TRANSFORM UI_SOURCES PREPEND "ui/")
-
+    message(UI_SOURCES="${UI_SOURCES}")
+    
     idf_component_register(
         SRCS "weather.c" "wifi.c" "systime.c" "clock.c" "waveshare_rgb_lcd_port.c" "lvgl_port.c" "main.c" "azan_clock.c" "ui/screens/ui_Loading_Screen.c" ${UI_SOURCES}
         INCLUDE_DIRS ".")

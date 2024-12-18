@@ -9,8 +9,59 @@ SET(SOURCES screens/ui_Loading_Screen.c
     images/ui_img_icn_pc_png.c
     images/ui_img_icn_usb_png.c
     images/ui_img_icn_time_2_png.c
-    images/ui_img_rainy_weather_png.c
+    images/ui_img_day_partly_cloudy_png.c
+    images/ui_img_arrow_down_png.c
+    images/ui_img_arrow_left_png.c
+    images/ui_img_arrow_right_png.c
+    images/ui_img_arrow_up_png.c
+    images/ui_img_icn_bed_png.c
+    images/ui_img_icn_head_png.c
+    images/ui_img_icn_pause_png.c
+    images/ui_img_icn_stop_png.c
     images/ui_img_icn_time_1_png.c
+    images/ui_img_rainy_weather_png.c
+    images/ui_img_day_clear_png.c
+    images/ui_img_day_dense_drizzle_png.c
+    images/ui_img_day_dense_freezing_drizzle_png.c
+    images/ui_img_day_fog_png.c
+    images/ui_img_day_heavy_freezing_rain_png.c
+    images/ui_img_day_heavy_rain_png.c
+    images/ui_img_day_heavy_snowfall_png.c
+    images/ui_img_day_light_drizzle_png.c
+    images/ui_img_day_light_freezing_drizzle_png.c
+    images/ui_img_day_light_freezing_rain_png.c
+    images/ui_img_day_light_rain_png.c
+    images/ui_img_day_moderate_drizzle_png.c
+    images/ui_img_day_moderate_rain_png.c
+    images/ui_img_day_mostly_clear_png.c
+    images/ui_img_day_overcast_png.c
+    images/ui_img_day_rime_fog_png.c
+    images/ui_img_day_slight_snowfall_png.c
+    images/ui_img_day_snowflake_png.c
+    images/ui_img_day_thunderstorm_png.c
+    images/ui_img_day_thunderstorm_with_hail_png.c
+    images/ui_img_day_unknown_png.c
+    images/ui_img_night_clear_png.c
+    images/ui_img_night_dense_drizzle_png.c
+    images/ui_img_night_dense_freezing_drizzle_png.c
+    images/ui_img_night_fog_png.c
+    images/ui_img_night_heavy_freezing_rain_png.c
+    images/ui_img_night_heavy_rain_png.c
+    images/ui_img_night_heavy_snowfall_png.c
+    images/ui_img_night_light_drizzle_png.c
+    images/ui_img_night_light_freezing_drizzle_png.c
+    images/ui_img_night_light_freezing_rain_png.c
+    images/ui_img_night_light_rain_png.c
+    images/ui_img_night_moderate_drizzle_png.c
+    images/ui_img_night_moderate_rain_png.c
+    images/ui_img_night_moderate_snowfall_png.c
+    images/ui_img_night_mostly_clear_png.c
+    images/ui_img_night_overcast_png.c
+    images/ui_img_night_partly_cloudy_png.c
+    images/ui_img_night_snowflake_png.c
+    images/ui_img_night_thunderstorm_png.c
+    images/ui_img_night_thunderstorm_with_hail_png.c
+    images/ui_img_night_unknown_png.c
     fonts/ui_font_FontAwesome_Brands_24.c
     fonts/ui_font_FontAwesome_Regular_24.c
     fonts/ui_font_FontAwesome_Solid_24_1.c

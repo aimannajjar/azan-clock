@@ -68,7 +68,7 @@ lv_obj_t * ui_Panel5;
 lv_obj_t * ui_Current_Time;
 lv_obj_t * ui_Label8;
 lv_obj_t * ui_Label9;
-lv_obj_t * ui_Image4;
+lv_obj_t * ui_Weather_Image;
 lv_obj_t * ui_Panel4;
 lv_obj_t * ui_Button1;
 lv_obj_t * ui_Label1;

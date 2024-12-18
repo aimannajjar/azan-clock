@@ -3,11 +3,14 @@
 #include "esp_log.h"
 #include "esp_http_client.h"
 #include "cJSON.h"
+#include "ui/ui.h"
 
 #define TAG "Weather"
 #define WEATHER_API_URL "https://api.open-meteo.com/v1/forecast?latitude=%f&longitude=%f&current_weather=true"
 
 static char weather_info[1024];
+static size_t weather_info_len = 0; // Add this variable to keep track of buffer length
+extern lv_obj_t *ui_Weather_Image;
 
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
     switch (evt->event_id) {
@@ -24,9 +27,15 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
             ESP_LOGI(TAG, "HTTP_EVENT_ON_HEADER, key=%s, value=%s", evt->header_key, evt->header_value);
             break;
         case HTTP_EVENT_ON_DATA:
-            ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA, len=%d, data=%s", evt->data_len, (char *)evt->data);
-            if (!esp_http_client_is_chunked_response(evt->client)) {
-                strncat(weather_info, (char *)evt->data, evt->data_len);
+            ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA, len=%d", evt->data_len);
+            // Append received data to weather_info buffer
+            if (evt->data_len + weather_info_len < sizeof(weather_info)) {
+                memcpy(weather_info + weather_info_len, evt->data, evt->data_len);
+                weather_info_len += evt->data_len;
+                weather_info[weather_info_len] = '\0'; // Null-terminate
+            } else {
+                ESP_LOGW(TAG, "weather_info buffer is full, cannot append more data");
+                // Optionally handle buffer overflow
             }
             break;
         case HTTP_EVENT_ON_FINISH:
@@ -44,6 +53,10 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
 void get_weather_forecast(float latitude, float longitude) {
     char url[256];
     snprintf(url, sizeof(url), WEATHER_API_URL, latitude, longitude);
+
+    // Clear weather_info buffer and reset length before starting request
+    memset(weather_info, 0, sizeof(weather_info));
+    weather_info_len = 0;
 
     esp_http_client_config_t config = {
         .url = url,
@@ -69,12 +82,19 @@ void get_weather_forecast(float latitude, float longitude) {
             if (current_weather != NULL) {
                 cJSON *temperature = cJSON_GetObjectItem(current_weather, "temperature");
                 cJSON *windspeed = cJSON_GetObjectItem(current_weather, "windspeed");
+                cJSON *weathercode = cJSON_GetObjectItem(current_weather, "weathercode");
                 if (temperature != NULL && windspeed != NULL) {
                     ESP_LOGI(TAG, "Current temperature: %.2f°C", temperature->valuedouble);
                     ESP_LOGI(TAG, "Current windspeed: %.2f km/h", windspeed->valuedouble);
+                    ESP_LOGI(TAG, "Current weathercode: %d km/h", weathercode->valueint);
+
                 }
             }
             cJSON_Delete(json);
+
+            take_ui_mutex("get_weather_forecast");
+            lv_img_set_src(ui_Weather_Image, &ui_img_day_clear_png);
+            give_ui_mutex("get_weather_forecast");
         }
     } else {
         ESP_LOGE(TAG, "HTTP GET request failed: %s", esp_err_to_name(err));
