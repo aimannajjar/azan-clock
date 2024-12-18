@@ -5,7 +5,7 @@
   "c_path": "/assets/fonts/ui_font_Montserrat_SemiBold_110.c",
   "cfg_path": "/assets/fonts/ui_font_Montserrat_SemiBold_110.fcfg",
   "size": 110,
-  "bpp": 1,
+  "bpp": 4,
   "letters": 0,
   "ranges": [
     "0x20-0x7f"
