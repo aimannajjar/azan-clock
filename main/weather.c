@@ -38,7 +38,7 @@ static const WeatherCodeImageMap weather_map_day[] = {
     { 66, &ui_img_day_light_freezing_rain_png },
     { 67, &ui_img_day_heavy_freezing_rain_png },
     { 71, &ui_img_day_slight_snowfall_png },
-    { 73, &ui_img_day_moderate_snowfall_png },
+    { 73, &ui_img_day_slight_snowfall_png },
     { 75, &ui_img_day_heavy_snowfall_png },
     { 77, &ui_img_day_snowflake_png },
     { 80, &ui_img_day_light_rain_png },
@@ -57,7 +57,7 @@ static const WeatherCodeImageMap weather_map_night[] = {
     { 2, &ui_img_night_partly_cloudy_png },
     { 3, &ui_img_night_overcast_png },
     { 45, &ui_img_night_fog_png },
-    { 48, &ui_img_night_rime_fog_png },
+    { 48, &ui_img_night_fog_png },
     { 51, &ui_img_night_light_drizzle_png },
     { 53, &ui_img_night_moderate_drizzle_png },
     { 55, &ui_img_night_dense_drizzle_png },
@@ -68,14 +68,14 @@ static const WeatherCodeImageMap weather_map_night[] = {
     { 65, &ui_img_night_heavy_rain_png },
     { 66, &ui_img_night_light_freezing_rain_png },
     { 67, &ui_img_night_heavy_freezing_rain_png },
-    { 71, &ui_img_night_slight_snowfall_png },
+    { 71, &ui_img_night_moderate_snowfall_png },
     { 73, &ui_img_night_moderate_snowfall_png },
     { 75, &ui_img_night_heavy_snowfall_png },
     { 77, &ui_img_night_snowflake_png },
     { 80, &ui_img_night_light_rain_png },
     { 81, &ui_img_night_moderate_rain_png },
     { 82, &ui_img_night_heavy_rain_png },
-    { 85, &ui_img_night_slight_snowfall_png },
+    { 85, &ui_img_night_moderate_snowfall_png },
     { 86, &ui_img_night_heavy_snowfall_png },
     { 95, &ui_img_night_thunderstorm_png },
     { 96, &ui_img_night_thunderstorm_with_hail_png },
@@ -85,7 +85,8 @@ static const WeatherCodeImageMap weather_map_night[] = {
 // Function to get the image resource for a given weather code
 const lv_img_dsc_t* get_weather_image(int is_day, int weather_code) {
     const WeatherCodeImageMap* weather_map = is_day ? weather_map_day : weather_map_night;
-    size_t map_size = sizeof(weather_map) / sizeof(weather_map[0]);
+    size_t map_size = is_day ? sizeof(weather_map_day) / sizeof(weather_map_day[0]) :
+        sizeof(weather_map_night) / sizeof(weather_map_night[0]);
     for (size_t i = 0; i < map_size; ++i) {
         if (weather_map[i].code == weather_code) {
             return weather_map[i].image;

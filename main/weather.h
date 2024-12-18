@@ -1,3 +1,5 @@
+#include "lvgl/lvgl.h"
+
 #ifndef WEATHER_H
 #define WEATHER_H
 
