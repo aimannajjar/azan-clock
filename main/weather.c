@@ -5,9 +5,11 @@
 #include "cJSON.h"
 #include "ui/ui.h"
 #include "lvgl/lvgl.h"
+#include "esp_system.h"
 
 #define TAG "Weather"
 #define WEATHER_API_URL "https://api.open-meteo.com/v1/forecast?latitude=%f&longitude=%f&current_weather=true"
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
 
 static char weather_info[512];
 static size_t weather_info_len = 0; // Add this variable to keep track of buffer length
@@ -134,7 +136,9 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
     return ESP_OK;
 }
 
-void get_weather_forecast(float latitude, float longitude) {
+esp_err_t get_weather_forecast(float latitude, float longitude) {
+    // Change return type to esp_err_t
+    esp_err_t result = ESP_FAIL;
     char url[256];
     snprintf(url, sizeof(url), WEATHER_API_URL, latitude, longitude);
 
@@ -186,18 +190,36 @@ void get_weather_forecast(float latitude, float longitude) {
             }
             cJSON_Delete(json);
         }
+        result = ESP_OK;
     } else {
         ESP_LOGE(TAG, "HTTP GET request failed: %s", esp_err_to_name(err));
+        result = err;
     }
 
     esp_http_client_cleanup(client);
+    return result;
 }
 
 static void weather_update_task(void *arg) {
+    const TickType_t THREE_HOURS = pdMS_TO_TICKS(3 * 60 * 60 * 1000); // 3 hours in milliseconds
+    const TickType_t MIN_RETRY_DELAY = pdMS_TO_TICKS(60 * 1000);      // 1 minute
+    const TickType_t MAX_RETRY_DELAY = pdMS_TO_TICKS(30 * 60 * 1000); // 30 minutes
+    TickType_t retry_delay = MIN_RETRY_DELAY;
+
     while (true) {
         // Retrieve weather forecast
-        get_weather_forecast(40.7128, -74.0060); // Example coordinates for New York City
-        ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(5000)); // Wait for notification or 1 minute
+        esp_err_t result = get_weather_forecast(40.7128, -74.0060); // Example coordinates for New York City
+        
+        if (result == ESP_OK) {
+            // Success - reset retry delay and wait for full interval
+            retry_delay = MIN_RETRY_DELAY;
+            vTaskDelay(THREE_HOURS);
+        } else {
+            // On failure, use exponential backoff
+            ESP_LOGW(TAG, "Weather update failed, retrying in %lu ms", pdTICKS_TO_MS(retry_delay));
+            vTaskDelay(retry_delay);
+            retry_delay = MIN(retry_delay * 2, MAX_RETRY_DELAY);
+        }
     }
 }
 
