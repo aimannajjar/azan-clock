@@ -144,8 +144,12 @@ void ui_Setup_Screen_screen_init(void)
     lv_obj_set_y(ui_WiFi_Networks, -110);
     lv_obj_set_align(ui_WiFi_Networks, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_WiFi_Networks, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_set_style_text_font(ui_WiFi_Networks, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    lv_obj_set_style_text_font(ui_WiFi_Networks, &lv_font_montserrat_14, LV_PART_INDICATOR | LV_STATE_DEFAULT);
 
+    lv_obj_set_style_text_font(lv_dropdown_get_list(ui_WiFi_Networks), &lv_font_montserrat_14,
+                               LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WiFi_Password = lv_textarea_create(ui_Setup_Screen);
     lv_obj_set_width(ui_WiFi_Password, 387);
@@ -156,6 +160,7 @@ void ui_Setup_Screen_screen_init(void)
     lv_textarea_set_placeholder_text(ui_WiFi_Password, "Placeholder...");
     lv_textarea_set_one_line(ui_WiFi_Password, true);
     lv_textarea_set_password_mode(ui_WiFi_Password, true);
+    lv_obj_set_style_text_font(ui_WiFi_Password, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 
 
@@ -173,6 +178,9 @@ void ui_Setup_Screen_screen_init(void)
     lv_obj_set_x(ui_ConnectButton, 302);
     lv_obj_set_y(ui_ConnectButton, -76);
     lv_obj_set_align(ui_ConnectButton, LV_ALIGN_CENTER);
+    lv_obj_set_style_bg_color(ui_ConnectButton, lv_color_hex(0xE58300), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_ConnectButton, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_ConnectButton, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Label10 = lv_label_create(ui_ConnectButton);
     lv_obj_set_width(ui_Label10, LV_SIZE_CONTENT);   /// 1
@@ -197,6 +205,8 @@ void ui_Setup_Screen_screen_init(void)
     lv_obj_set_x(ui_Keyboard1, 42);
     lv_obj_set_y(ui_Keyboard1, 100);
     lv_obj_set_align(ui_Keyboard1, LV_ALIGN_CENTER);
+
+    lv_obj_set_style_text_font(ui_Keyboard1, &lv_font_montserrat_14, LV_PART_ITEMS | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_Button4, ui_event_Button4, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Label10, ui_event_Label10, LV_EVENT_ALL, NULL);

@@ -9796,7 +9796,22 @@
               },
               {
                 "part": "lv.PART.MAIN",
-                "childs": [],
+                "childs": [
+                  {
+                    "nid": 10000,
+                    "strtype": "_style/StyleState",
+                    "strval": "DEFAULT",
+                    "childs": [
+                      {
+                        "nid": 10450,
+                        "strtype": "_style/Text_Font",
+                        "strval": "montserrat_14",
+                        "InheritedType": 3
+                      }
+                    ],
+                    "InheritedType": 1
+                  }
+                ],
                 "nid": 1060,
                 "strtype": "DROPDOWN/Style_main",
                 "strval": "lv.PART.MAIN, Text, Rectangle, Pad, Transform",
@@ -9804,7 +9819,22 @@
               },
               {
                 "part": "lv.PART.INDICATOR",
-                "childs": [],
+                "childs": [
+                  {
+                    "nid": 10000,
+                    "strtype": "_style/StyleState",
+                    "strval": "DEFAULT",
+                    "childs": [
+                      {
+                        "nid": 10450,
+                        "strtype": "_style/Text_Font",
+                        "strval": "montserrat_14",
+                        "InheritedType": 3
+                      }
+                    ],
+                    "InheritedType": 1
+                  }
+                ],
                 "nid": 1070,
                 "strtype": "DROPDOWN/Style_indicator",
                 "strval": "lv.PART.INDICATOR, Text",
@@ -9812,7 +9842,22 @@
               },
               {
                 "part": " lv.PART.MAIN",
-                "childs": [],
+                "childs": [
+                  {
+                    "nid": 10000,
+                    "strtype": "_style/StyleState",
+                    "strval": "DEFAULT",
+                    "childs": [
+                      {
+                        "nid": 10450,
+                        "strtype": "_style/Text_Font",
+                        "strval": "montserrat_14",
+                        "InheritedType": 3
+                      }
+                    ],
+                    "InheritedType": 1
+                  }
+                ],
                 "nid": 1080,
                 "strtype": "DROPDOWN/Style_list_main",
                 "strval": "{\"python\":\"{0}.get_list()\",\"c\":\"lv_dropdown_get_list({0})\"} lv.PART.MAIN, Text, Rectangle, Pad",
@@ -9965,7 +10010,22 @@
               },
               {
                 "part": "lv.PART.MAIN",
-                "childs": [],
+                "childs": [
+                  {
+                    "nid": 10000,
+                    "strtype": "_style/StyleState",
+                    "strval": "DEFAULT",
+                    "childs": [
+                      {
+                        "nid": 10450,
+                        "strtype": "_style/Text_Font",
+                        "strval": "montserrat_14",
+                        "InheritedType": 3
+                      }
+                    ],
+                    "InheritedType": 1
+                  }
+                ],
                 "nid": 1080,
                 "strtype": "TEXTAREA/Style_main",
                 "strval": "lv.PART.MAIN, Text, Rectangle, Pad, Transform",
@@ -10387,7 +10447,33 @@
               },
               {
                 "part": "lv.PART.MAIN",
-                "childs": [],
+                "childs": [
+                  {
+                    "nid": 10000,
+                    "strtype": "_style/StyleState",
+                    "strval": "DEFAULT",
+                    "childs": [
+                      {
+                        "nid": 10520,
+                        "strtype": "_style/Bg_Color",
+                        "intarray": [
+                          229,
+                          131,
+                          0,
+                          255
+                        ],
+                        "InheritedType": 7
+                      },
+                      {
+                        "nid": 10450,
+                        "strtype": "_style/Text_Font",
+                        "strval": "montserrat_14",
+                        "InheritedType": 3
+                      }
+                    ],
+                    "InheritedType": 1
+                  }
+                ],
                 "nid": 1010,
                 "strtype": "BUTTON/Style_main",
                 "strval": "lv.PART.MAIN, Rectangle, Pad, Text, Transform",
@@ -10719,7 +10805,22 @@
               },
               {
                 "part": "lv.PART.ITEMS",
-                "childs": [],
+                "childs": [
+                  {
+                    "nid": 10000,
+                    "strtype": "_style/StyleState",
+                    "strval": "DEFAULT",
+                    "childs": [
+                      {
+                        "nid": 10450,
+                        "strtype": "_style/Text_Font",
+                        "strval": "montserrat_14",
+                        "InheritedType": 3
+                      }
+                    ],
+                    "InheritedType": 1
+                  }
+                ],
                 "nid": 1040,
                 "strtype": "KEYBOARD/Style_items",
                 "strval": "lv.PART.ITEMS, Rectangle, Pad, Text",
@@ -12172,7 +12273,7 @@
     "uiExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main/ui",
     "projectExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 115,
+    "backup_cnt": 117,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
