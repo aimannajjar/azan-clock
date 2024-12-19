@@ -10,6 +10,11 @@
 
 #define TAG "Settings"
 
+extern lv_obj_t *ui_Latitude;
+extern lv_obj_t *ui_Longitude;
+extern lv_obj_t *ui_Location_Name;
+extern lv_obj_t *ui_Timezone_Dropdown;
+
 // Declare response buffer and length
 static char location_response[1024];
 static int response_len = 0;
@@ -55,10 +60,6 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
 
 }
 
-extern lv_obj_t *ui_Latitude;
-extern lv_obj_t *ui_Longitude;
-extern lv_obj_t *ui_Location_Name;
-
 // Function to get the user's location using ipstack.com API
 void get_user_location(lv_event_t *e) {
     // Reset response buffer
@@ -68,7 +69,7 @@ void get_user_location(lv_event_t *e) {
     char url[256];
     const char *api_key = "22862314071ccda94c8a4f3c5384e28f"; // Replace with your actual API key
 
-    snprintf(url, sizeof(url), "http://api.ipstack.com/check?access_key=%s", api_key);
+    snprintf(url, sizeof(url), "http://api.ipstack.com/check?access_key=%s&fields=time_zone.id,city,latitude,longitude", api_key);
 
     esp_http_client_config_t config = {
         .url = url,
@@ -89,7 +90,9 @@ void get_user_location(lv_event_t *e) {
             cJSON *lat = cJSON_GetObjectItem(json, "latitude");
             cJSON *lon = cJSON_GetObjectItem(json, "longitude");
             cJSON *city = cJSON_GetObjectItem(json, "city");
-            if (lat && lon && city) {
+            cJSON *time_zone = cJSON_GetObjectItem(json, "time_zone");
+            cJSON *time_zone_id = cJSON_GetObjectItem(time_zone, "id");
+            if (lat && lon && city && time_zone_id) {
                 ESP_LOGI(TAG, "User location: Latitude = %f, Longitude = %f, City = %s",
                          lat->valuedouble, lon->valuedouble, city->valuestring);
 
@@ -102,6 +105,7 @@ void get_user_location(lv_event_t *e) {
                 lv_textarea_set_text(ui_Latitude, lat_str);
                 lv_textarea_set_text(ui_Longitude, lon_str);
                 lv_label_set_text(ui_Location_Name, city->valuestring);
+                lv_dropdown_set_selected(ui_Timezone_Dropdown, get_timezone_index(time_zone_id->valuestring));
             } else {
                 ESP_LOGE(TAG, "Failed to extract location data from JSON");
             }

@@ -31,6 +31,7 @@ else()
     
     idf_component_register(
         SRCS "settings.c"
+             "timezones.c"
              "prayers.c"
              "weather.c"
              "wifi.c"
