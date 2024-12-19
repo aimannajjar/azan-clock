@@ -41,15 +41,6 @@ lv_obj_t * ui_Next_Prayer_Panel;
 lv_obj_t * ui_Next_Prayer;
 lv_obj_t * ui_Next_Prayer_Remaining;
 lv_obj_t * ui_Next_Prayer_Time;
-lv_obj_t * ui_Date_Panel;
-lv_obj_t * ui_DT3;
-lv_obj_t * ui_Label_Head_Temp;
-lv_obj_t * ui_Label_Printing_Head_Temp_2;
-lv_obj_t * ui_Panel1;
-lv_obj_t * ui_DT3_copy;
-lv_obj_t * ui_Label_Bed_Temp;
-lv_obj_t * ui_Label_Printing_Bed_Temp1;
-lv_obj_t * ui_Label3;
 lv_obj_t * ui_Current_Time;
 lv_obj_t * ui_Weather_Condition_Panel;
 lv_obj_t * ui_Weather_Image;
@@ -61,9 +52,9 @@ lv_obj_t * ui_Label1;
 void ui_event_Button2(lv_event_t * e);
 lv_obj_t * ui_Button2;
 lv_obj_t * ui_Label5;
+void ui_event_Button3(lv_event_t * e);
 lv_obj_t * ui_Button3;
 lv_obj_t * ui_Label6;
-lv_obj_t * ui_Container1;
 lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
 
@@ -90,6 +81,57 @@ void ui_event_Label10(lv_event_t * e);
 lv_obj_t * ui_Label10;
 lv_obj_t * ui_Label11;
 lv_obj_t * ui_Keyboard1;
+// CUSTOM VARIABLES
+
+
+// SCREEN: ui_Prayers_Screen
+void ui_Prayers_Screen_screen_init(void);
+lv_obj_t * ui_Prayers_Screen;
+lv_obj_t * ui_Background3;
+lv_obj_t * ui_S1_Content_Panel1;
+lv_obj_t * ui_Next_Prayer_Panel1;
+lv_obj_t * ui_Next_Prayer1;
+lv_obj_t * ui_Next_Prayer_Remaining1;
+lv_obj_t * ui_Next_Prayer_Time1;
+lv_obj_t * ui_Date_Panel1;
+lv_obj_t * ui_DT1;
+lv_obj_t * ui_Label_Head_Temp1;
+lv_obj_t * ui_Label_Printing_Head_Temp_1;
+lv_obj_t * ui_Panel3;
+lv_obj_t * ui_DT3_copy1;
+lv_obj_t * ui_Label_Bed_Temp1;
+lv_obj_t * ui_Label_Printing_Bed_Temp2;
+lv_obj_t * ui_Label2;
+lv_obj_t * ui_Current_Time1;
+lv_obj_t * ui_Prayers_List_Panel;
+lv_obj_t * ui_Fajr_Container;
+lv_obj_t * ui_Fajr_Label;
+lv_obj_t * ui_Fajr_Time;
+lv_obj_t * ui_Sunrise_Container;
+lv_obj_t * ui_Sunrise_Label;
+lv_obj_t * ui_Sunrise_Time;
+lv_obj_t * ui_Duhur_Container;
+lv_obj_t * ui_Duhur_Label;
+lv_obj_t * ui_Duhur_Time;
+lv_obj_t * ui_Asr_Container;
+lv_obj_t * ui_Asr_Label;
+lv_obj_t * ui_Asr_Time;
+lv_obj_t * ui_Maghrib_Container;
+lv_obj_t * ui_Maghrib_Label;
+lv_obj_t * ui_Maghrib_Time;
+lv_obj_t * ui_Isha_Container;
+lv_obj_t * ui_Isha_Label;
+lv_obj_t * ui_Isha_Time;
+lv_obj_t * ui_Left_Panel1;
+void ui_event_Button12(lv_event_t * e);
+lv_obj_t * ui_Button12;
+lv_obj_t * ui_Label9;
+void ui_event_Button11(lv_event_t * e);
+lv_obj_t * ui_Button11;
+lv_obj_t * ui_Label8;
+lv_obj_t * ui_Button13;
+lv_obj_t * ui_Label14;
+lv_obj_t * ui_WiFi_Status1;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -261,6 +303,15 @@ void ui_event_Button2(lv_event_t * e)
     }
 }
 
+void ui_event_Button3(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Prayers_Screen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Prayers_Screen_screen_init);
+    }
+}
+
 void ui_event_Button4(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -289,6 +340,26 @@ void ui_event_Label10(lv_event_t * e)
     }
 }
 
+void ui_event_Button12(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Setup_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Setup_Screen_screen_init);
+        start_scan_task(e);
+    }
+}
+
+void ui_event_Button11(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Setup_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Setup_Screen_screen_init);
+        start_scan_task(e);
+    }
+}
+
 ///////////////////// SCREENS ////////////////////
 
 void ui_init(void)
@@ -300,6 +371,7 @@ void ui_init(void)
     ui_Loading_Screen_screen_init();
     ui_Main_Screen_screen_init();
     ui_Setup_Screen_screen_init();
+    ui_Prayers_Screen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_Loading_Screen);
 }

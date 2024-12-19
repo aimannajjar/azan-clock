@@ -47,15 +47,6 @@ extern lv_obj_t * ui_Next_Prayer_Panel;
 extern lv_obj_t * ui_Next_Prayer;
 extern lv_obj_t * ui_Next_Prayer_Remaining;
 extern lv_obj_t * ui_Next_Prayer_Time;
-extern lv_obj_t * ui_Date_Panel;
-extern lv_obj_t * ui_DT3;
-extern lv_obj_t * ui_Label_Head_Temp;
-extern lv_obj_t * ui_Label_Printing_Head_Temp_2;
-extern lv_obj_t * ui_Panel1;
-extern lv_obj_t * ui_DT3_copy;
-extern lv_obj_t * ui_Label_Bed_Temp;
-extern lv_obj_t * ui_Label_Printing_Bed_Temp1;
-extern lv_obj_t * ui_Label3;
 extern lv_obj_t * ui_Current_Time;
 extern lv_obj_t * ui_Weather_Condition_Panel;
 extern lv_obj_t * ui_Weather_Image;
@@ -67,9 +58,9 @@ extern lv_obj_t * ui_Label1;
 void ui_event_Button2(lv_event_t * e);
 extern lv_obj_t * ui_Button2;
 extern lv_obj_t * ui_Label5;
+void ui_event_Button3(lv_event_t * e);
 extern lv_obj_t * ui_Button3;
 extern lv_obj_t * ui_Label6;
-extern lv_obj_t * ui_Container1;
 extern lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
 
@@ -95,6 +86,56 @@ void ui_event_Label10(lv_event_t * e);
 extern lv_obj_t * ui_Label10;
 extern lv_obj_t * ui_Label11;
 extern lv_obj_t * ui_Keyboard1;
+// CUSTOM VARIABLES
+
+// SCREEN: ui_Prayers_Screen
+void ui_Prayers_Screen_screen_init(void);
+extern lv_obj_t * ui_Prayers_Screen;
+extern lv_obj_t * ui_Background3;
+extern lv_obj_t * ui_S1_Content_Panel1;
+extern lv_obj_t * ui_Next_Prayer_Panel1;
+extern lv_obj_t * ui_Next_Prayer1;
+extern lv_obj_t * ui_Next_Prayer_Remaining1;
+extern lv_obj_t * ui_Next_Prayer_Time1;
+extern lv_obj_t * ui_Date_Panel1;
+extern lv_obj_t * ui_DT1;
+extern lv_obj_t * ui_Label_Head_Temp1;
+extern lv_obj_t * ui_Label_Printing_Head_Temp_1;
+extern lv_obj_t * ui_Panel3;
+extern lv_obj_t * ui_DT3_copy1;
+extern lv_obj_t * ui_Label_Bed_Temp1;
+extern lv_obj_t * ui_Label_Printing_Bed_Temp2;
+extern lv_obj_t * ui_Label2;
+extern lv_obj_t * ui_Current_Time1;
+extern lv_obj_t * ui_Prayers_List_Panel;
+extern lv_obj_t * ui_Fajr_Container;
+extern lv_obj_t * ui_Fajr_Label;
+extern lv_obj_t * ui_Fajr_Time;
+extern lv_obj_t * ui_Sunrise_Container;
+extern lv_obj_t * ui_Sunrise_Label;
+extern lv_obj_t * ui_Sunrise_Time;
+extern lv_obj_t * ui_Duhur_Container;
+extern lv_obj_t * ui_Duhur_Label;
+extern lv_obj_t * ui_Duhur_Time;
+extern lv_obj_t * ui_Asr_Container;
+extern lv_obj_t * ui_Asr_Label;
+extern lv_obj_t * ui_Asr_Time;
+extern lv_obj_t * ui_Maghrib_Container;
+extern lv_obj_t * ui_Maghrib_Label;
+extern lv_obj_t * ui_Maghrib_Time;
+extern lv_obj_t * ui_Isha_Container;
+extern lv_obj_t * ui_Isha_Label;
+extern lv_obj_t * ui_Isha_Time;
+extern lv_obj_t * ui_Left_Panel1;
+void ui_event_Button12(lv_event_t * e);
+extern lv_obj_t * ui_Button12;
+extern lv_obj_t * ui_Label9;
+void ui_event_Button11(lv_event_t * e);
+extern lv_obj_t * ui_Button11;
+extern lv_obj_t * ui_Label8;
+extern lv_obj_t * ui_Button13;
+extern lv_obj_t * ui_Label14;
+extern lv_obj_t * ui_WiFi_Status1;
 // CUSTOM VARIABLES
 
 // EVENTS
