@@ -13,6 +13,7 @@ extern "C" {
 void stop_scan_task(lv_event_t * e);
 void start_scan_task(lv_event_t * e);
 void connect_wifi(lv_event_t * e);
+void get_user_location(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

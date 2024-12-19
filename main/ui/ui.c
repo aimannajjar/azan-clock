@@ -168,6 +168,7 @@ lv_obj_t * ui_Latitude;
 lv_obj_t * ui_Spacer1;
 lv_obj_t * ui_Longitude;
 lv_obj_t * ui_Spacer;
+void ui_event_Locate_Me(lv_event_t * e);
 lv_obj_t * ui_Locate_Me;
 lv_obj_t * ui_Label23;
 lv_obj_t * ui_Location_Name;
@@ -448,6 +449,15 @@ void ui_event_Button19(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         _ui_screen_change(&ui_Prayers_Screen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Prayers_Screen_screen_init);
+    }
+}
+
+void ui_event_Locate_Me(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        get_user_location(e);
     }
 }
 

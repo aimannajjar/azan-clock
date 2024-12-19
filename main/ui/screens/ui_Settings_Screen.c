@@ -297,5 +297,6 @@ void ui_Settings_Screen_screen_init(void)
 
     lv_obj_add_event_cb(ui_Button14, ui_event_Button14, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button19, ui_event_Button19, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Locate_Me, ui_event_Locate_Me, LV_EVENT_ALL, NULL);
 
 }

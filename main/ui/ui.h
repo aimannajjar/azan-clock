@@ -171,6 +171,7 @@ extern lv_obj_t * ui_Latitude;
 extern lv_obj_t * ui_Spacer1;
 extern lv_obj_t * ui_Longitude;
 extern lv_obj_t * ui_Spacer;
+void ui_event_Locate_Me(lv_event_t * e);
 extern lv_obj_t * ui_Locate_Me;
 extern lv_obj_t * ui_Label23;
 extern lv_obj_t * ui_Location_Name;
