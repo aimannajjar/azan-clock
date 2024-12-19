@@ -11,6 +11,7 @@
 #define TAG "Clock"
 
 extern lv_obj_t *ui_Next_Prayer_Panel;
+extern lv_obj_t *ui_Next_Prayer_Panel1;
 
 // External LVGL container references
 extern lv_obj_t *ui_Fajr_Container;
@@ -129,6 +130,17 @@ static void update_time_ui() {
         int minutes = min_time_diff % 60;
         snprintf(remaining_time_str, sizeof(remaining_time_str), "%d:%02d", hours, minutes);
 
+        // Calculate gradient stop value (255 = 0% time left, 0 = 100% time left)
+        // Assuming maximum time difference we care about is 3 hours (180 minutes)
+        const int MAX_TIME_DIFF = 180;
+        int stop_value = 255 - ((min_time_diff * 255) / MAX_TIME_DIFF);
+        if (stop_value < 0) stop_value = 0;
+        if (stop_value > 255) stop_value = 255;
+
+        // Update gradient stop for both panels
+        lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel, stop_value, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel1, stop_value, LV_PART_MAIN | LV_STATE_DEFAULT);
+
         // Set color based on remaining time
         lv_color_t remaining_time_color = (min_time_diff > 60) ? 
             lv_color_hex(0x00FF37) :  // Green for > 1 hour
@@ -147,11 +159,12 @@ static void update_time_ui() {
         lv_label_set_text(ui_Next_Prayer_Time, next_prayer_time);
         lv_label_set_text(ui_Next_Prayer_Time1, next_prayer_time);
 
-        ESP_LOGI(TAG, "Next prayer: %s in %s (%s) [Color: %s]", 
+        ESP_LOGI(TAG, "Next prayer: %s in %s (%s) [Color: %s, Gradient: %d]", 
                  prayers[next_prayer_idx].name, 
                  remaining_time_str, 
                  next_prayer_time,
-                 min_time_diff > 60 ? "Green" : "Red");
+                 min_time_diff > 60 ? "Green" : "Red",
+                 stop_value);
     }
 
     ESP_LOGI(TAG, "Time updated: %s", time_str);

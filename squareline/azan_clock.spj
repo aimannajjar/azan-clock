@@ -2855,8 +2855,8 @@
                                 "nid": -204945267,
                                 "strtype": "_style/Text_Color",
                                 "intarray": [
-                                  219,
-                                  230,
+                                  255,
+                                  255,
                                   255,
                                   255
                                 ],
@@ -9979,8 +9979,8 @@
                                 "nid": -204945267,
                                 "strtype": "_style/Text_Color",
                                 "intarray": [
-                                  219,
-                                  230,
+                                  255,
+                                  255,
                                   255,
                                   255
                                 ],
@@ -10187,7 +10187,7 @@
                             "nid": 1441899722,
                             "strtype": "_style/Bg_gradient_params",
                             "intarray": [
-                              130,
+                              0,
                               0
                             ],
                             "InheritedType": 7
@@ -12103,17 +12103,17 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      25,
+                      0,
                       -70
                     ],
                     "InheritedType": 7
                   },
                   {
                     "nid": 60,
-                    "flags": 51,
+                    "flags": 49,
                     "strtype": "OBJECT/Size",
                     "intarray": [
-                      1,
+                      370,
                       1
                     ],
                     "InheritedType": 7
@@ -12168,7 +12168,7 @@
                   {
                     "nid": 1030,
                     "strtype": "LABEL/Text",
-                    "strval": "05:00\\nPM",
+                    "strval": "10:11\\nPM",
                     "InheritedType": 10
                   },
                   {
@@ -18442,7 +18442,7 @@
     "uiExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main/ui",
     "projectExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 149,
+    "backup_cnt": 151,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
