@@ -8,7 +8,7 @@
 #include "esp_system.h"
 
 #define TAG "Weather"
-#define WEATHER_API_URL "https://api.open-meteo.com/v1/forecast?latitude=%f&longitude=%f&current_weather=true"
+#define WEATHER_API_URL "https://weather.hurranet.net/v1/forecast?latitude=%f&longitude=%f&current_weather=true"
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 
 static char weather_info[512];
