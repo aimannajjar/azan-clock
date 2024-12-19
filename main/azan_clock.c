@@ -17,6 +17,7 @@ typedef struct {
     bool wifi_previously_connected;
     bool clock_initialized;
     bool weather_initialized;
+    bool prayers_initialized;
 } state_t;
 
 state_t state = { .wifi_previously_connected = false, .clock_initialized = false };
@@ -70,6 +71,14 @@ void set_weather_initialized() {
 
 bool is_weather_initialized() {
     return state.weather_initialized;
+}
+
+bool is_prayers_initialized(void) {
+    return state.prayers_initialized;
+}
+
+void set_prayers_initialized(void) {
+    state.prayers_initialized = true;
 }
 
 void take_ui_mutex(const char *caller) {

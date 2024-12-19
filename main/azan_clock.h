@@ -11,6 +11,8 @@ void set_clock_initialized();
 bool is_clock_initialized();
 void set_weather_initialized();
 bool is_weather_initialized();
+bool is_prayers_initialized(void);
+void set_prayers_initialized(void);
 
 void take_ui_mutex(const char *caller);
 void give_ui_mutex(const char *caller);
