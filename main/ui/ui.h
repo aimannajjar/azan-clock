@@ -34,6 +34,9 @@ extern lv_obj_t * ui_Button8;
 extern lv_obj_t * ui_Label12;
 extern lv_obj_t * ui_Button9;
 extern lv_obj_t * ui_Label13;
+void ui_event_Button16(lv_event_t * e);
+extern lv_obj_t * ui_Button16;
+extern lv_obj_t * ui_Label19;
 extern lv_obj_t * ui_Spinner2;
 extern lv_obj_t * ui_Loading_Status_Text;
 // CUSTOM VARIABLES
@@ -61,6 +64,9 @@ extern lv_obj_t * ui_Label5;
 void ui_event_Button3(lv_event_t * e);
 extern lv_obj_t * ui_Button3;
 extern lv_obj_t * ui_Label6;
+void ui_event_Button10(lv_event_t * e);
+extern lv_obj_t * ui_Button10;
+extern lv_obj_t * ui_Label3;
 extern lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
 
@@ -135,7 +141,35 @@ extern lv_obj_t * ui_Button11;
 extern lv_obj_t * ui_Label8;
 extern lv_obj_t * ui_Button13;
 extern lv_obj_t * ui_Label14;
+void ui_event_Button15(lv_event_t * e);
+extern lv_obj_t * ui_Button15;
+extern lv_obj_t * ui_Label15;
 extern lv_obj_t * ui_WiFi_Status1;
+// CUSTOM VARIABLES
+
+// SCREEN: ui_Settings_Screen
+void ui_Settings_Screen_screen_init(void);
+extern lv_obj_t * ui_Settings_Screen;
+extern lv_obj_t * ui_Background4;
+extern lv_obj_t * ui_Panel1;
+void ui_event_Button14(lv_event_t * e);
+extern lv_obj_t * ui_Button14;
+extern lv_obj_t * ui_Label4;
+void ui_event_Button19(lv_event_t * e);
+extern lv_obj_t * ui_Button19;
+extern lv_obj_t * ui_Label22;
+extern lv_obj_t * ui_Button18;
+extern lv_obj_t * ui_Label21;
+extern lv_obj_t * ui_Button17;
+extern lv_obj_t * ui_Label20;
+extern lv_obj_t * ui_Settings_Content_Panel;
+extern lv_obj_t * ui_Container1;
+extern lv_obj_t * ui_Location_Label;
+extern lv_obj_t * ui_Latitude;
+extern lv_obj_t * ui_Longitude;
+extern lv_obj_t * ui_Locate_Me;
+extern lv_obj_t * ui_Label23;
+extern lv_obj_t * ui_Location_Name;
 // CUSTOM VARIABLES
 
 // EVENTS

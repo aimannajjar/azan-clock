@@ -43,7 +43,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_style_bg_color(ui_Next_Prayer_Panel1, lv_color_hex(0x191D26), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Next_Prayer_Panel1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_grad_color(ui_Next_Prayer_Panel1, lv_color_hex(0xBB7910), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel1, 130, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_grad_stop(ui_Next_Prayer_Panel1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_grad_dir(ui_Next_Prayer_Panel1, LV_GRAD_DIR_VER, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_color(ui_Next_Prayer_Panel1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -70,7 +70,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_y(ui_Next_Prayer_Remaining1, 0);
     lv_obj_set_align(ui_Next_Prayer_Remaining1, LV_ALIGN_BOTTOM_LEFT);
     lv_label_set_text(ui_Next_Prayer_Remaining1, "05:00");
-    lv_obj_set_style_text_color(ui_Next_Prayer_Remaining1, lv_color_hex(0xFFFCCA), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Next_Prayer_Remaining1, lv_color_hex(0xA30000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Next_Prayer_Remaining1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Next_Prayer_Remaining1, &ui_font_Montserrat_SemiBold_60, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -81,7 +81,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_y(ui_Next_Prayer_Time1, -16);
     lv_obj_set_align(ui_Next_Prayer_Time1, LV_ALIGN_BOTTOM_RIGHT);
     lv_label_set_text(ui_Next_Prayer_Time1, "08:25 PM");
-    lv_obj_set_style_text_color(ui_Next_Prayer_Time1, lv_color_hex(0xDBE6FF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Next_Prayer_Time1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Next_Prayer_Time1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Next_Prayer_Time1, &lv_font_montserrat_30, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -196,12 +196,12 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_style_text_font(ui_Label2, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Current_Time1 = lv_label_create(ui_S1_Content_Panel1);
-    lv_obj_set_width(ui_Current_Time1, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_width(ui_Current_Time1, 370);
     lv_obj_set_height(ui_Current_Time1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Current_Time1, 25);
+    lv_obj_set_x(ui_Current_Time1, 0);
     lv_obj_set_y(ui_Current_Time1, -70);
     lv_obj_set_align(ui_Current_Time1, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_Current_Time1, "05:00\nPM");
+    lv_label_set_text(ui_Current_Time1, "10:11\nPM");
     lv_obj_set_style_text_color(ui_Current_Time1, lv_color_hex(0x9F4400), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Current_Time1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_letter_space(ui_Current_Time1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -531,6 +531,39 @@ void ui_Prayers_Screen_screen_init(void)
     lv_label_set_text(ui_Label14, "");
     lv_obj_set_style_text_font(ui_Label14, &ui_font_FontAwesome_Solid_24_1, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_Button15 = lv_btn_create(ui_Left_Panel1);
+    lv_obj_set_width(ui_Button15, 50);
+    lv_obj_set_height(ui_Button15, 50);
+    lv_obj_set_align(ui_Button15, LV_ALIGN_CENTER);
+    lv_obj_set_style_bg_color(ui_Button15, lv_color_hex(0xFFBC58), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Button15, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_grad_color(ui_Button15, lv_color_hex(0xEFA337), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_main_stop(ui_Button15, 20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_grad_stop(ui_Button15, 80, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_grad_dir(ui_Button15, LV_GRAD_DIR_VER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_Button15, lv_color_hex(0xFFEDAD), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Button15, 150, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(ui_Button15, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_width(ui_Button15, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_spread(ui_Button15, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_Button15, lv_color_hex(0xEFA337), LV_PART_MAIN | LV_STATE_PRESSED);
+    lv_obj_set_style_bg_opa(ui_Button15, 255, LV_PART_MAIN | LV_STATE_PRESSED);
+    lv_obj_set_style_bg_grad_color(ui_Button15, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_PRESSED);
+    lv_obj_set_style_bg_grad_dir(ui_Button15, LV_GRAD_DIR_NONE, LV_PART_MAIN | LV_STATE_PRESSED);
+    lv_obj_set_style_bg_grad_color(ui_Button15, lv_color_hex(0xFFBC58), LV_PART_MAIN | LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_grad_dir(ui_Button15, LV_GRAD_DIR_VER, LV_PART_MAIN | LV_STATE_FOCUSED);
+    lv_obj_set_style_shadow_color(ui_Button15, lv_color_hex(0xFFF2C7), LV_PART_MAIN | LV_STATE_FOCUSED);
+    lv_obj_set_style_shadow_opa(ui_Button15, 100, LV_PART_MAIN | LV_STATE_FOCUSED);
+    lv_obj_set_style_shadow_width(ui_Button15, 40, LV_PART_MAIN | LV_STATE_FOCUSED);
+    lv_obj_set_style_shadow_spread(ui_Button15, 5, LV_PART_MAIN | LV_STATE_FOCUSED);
+
+    ui_Label15 = lv_label_create(ui_Button15);
+    lv_obj_set_width(ui_Label15, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label15, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Label15, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label15, "");
+    lv_obj_set_style_text_font(ui_Label15, &ui_font_FontAwesome_Solid_24_1, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     ui_WiFi_Status1 = lv_img_create(ui_Prayers_Screen);
     lv_img_set_src(ui_WiFi_Status1, &ui_img_icn_wifi_png);
     lv_obj_set_width(ui_WiFi_Status1, LV_SIZE_CONTENT);   /// 100
@@ -542,5 +575,6 @@ void ui_Prayers_Screen_screen_init(void)
 
     lv_obj_add_event_cb(ui_Button12, ui_event_Button12, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button11, ui_event_Button11, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Button15, ui_event_Button15, LV_EVENT_ALL, NULL);
 
 }

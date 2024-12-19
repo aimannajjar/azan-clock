@@ -70,7 +70,7 @@ void ui_Main_Screen_screen_init(void)
     lv_obj_set_y(ui_Next_Prayer_Remaining, 0);
     lv_obj_set_align(ui_Next_Prayer_Remaining, LV_ALIGN_BOTTOM_LEFT);
     lv_label_set_text(ui_Next_Prayer_Remaining, "05:00");
-    lv_obj_set_style_text_color(ui_Next_Prayer_Remaining, lv_color_hex(0xFFFCCA), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Next_Prayer_Remaining, lv_color_hex(0x00FF37), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Next_Prayer_Remaining, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Next_Prayer_Remaining, &ui_font_Montserrat_SemiBold_60, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -81,7 +81,7 @@ void ui_Main_Screen_screen_init(void)
     lv_obj_set_y(ui_Next_Prayer_Time, -16);
     lv_obj_set_align(ui_Next_Prayer_Time, LV_ALIGN_BOTTOM_RIGHT);
     lv_label_set_text(ui_Next_Prayer_Time, "08:25 PM");
-    lv_obj_set_style_text_color(ui_Next_Prayer_Time, lv_color_hex(0xDBE6FF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Next_Prayer_Time, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Next_Prayer_Time, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Next_Prayer_Time, &lv_font_montserrat_30, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -255,6 +255,39 @@ void ui_Main_Screen_screen_init(void)
     lv_label_set_text(ui_Label6, "");
     lv_obj_set_style_text_font(ui_Label6, &ui_font_FontAwesome_Solid_24_1, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_Button10 = lv_btn_create(ui_Left_Panel);
+    lv_obj_set_width(ui_Button10, 50);
+    lv_obj_set_height(ui_Button10, 50);
+    lv_obj_set_align(ui_Button10, LV_ALIGN_CENTER);
+    lv_obj_set_style_bg_color(ui_Button10, lv_color_hex(0xFFBC58), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Button10, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_grad_color(ui_Button10, lv_color_hex(0xEFA337), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_main_stop(ui_Button10, 20, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_grad_stop(ui_Button10, 80, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_grad_dir(ui_Button10, LV_GRAD_DIR_VER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_Button10, lv_color_hex(0xFFEDAD), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Button10, 150, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(ui_Button10, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_width(ui_Button10, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_spread(ui_Button10, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_Button10, lv_color_hex(0xEFA337), LV_PART_MAIN | LV_STATE_PRESSED);
+    lv_obj_set_style_bg_opa(ui_Button10, 255, LV_PART_MAIN | LV_STATE_PRESSED);
+    lv_obj_set_style_bg_grad_color(ui_Button10, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_PRESSED);
+    lv_obj_set_style_bg_grad_dir(ui_Button10, LV_GRAD_DIR_NONE, LV_PART_MAIN | LV_STATE_PRESSED);
+    lv_obj_set_style_bg_grad_color(ui_Button10, lv_color_hex(0xFFBC58), LV_PART_MAIN | LV_STATE_FOCUSED);
+    lv_obj_set_style_bg_grad_dir(ui_Button10, LV_GRAD_DIR_VER, LV_PART_MAIN | LV_STATE_FOCUSED);
+    lv_obj_set_style_shadow_color(ui_Button10, lv_color_hex(0xFFF2C7), LV_PART_MAIN | LV_STATE_FOCUSED);
+    lv_obj_set_style_shadow_opa(ui_Button10, 100, LV_PART_MAIN | LV_STATE_FOCUSED);
+    lv_obj_set_style_shadow_width(ui_Button10, 40, LV_PART_MAIN | LV_STATE_FOCUSED);
+    lv_obj_set_style_shadow_spread(ui_Button10, 5, LV_PART_MAIN | LV_STATE_FOCUSED);
+
+    ui_Label3 = lv_label_create(ui_Button10);
+    lv_obj_set_width(ui_Label3, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label3, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Label3, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label3, "");
+    lv_obj_set_style_text_font(ui_Label3, &ui_font_FontAwesome_Solid_24_1, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     ui_WiFi_Status = lv_img_create(ui_Main_Screen);
     lv_img_set_src(ui_WiFi_Status, &ui_img_icn_wifi_png);
     lv_obj_set_width(ui_WiFi_Status, LV_SIZE_CONTENT);   /// 100
@@ -266,5 +299,6 @@ void ui_Main_Screen_screen_init(void)
 
     lv_obj_add_event_cb(ui_Button2, ui_event_Button2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button3, ui_event_Button3, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Button10, ui_event_Button10, LV_EVENT_ALL, NULL);
 
 }
