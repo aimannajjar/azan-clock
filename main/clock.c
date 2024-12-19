@@ -30,6 +30,14 @@ extern lv_obj_t *ui_Asr_Time;
 extern lv_obj_t *ui_Maghrib_Time;
 extern lv_obj_t *ui_Isha_Time;
 
+// Add these external references
+extern lv_obj_t *ui_Next_Prayer;
+extern lv_obj_t *ui_Next_Prayer1;
+extern lv_obj_t *ui_Next_Prayer_Remaining;
+extern lv_obj_t *ui_Next_Prayer_Remaining1;
+extern lv_obj_t *ui_Next_Prayer_Time;
+extern lv_obj_t *ui_Next_Prayer_Time1;
+
 // Helper function to convert prayer time string to minutes since midnight
 static int get_prayer_minutes(const char* prayer_time) {
     int hour, minute;
@@ -47,6 +55,7 @@ static void update_time_ui() {
     time_t now;
     struct tm timeinfo;
     char time_str[64];
+    char remaining_time_str[16];
 
     time(&now);
     localtime_r(&now, &timeinfo);
@@ -68,17 +77,18 @@ static void update_time_ui() {
     lv_label_set_text(ui_Current_Time, time_str);
     lv_label_set_text(ui_Current_Time1, time_str);
 
-    // Setup prayer times array
+    // Setup prayer times array with names and UI elements
     struct {
+        const char *name;
         lv_obj_t *container;
         lv_obj_t *time_label;
     } prayers[] = {
-        {ui_Fajr_Container, ui_Fajr_Time},
-        {ui_Sunrise_Container, ui_Sunrise_Time},
-        {ui_Duhur_Container, ui_Duhur_Time},
-        {ui_Asr_Container, ui_Asr_Time},
-        {ui_Maghrib_Container, ui_Maghrib_Time},
-        {ui_Isha_Container, ui_Isha_Time}
+        {"Fajr", ui_Fajr_Container, ui_Fajr_Time},
+        {"Sunrise", ui_Sunrise_Container, ui_Sunrise_Time},
+        {"Duhur", ui_Duhur_Container, ui_Duhur_Time},
+        {"Asr", ui_Asr_Container, ui_Asr_Time},
+        {"Maghrib", ui_Maghrib_Container, ui_Maghrib_Time},
+        {"Isha", ui_Isha_Container, ui_Isha_Time}
     };
 
     // Reset all containers to default color
@@ -90,6 +100,7 @@ static void update_time_ui() {
     // Find next prayer time
     int next_prayer_idx = -1;
     int min_time_diff = 24 * 60; // Initialize to maximum minutes in a day
+    const char* next_prayer_time = NULL;
 
     for (int i = 0; i < 6; i++) {
         const char* prayer_time = lv_label_get_text(prayers[i].time_label);
@@ -102,15 +113,34 @@ static void update_time_ui() {
             if (time_diff < min_time_diff) {
                 min_time_diff = time_diff;
                 next_prayer_idx = i;
+                next_prayer_time = prayer_time;
             }
         }
     }
 
-    // Highlight next prayer time container
+    // Highlight next prayer time container and update UI elements
     if (next_prayer_idx >= 0) {
+        // Update container highlight
         lv_obj_set_style_bg_color(prayers[next_prayer_idx].container, lv_color_hex(0xFFD29C), LV_PART_MAIN | LV_STATE_DEFAULT);
         lv_obj_set_style_bg_opa(prayers[next_prayer_idx].container, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
-        ESP_LOGI(TAG, "Next prayer highlighted: %d, time diff: %d minutes", next_prayer_idx, min_time_diff);
+
+        // Format remaining time
+        int hours = min_time_diff / 60;
+        int minutes = min_time_diff % 60;
+        snprintf(remaining_time_str, sizeof(remaining_time_str), "%d:%02d", hours, minutes);
+
+        // Update all next prayer related labels
+        lv_label_set_text(ui_Next_Prayer, prayers[next_prayer_idx].name);
+        lv_label_set_text(ui_Next_Prayer1, prayers[next_prayer_idx].name);
+        lv_label_set_text(ui_Next_Prayer_Remaining, remaining_time_str);
+        lv_label_set_text(ui_Next_Prayer_Remaining1, remaining_time_str);
+        lv_label_set_text(ui_Next_Prayer_Time, next_prayer_time);
+        lv_label_set_text(ui_Next_Prayer_Time1, next_prayer_time);
+
+        ESP_LOGI(TAG, "Next prayer: %s in %s (%s)", 
+                 prayers[next_prayer_idx].name, 
+                 remaining_time_str, 
+                 next_prayer_time);
     }
 
     ESP_LOGI(TAG, "Time updated: %s", time_str);

@@ -2365,7 +2365,7 @@
                         "flags": 17,
                         "strtype": "OBJECT/Position",
                         "intarray": [
-                          30,
+                          0,
                           0
                         ],
                         "InheritedType": 7
@@ -2383,7 +2383,7 @@
                       {
                         "nid": 636530937,
                         "strtype": "OBJECT/Align",
-                        "strval": "LEFT_MID",
+                        "strval": "TOP_MID",
                         "InheritedType": 3
                       },
                       {
@@ -2484,7 +2484,7 @@
                       {
                         "nid": 1761784673,
                         "strtype": "LABEL/Text",
-                        "strval": "Fajr",
+                        "strval": "Maghrib",
                         "InheritedType": 10
                       },
                       {
@@ -2570,8 +2570,8 @@
                         "flags": 17,
                         "strtype": "OBJECT/Position",
                         "intarray": [
-                          -38,
-                          20
+                          10,
+                          0
                         ],
                         "InheritedType": 7
                       },
@@ -2588,7 +2588,7 @@
                       {
                         "nid": 70,
                         "strtype": "OBJECT/Align",
-                        "strval": "TOP_RIGHT",
+                        "strval": "BOTTOM_LEFT",
                         "InheritedType": 3
                       },
                       {
@@ -2635,7 +2635,7 @@
                       {
                         "nid": 1030,
                         "strtype": "LABEL/Text",
-                        "strval": "5:00",
+                        "strval": "05:00",
                         "InheritedType": 10
                       },
                       {
@@ -2650,9 +2650,9 @@
                                 "nid": 10410,
                                 "strtype": "_style/Text_Color",
                                 "intarray": [
+                                  0,
                                   255,
-                                  252,
-                                  202,
+                                  55,
                                   255
                                 ],
                                 "InheritedType": 7
@@ -2721,7 +2721,7 @@
                         "flags": 17,
                         "strtype": "OBJECT/Position",
                         "intarray": [
-                          -35,
+                          -10,
                           -16
                         ],
                         "InheritedType": 7
@@ -9489,7 +9489,7 @@
                         "flags": 17,
                         "strtype": "OBJECT/Position",
                         "intarray": [
-                          30,
+                          0,
                           0
                         ],
                         "InheritedType": 7
@@ -9507,7 +9507,7 @@
                       {
                         "nid": 636530937,
                         "strtype": "OBJECT/Align",
-                        "strval": "LEFT_MID",
+                        "strval": "TOP_MID",
                         "InheritedType": 3
                       },
                       {
@@ -9694,8 +9694,8 @@
                         "flags": 17,
                         "strtype": "OBJECT/Position",
                         "intarray": [
-                          -38,
-                          20
+                          10,
+                          0
                         ],
                         "InheritedType": 7
                       },
@@ -9712,7 +9712,7 @@
                       {
                         "nid": 70,
                         "strtype": "OBJECT/Align",
-                        "strval": "TOP_RIGHT",
+                        "strval": "BOTTOM_LEFT",
                         "InheritedType": 3
                       },
                       {
@@ -9759,7 +9759,7 @@
                       {
                         "nid": 1030,
                         "strtype": "LABEL/Text",
-                        "strval": "5:00",
+                        "strval": "05:00",
                         "InheritedType": 10
                       },
                       {
@@ -9774,9 +9774,9 @@
                                 "nid": 10410,
                                 "strtype": "_style/Text_Color",
                                 "intarray": [
-                                  255,
-                                  252,
-                                  202,
+                                  163,
+                                  0,
+                                  0,
                                   255
                                 ],
                                 "InheritedType": 7
@@ -9845,7 +9845,7 @@
                         "flags": 17,
                         "strtype": "OBJECT/Position",
                         "intarray": [
-                          -35,
+                          -10,
                           -16
                         ],
                         "InheritedType": 7
@@ -18442,7 +18442,7 @@
     "uiExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main/ui",
     "projectExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 145,
+    "backup_cnt": 149,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

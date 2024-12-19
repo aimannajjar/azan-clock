@@ -57,10 +57,8 @@ void ui_Main_Screen_screen_init(void)
     ui_Next_Prayer = lv_label_create(ui_Next_Prayer_Panel);
     lv_obj_set_width(ui_Next_Prayer, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Next_Prayer, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Next_Prayer, 30);
-    lv_obj_set_y(ui_Next_Prayer, 0);
-    lv_obj_set_align(ui_Next_Prayer, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_Next_Prayer, "Fajr");
+    lv_obj_set_align(ui_Next_Prayer, LV_ALIGN_TOP_MID);
+    lv_label_set_text(ui_Next_Prayer, "Maghrib");
     lv_obj_set_style_text_color(ui_Next_Prayer, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Next_Prayer, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Next_Prayer, &ui_font_Montserrat_SemiBold_60, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -68,10 +66,10 @@ void ui_Main_Screen_screen_init(void)
     ui_Next_Prayer_Remaining = lv_label_create(ui_Next_Prayer_Panel);
     lv_obj_set_width(ui_Next_Prayer_Remaining, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Next_Prayer_Remaining, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Next_Prayer_Remaining, -38);
-    lv_obj_set_y(ui_Next_Prayer_Remaining, 20);
-    lv_obj_set_align(ui_Next_Prayer_Remaining, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_Next_Prayer_Remaining, "5:00");
+    lv_obj_set_x(ui_Next_Prayer_Remaining, 10);
+    lv_obj_set_y(ui_Next_Prayer_Remaining, 0);
+    lv_obj_set_align(ui_Next_Prayer_Remaining, LV_ALIGN_BOTTOM_LEFT);
+    lv_label_set_text(ui_Next_Prayer_Remaining, "05:00");
     lv_obj_set_style_text_color(ui_Next_Prayer_Remaining, lv_color_hex(0xFFFCCA), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Next_Prayer_Remaining, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Next_Prayer_Remaining, &ui_font_Montserrat_SemiBold_60, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -79,7 +77,7 @@ void ui_Main_Screen_screen_init(void)
     ui_Next_Prayer_Time = lv_label_create(ui_Next_Prayer_Panel);
     lv_obj_set_width(ui_Next_Prayer_Time, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Next_Prayer_Time, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Next_Prayer_Time, -35);
+    lv_obj_set_x(ui_Next_Prayer_Time, -10);
     lv_obj_set_y(ui_Next_Prayer_Time, -16);
     lv_obj_set_align(ui_Next_Prayer_Time, LV_ALIGN_BOTTOM_RIGHT);
     lv_label_set_text(ui_Next_Prayer_Time, "08:25 PM");
