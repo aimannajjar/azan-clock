@@ -141,8 +141,8 @@ esp_err_t get_prayer_times(float latitude, float longitude) {
 
 static void prayers_update_task(void *arg) {
     const TickType_t TWELVE_HOURS = pdMS_TO_TICKS(12 * 60 * 60 * 1000);
-    const TickType_t MIN_RETRY_DELAY = pdMS_TO_TICKS(60 * 1000);      // 1 minute
-    const TickType_t MAX_RETRY_DELAY = pdMS_TO_TICKS(30 * 60 * 1000); // 30 minutes
+    const TickType_t MIN_RETRY_DELAY = pdMS_TO_TICKS(5 * 1000);      // 1 minute
+    const TickType_t MAX_RETRY_DELAY = pdMS_TO_TICKS(1 * 60 * 1000); // 30 minutes
     TickType_t retry_delay = MIN_RETRY_DELAY;
 
     while (true) {
@@ -165,7 +165,8 @@ void prayers_init(void) {
         return;
     }
     
-    xTaskCreate(prayers_update_task, "prayers_update_task", 4096, NULL, 5, NULL);
+    vTaskDelay(5000); // 5 seocnds initial delay
+    xTaskCreate(prayers_update_task, "prayers_update_task", 5120, NULL, 5, NULL);
     set_prayers_initialized();
     ESP_LOGI(TAG, "Prayer times service initialized successfully");
 }

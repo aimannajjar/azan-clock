@@ -43,7 +43,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_style_bg_color(ui_Next_Prayer_Panel1, lv_color_hex(0x191D26), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Next_Prayer_Panel1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_grad_color(ui_Next_Prayer_Panel1, lv_color_hex(0xBB7910), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel1, 240, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_grad_stop(ui_Next_Prayer_Panel1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_grad_dir(ui_Next_Prayer_Panel1, LV_GRAD_DIR_VER, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_color(ui_Next_Prayer_Panel1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -58,7 +58,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_width(ui_Next_Prayer1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Next_Prayer1, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Next_Prayer1, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_Next_Prayer1, "Fajr");
+    lv_label_set_text(ui_Next_Prayer1, "--");
     lv_obj_set_style_text_color(ui_Next_Prayer1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Next_Prayer1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Next_Prayer1, &ui_font_Montserrat_SemiBold_60, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -69,8 +69,8 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_x(ui_Next_Prayer_Remaining1, 10);
     lv_obj_set_y(ui_Next_Prayer_Remaining1, 0);
     lv_obj_set_align(ui_Next_Prayer_Remaining1, LV_ALIGN_BOTTOM_LEFT);
-    lv_label_set_text(ui_Next_Prayer_Remaining1, "05:00");
-    lv_obj_set_style_text_color(ui_Next_Prayer_Remaining1, lv_color_hex(0xA30000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_label_set_text(ui_Next_Prayer_Remaining1, "00:00");
+    lv_obj_set_style_text_color(ui_Next_Prayer_Remaining1, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Next_Prayer_Remaining1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Next_Prayer_Remaining1, &ui_font_Montserrat_SemiBold_60, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -80,7 +80,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_x(ui_Next_Prayer_Time1, -10);
     lv_obj_set_y(ui_Next_Prayer_Time1, -16);
     lv_obj_set_align(ui_Next_Prayer_Time1, LV_ALIGN_BOTTOM_RIGHT);
-    lv_label_set_text(ui_Next_Prayer_Time1, "08:25 PM");
+    lv_label_set_text(ui_Next_Prayer_Time1, "00:00AM");
     lv_obj_set_style_text_color(ui_Next_Prayer_Time1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Next_Prayer_Time1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Next_Prayer_Time1, &lv_font_montserrat_30, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -201,7 +201,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_x(ui_Current_Time1, 0);
     lv_obj_set_y(ui_Current_Time1, -70);
     lv_obj_set_align(ui_Current_Time1, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_Current_Time1, "10:11\nPM");
+    lv_label_set_text(ui_Current_Time1, "00:00\nPM");
     lv_obj_set_style_text_color(ui_Current_Time1, lv_color_hex(0x9F4400), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Current_Time1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_letter_space(ui_Current_Time1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -255,7 +255,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_width(ui_Fajr_Time, lv_pct(50));
     lv_obj_set_height(ui_Fajr_Time, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Fajr_Time, LV_ALIGN_BOTTOM_RIGHT);
-    lv_label_set_text(ui_Fajr_Time, "05:55 AM");
+    lv_label_set_text(ui_Fajr_Time, "00:00 AM");
     lv_obj_set_style_text_color(ui_Fajr_Time, lv_color_hex(0x784000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Fajr_Time, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Fajr_Time, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -288,7 +288,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_width(ui_Sunrise_Time, lv_pct(50));
     lv_obj_set_height(ui_Sunrise_Time, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Sunrise_Time, LV_ALIGN_BOTTOM_RIGHT);
-    lv_label_set_text(ui_Sunrise_Time, "05:55 AM");
+    lv_label_set_text(ui_Sunrise_Time, "00:00 AM");
     lv_obj_set_style_text_color(ui_Sunrise_Time, lv_color_hex(0x784000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Sunrise_Time, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Sunrise_Time, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -321,7 +321,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_width(ui_Duhur_Time, lv_pct(50));
     lv_obj_set_height(ui_Duhur_Time, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Duhur_Time, LV_ALIGN_BOTTOM_RIGHT);
-    lv_label_set_text(ui_Duhur_Time, "05:55 AM");
+    lv_label_set_text(ui_Duhur_Time, "00:00 AM");
     lv_obj_set_style_text_color(ui_Duhur_Time, lv_color_hex(0x784000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Duhur_Time, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Duhur_Time, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -354,7 +354,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_width(ui_Asr_Time, lv_pct(50));
     lv_obj_set_height(ui_Asr_Time, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Asr_Time, LV_ALIGN_BOTTOM_RIGHT);
-    lv_label_set_text(ui_Asr_Time, "05:55 AM");
+    lv_label_set_text(ui_Asr_Time, "00:00 AM");
     lv_obj_set_style_text_color(ui_Asr_Time, lv_color_hex(0x784000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Asr_Time, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Asr_Time, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -387,7 +387,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_width(ui_Maghrib_Time, lv_pct(50));
     lv_obj_set_height(ui_Maghrib_Time, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Maghrib_Time, LV_ALIGN_BOTTOM_RIGHT);
-    lv_label_set_text(ui_Maghrib_Time, "05:55 AM");
+    lv_label_set_text(ui_Maghrib_Time, "00:00 AM");
     lv_obj_set_style_text_color(ui_Maghrib_Time, lv_color_hex(0x784000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Maghrib_Time, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Maghrib_Time, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -420,7 +420,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_width(ui_Isha_Time, lv_pct(50));
     lv_obj_set_height(ui_Isha_Time, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Isha_Time, LV_ALIGN_BOTTOM_RIGHT);
-    lv_label_set_text(ui_Isha_Time, "05:55 AM");
+    lv_label_set_text(ui_Isha_Time, "00:00 AM");
     lv_obj_set_style_text_color(ui_Isha_Time, lv_color_hex(0x784000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Isha_Time, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Isha_Time, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);

@@ -2947,7 +2947,7 @@
                       {
                         "nid": 1761784673,
                         "strtype": "LABEL/Text",
-                        "strval": "Maghrib",
+                        "strval": "--",
                         "InheritedType": 10
                       },
                       {
@@ -3098,7 +3098,7 @@
                       {
                         "nid": 1030,
                         "strtype": "LABEL/Text",
-                        "strval": "05:00",
+                        "strval": "00:00",
                         "InheritedType": 10
                       },
                       {
@@ -3303,7 +3303,7 @@
                       {
                         "nid": 1230762829,
                         "strtype": "LABEL/Text",
-                        "strval": "08:25 PM",
+                        "strval": "00:00 AM",
                         "InheritedType": 10
                       },
                       {
@@ -3690,7 +3690,7 @@
                   {
                     "nid": 1030,
                     "strtype": "LABEL/Text",
-                    "strval": "5:00\\nPM",
+                    "strval": "00:00\\nAM",
                     "InheritedType": 10
                   },
                   {
@@ -3888,7 +3888,7 @@
                       {
                         "nid": 1020,
                         "strtype": "IMAGE/Asset",
-                        "strval": "assets/night_heavy_rain.png",
+                        "strval": "",
                         "InheritedType": 5
                       },
                       {
@@ -4176,7 +4176,7 @@
                       {
                         "nid": 1030,
                         "strtype": "LABEL/Text",
-                        "strval": "Wed\\nNov 24",
+                        "strval": "---",
                         "InheritedType": 10
                       },
                       {
@@ -10611,7 +10611,7 @@
                       {
                         "nid": 1761784673,
                         "strtype": "LABEL/Text",
-                        "strval": "Fajr",
+                        "strval": "--",
                         "InheritedType": 10
                       },
                       {
@@ -10762,7 +10762,7 @@
                       {
                         "nid": 1030,
                         "strtype": "LABEL/Text",
-                        "strval": "05:00",
+                        "strval": "00:00",
                         "InheritedType": 10
                       },
                       {
@@ -10777,7 +10777,7 @@
                                 "nid": 10410,
                                 "strtype": "_style/Text_Color",
                                 "intarray": [
-                                  163,
+                                  255,
                                   0,
                                   0,
                                   255
@@ -10967,7 +10967,7 @@
                       {
                         "nid": 1230762829,
                         "strtype": "LABEL/Text",
-                        "strval": "08:25 PM",
+                        "strval": "00:00AM",
                         "InheritedType": 10
                       },
                       {
@@ -11190,7 +11190,7 @@
                             "nid": 1441899722,
                             "strtype": "_style/Bg_gradient_params",
                             "intarray": [
-                              0,
+                              240,
                               0
                             ],
                             "InheritedType": 7
@@ -13172,7 +13172,7 @@
                   {
                     "nid": 1030,
                     "strtype": "LABEL/Text",
-                    "strval": "10:11\\nPM",
+                    "strval": "00:00\\nPM",
                     "InheritedType": 10
                   },
                   {
@@ -13525,7 +13525,7 @@
                           {
                             "nid": 1030,
                             "strtype": "LABEL/Text",
-                            "strval": "05:55 AM",
+                            "strval": "00:00 AM",
                             "InheritedType": 10
                           },
                           {
@@ -13977,7 +13977,7 @@
                           {
                             "nid": 1030,
                             "strtype": "LABEL/Text",
-                            "strval": "05:55 AM",
+                            "strval": "00:00 AM",
                             "InheritedType": 10
                           },
                           {
@@ -14429,7 +14429,7 @@
                           {
                             "nid": 1030,
                             "strtype": "LABEL/Text",
-                            "strval": "05:55 AM",
+                            "strval": "00:00 AM",
                             "InheritedType": 10
                           },
                           {
@@ -14881,7 +14881,7 @@
                           {
                             "nid": 1030,
                             "strtype": "LABEL/Text",
-                            "strval": "05:55 AM",
+                            "strval": "00:00 AM",
                             "InheritedType": 10
                           },
                           {
@@ -15333,7 +15333,7 @@
                           {
                             "nid": 1030,
                             "strtype": "LABEL/Text",
-                            "strval": "05:55 AM",
+                            "strval": "00:00 AM",
                             "InheritedType": 10
                           },
                           {
@@ -15785,7 +15785,7 @@
                           {
                             "nid": 1030,
                             "strtype": "LABEL/Text",
-                            "strval": "05:55 AM",
+                            "strval": "00:00 AM",
                             "InheritedType": 10
                           },
                           {
@@ -16114,8 +16114,7 @@
                     "InheritedType": 11
                   }
                 ],
-                "saved_objtypeKey": "PANEL",
-                "tree_closed": true
+                "saved_objtypeKey": "PANEL"
               }
             ],
             "dont_export": false,
@@ -16322,8 +16321,7 @@
                 "InheritedType": 11
               }
             ],
-            "saved_objtypeKey": "PANEL",
-            "tree_closed": true
+            "saved_objtypeKey": "PANEL"
           },
           {
             "guid": "GUID75494286-775895S7953354",
@@ -24349,7 +24347,7 @@
     "uiExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main/ui",
     "projectExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 175,
+    "backup_cnt": 182,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

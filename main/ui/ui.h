@@ -184,7 +184,6 @@ extern lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
 LV_IMG_DECLARE(ui_img_minaret_bg_png);    // assets/minaret_bg.png
-LV_IMG_DECLARE(ui_img_night_heavy_rain_png);    // assets/night_heavy_rain.png
 LV_IMG_DECLARE(ui_img_icn_wifi_png);    // assets/icn_wifi.png
 LV_IMG_DECLARE(ui_img_arrow_down_png);    // assets/arrow_down.png
 LV_IMG_DECLARE(ui_img_arrow_left_png);    // assets/arrow_left.png
@@ -212,6 +211,7 @@ LV_IMG_DECLARE(ui_img_icn_time_2_png);    // assets/icn_time_2.png
 LV_IMG_DECLARE(ui_img_icn_usb_png);    // assets/icn_usb.png
 LV_IMG_DECLARE(ui_img_night_clear_png);    // assets/night_clear.png
 LV_IMG_DECLARE(ui_img_night_fog_png);    // assets/night_fog.png
+LV_IMG_DECLARE(ui_img_night_heavy_rain_png);    // assets/night_heavy_rain.png
 LV_IMG_DECLARE(ui_img_night_heavy_snowfall_png);    // assets/night_heavy_snowfall.png
 LV_IMG_DECLARE(ui_img_night_light_drizzle_png);    // assets/night_light_drizzle.png
 LV_IMG_DECLARE(ui_img_night_light_rain_png);    // assets/night_light_rain.png

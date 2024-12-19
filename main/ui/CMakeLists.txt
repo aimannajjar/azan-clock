@@ -7,7 +7,6 @@ SET(SOURCES screens/ui_Loading_Screen.c
     components/ui_comp_hook.c
     ui_helpers.c
     images/ui_img_minaret_bg_png.c
-    images/ui_img_night_heavy_rain_png.c
     images/ui_img_icn_wifi_png.c
     images/ui_img_arrow_down_png.c
     images/ui_img_arrow_left_png.c
@@ -35,6 +34,7 @@ SET(SOURCES screens/ui_Loading_Screen.c
     images/ui_img_icn_usb_png.c
     images/ui_img_night_clear_png.c
     images/ui_img_night_fog_png.c
+    images/ui_img_night_heavy_rain_png.c
     images/ui_img_night_heavy_snowfall_png.c
     images/ui_img_night_light_drizzle_png.c
     images/ui_img_night_light_rain_png.c
