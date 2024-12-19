@@ -1,12 +1,6 @@
 #include "timezones.h"
 #include <string.h>
 
-// Define a struct for the hashmap entries
-typedef struct {
-    const char *timezone_id;
-    int index;
-} TimezoneEntry;
-
 // List of standard timezones
 TimezoneEntry timezone_map[] = {
     {"Africa/Abidjan", 0},
