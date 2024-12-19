@@ -129,18 +129,29 @@ static void update_time_ui() {
         int minutes = min_time_diff % 60;
         snprintf(remaining_time_str, sizeof(remaining_time_str), "%d:%02d", hours, minutes);
 
+        // Set color based on remaining time
+        lv_color_t remaining_time_color = (min_time_diff > 60) ? 
+            lv_color_hex(0x00FF37) :  // Green for > 1 hour
+            lv_color_hex(0xA30000);   // Red for <= 1 hour
+
         // Update all next prayer related labels
         lv_label_set_text(ui_Next_Prayer, prayers[next_prayer_idx].name);
         lv_label_set_text(ui_Next_Prayer1, prayers[next_prayer_idx].name);
+        
+        // Update remaining time labels with color
         lv_label_set_text(ui_Next_Prayer_Remaining, remaining_time_str);
         lv_label_set_text(ui_Next_Prayer_Remaining1, remaining_time_str);
+        lv_obj_set_style_text_color(ui_Next_Prayer_Remaining, remaining_time_color, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(ui_Next_Prayer_Remaining1, remaining_time_color, LV_PART_MAIN | LV_STATE_DEFAULT);
+        
         lv_label_set_text(ui_Next_Prayer_Time, next_prayer_time);
         lv_label_set_text(ui_Next_Prayer_Time1, next_prayer_time);
 
-        ESP_LOGI(TAG, "Next prayer: %s in %s (%s)", 
+        ESP_LOGI(TAG, "Next prayer: %s in %s (%s) [Color: %s]", 
                  prayers[next_prayer_idx].name, 
                  remaining_time_str, 
-                 next_prayer_time);
+                 next_prayer_time,
+                 min_time_diff > 60 ? "Green" : "Red");
     }
 
     ESP_LOGI(TAG, "Time updated: %s", time_str);
