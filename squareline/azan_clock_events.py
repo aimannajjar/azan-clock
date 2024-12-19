@@ -10,3 +10,7 @@ def start_scan_task(event_struct):
 def stop_scan_task(event_struct):
     return
 
+
+def get_user_location(event_struct):
+    return
+

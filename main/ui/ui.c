@@ -173,8 +173,11 @@ lv_obj_t * ui_Locate_Me;
 lv_obj_t * ui_Label23;
 lv_obj_t * ui_Location_Name;
 lv_obj_t * ui_Method_Setting_Container;
-lv_obj_t * ui_Location_Label1;
-lv_obj_t * ui_Dropdown2;
+lv_obj_t * ui_Timezone_Label;
+lv_obj_t * ui_Timezone_Dropdown;
+lv_obj_t * ui_Method_Setting_Container1;
+lv_obj_t * ui_Location_Label2;
+lv_obj_t * ui_Dropdown1;
 // CUSTOM VARIABLES
 
 // EVENTS

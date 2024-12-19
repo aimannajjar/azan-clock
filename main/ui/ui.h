@@ -176,8 +176,11 @@ extern lv_obj_t * ui_Locate_Me;
 extern lv_obj_t * ui_Label23;
 extern lv_obj_t * ui_Location_Name;
 extern lv_obj_t * ui_Method_Setting_Container;
-extern lv_obj_t * ui_Location_Label1;
-extern lv_obj_t * ui_Dropdown2;
+extern lv_obj_t * ui_Timezone_Label;
+extern lv_obj_t * ui_Timezone_Dropdown;
+extern lv_obj_t * ui_Method_Setting_Container1;
+extern lv_obj_t * ui_Location_Label2;
+extern lv_obj_t * ui_Dropdown1;
 // CUSTOM VARIABLES
 
 // EVENTS

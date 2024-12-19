@@ -410,7 +410,7 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_width(ui_Isha_Label, lv_pct(50));
     lv_obj_set_height(ui_Isha_Label, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Isha_Label, LV_ALIGN_BOTTOM_LEFT);
-    lv_label_set_text(ui_Isha_Label, "Sunrise");
+    lv_label_set_text(ui_Isha_Label, "Isha");
     lv_obj_set_style_text_color(ui_Isha_Label, lv_color_hex(0x784000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Isha_Label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Isha_Label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);

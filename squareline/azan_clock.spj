@@ -15628,7 +15628,7 @@
                           {
                             "nid": 1030,
                             "strtype": "LABEL/Text",
-                            "strval": "Sunrise",
+                            "strval": "Isha",
                             "InheritedType": 10
                           },
                           {
@@ -19118,7 +19118,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   10,
-                  37
+                  120
                 ],
                 "InheritedType": 7
               },
@@ -21323,7 +21323,22 @@
                       },
                       {
                         "part": "lv.PART.MAIN",
-                        "childs": [],
+                        "childs": [
+                          {
+                            "nid": 10000,
+                            "strtype": "_style/StyleState",
+                            "strval": "DEFAULT",
+                            "childs": [
+                              {
+                                "nid": 10450,
+                                "strtype": "_style/Text_Font",
+                                "strval": "montserrat_14",
+                                "InheritedType": 3
+                              }
+                            ],
+                            "InheritedType": 1
+                          }
+                        ],
                         "nid": 1080,
                         "strtype": "TEXTAREA/Style_main",
                         "strval": "lv.PART.MAIN, Text, Rectangle, Pad, Transform",
@@ -21616,7 +21631,22 @@
                       },
                       {
                         "part": "lv.PART.MAIN",
-                        "childs": [],
+                        "childs": [
+                          {
+                            "nid": 10000,
+                            "strtype": "_style/StyleState",
+                            "strval": "DEFAULT",
+                            "childs": [
+                              {
+                                "nid": 10450,
+                                "strtype": "_style/Text_Font",
+                                "strval": "montserrat_14",
+                                "InheritedType": 3
+                              }
+                            ],
+                            "InheritedType": 1
+                          }
+                        ],
                         "nid": 1080,
                         "strtype": "TEXTAREA/Style_main",
                         "strval": "lv.PART.MAIN, Text, Rectangle, Pad, Transform",
@@ -22035,6 +22065,71 @@
                         "strtype": "BUTTON/Style_main",
                         "strval": "lv.PART.MAIN, Rectangle, Pad, Text, Transform",
                         "InheritedType": 11
+                      },
+                      {
+                        "disabled": false,
+                        "nid": 1000508,
+                        "strtype": "_event/EventHandler",
+                        "strval": "CLICKED",
+                        "childs": [
+                          {
+                            "nid": 1000509,
+                            "strtype": "_event/name",
+                            "strval": "LocateMe",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 1000510,
+                            "strtype": "_event/condition_C",
+                            "strval": "",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 1000511,
+                            "strtype": "_event/condition_P",
+                            "strval": "",
+                            "InheritedType": 10
+                          },
+                          {
+                            "nid": 1000512,
+                            "strtype": "_event/action",
+                            "strval": "CALL FUNCTION",
+                            "childs": [
+                              {
+                                "nid": 1000513,
+                                "strtype": "CALL FUNCTION/Name",
+                                "strval": "CALL FUNCTION",
+                                "InheritedType": 10
+                              },
+                              {
+                                "nid": 1000514,
+                                "strtype": "CALL FUNCTION/Call",
+                                "strval": "<{Function_name}>( event_struct )",
+                                "InheritedType": 10
+                              },
+                              {
+                                "nid": 1000515,
+                                "strtype": "CALL FUNCTION/CallC",
+                                "strval": "<{Function_name}>( e );",
+                                "InheritedType": 10
+                              },
+                              {
+                                "nid": 1000516,
+                                "strtype": "CALL FUNCTION/Function_name",
+                                "strval": "get_user_location",
+                                "InheritedType": 10
+                              },
+                              {
+                                "nid": 1000517,
+                                "strtype": "CALL FUNCTION/Dont_export_function",
+                                "strval": "True",
+                                "InheritedType": 2
+                              }
+                            ],
+                            "InheritedType": 10
+                          }
+                        ],
+                        "InheritedType": 4
                       }
                     ],
                     "saved_objtypeKey": "BUTTON"
@@ -22312,7 +22407,491 @@
                       {
                         "nid": 10,
                         "strtype": "OBJECT/Name",
-                        "strval": "Location Label1",
+                        "strval": "Timezone Label",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 20,
+                        "strtype": "OBJECT/Layout",
+                        "InheritedType": 1
+                      },
+                      {
+                        "Flow": 0,
+                        "Wrap": false,
+                        "Reversed": false,
+                        "MainAlignment": 0,
+                        "CrossAlignment": 0,
+                        "TrackAlignment": 0,
+                        "LayoutType": 0,
+                        "nid": 30,
+                        "strtype": "OBJECT/Layout_type",
+                        "strval": "No_layout",
+                        "InheritedType": 13
+                      },
+                      {
+                        "nid": 40,
+                        "strtype": "OBJECT/Transform",
+                        "InheritedType": 1
+                      },
+                      {
+                        "nid": 50,
+                        "flags": 17,
+                        "strtype": "OBJECT/Position",
+                        "intarray": [
+                          0,
+                          0
+                        ],
+                        "InheritedType": 7
+                      },
+                      {
+                        "nid": 60,
+                        "flags": 49,
+                        "strtype": "OBJECT/Size",
+                        "intarray": [
+                          250,
+                          1
+                        ],
+                        "InheritedType": 7
+                      },
+                      {
+                        "nid": 70,
+                        "strtype": "OBJECT/Align",
+                        "strval": "CENTER",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 90,
+                        "flags": 1048576,
+                        "strtype": "OBJECT/Flags",
+                        "InheritedType": 1
+                      },
+                      {
+                        "nid": 110,
+                        "strtype": "OBJECT/Clickable",
+                        "strval": "False",
+                        "InheritedType": 2
+                      },
+                      {
+                        "nid": 300,
+                        "strtype": "OBJECT/Scrollbar_mode",
+                        "strval": "AUTO",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 310,
+                        "strtype": "OBJECT/Scroll_direction",
+                        "strval": "ALL",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 320,
+                        "flags": 1048576,
+                        "strtype": "OBJECT/States",
+                        "InheritedType": 1
+                      },
+                      {
+                        "nid": 1010,
+                        "strtype": "LABEL/Label",
+                        "InheritedType": 1
+                      },
+                      {
+                        "nid": 1020,
+                        "strtype": "LABEL/Long_mode",
+                        "strval": "WRAP",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 1030,
+                        "strtype": "LABEL/Text",
+                        "strval": "Timezone",
+                        "InheritedType": 10
+                      },
+                      {
+                        "part": "lv.PART.MAIN",
+                        "childs": [
+                          {
+                            "nid": 10000,
+                            "strtype": "_style/StyleState",
+                            "strval": "DEFAULT",
+                            "childs": [
+                              {
+                                "nid": 10410,
+                                "strtype": "_style/Text_Color",
+                                "intarray": [
+                                  241,
+                                  154,
+                                  0,
+                                  255
+                                ],
+                                "InheritedType": 7
+                              },
+                              {
+                                "nid": 10430,
+                                "strtype": "_style/Text_Align",
+                                "strval": "LEFT",
+                                "InheritedType": 3
+                              },
+                              {
+                                "nid": 10450,
+                                "strtype": "_style/Text_Font",
+                                "strval": "montserrat_24",
+                                "InheritedType": 3
+                              }
+                            ],
+                            "InheritedType": 1
+                          }
+                        ],
+                        "nid": 1040,
+                        "strtype": "LABEL/Style_main",
+                        "strval": "lv.PART.MAIN, Text, Rectangle, Pad, Transform",
+                        "InheritedType": 11
+                      },
+                      {
+                        "nid": 1050,
+                        "strtype": "LABEL/Recolor",
+                        "strval": "False",
+                        "InheritedType": 2
+                      }
+                    ],
+                    "saved_objtypeKey": "LABEL"
+                  },
+                  {
+                    "guid": "GUID2125397-791726S4063354",
+                    "deepid": 1176272475,
+                    "dont_export": false,
+                    "locked": false,
+                    "properties": [
+                      {
+                        "nid": 10,
+                        "strtype": "OBJECT/Name",
+                        "strval": "Timezone Dropdown",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 20,
+                        "strtype": "OBJECT/Layout",
+                        "InheritedType": 1
+                      },
+                      {
+                        "Flow": 0,
+                        "Wrap": false,
+                        "Reversed": false,
+                        "MainAlignment": 0,
+                        "CrossAlignment": 0,
+                        "TrackAlignment": 0,
+                        "LayoutType": 0,
+                        "nid": 30,
+                        "strtype": "OBJECT/Layout_type",
+                        "strval": "No_layout",
+                        "InheritedType": 13
+                      },
+                      {
+                        "nid": 40,
+                        "strtype": "OBJECT/Transform",
+                        "InheritedType": 1
+                      },
+                      {
+                        "nid": 50,
+                        "flags": 17,
+                        "strtype": "OBJECT/Position",
+                        "intarray": [
+                          0,
+                          0
+                        ],
+                        "InheritedType": 7
+                      },
+                      {
+                        "nid": 60,
+                        "flags": 49,
+                        "strtype": "OBJECT/Size",
+                        "intarray": [
+                          380,
+                          1
+                        ],
+                        "InheritedType": 7
+                      },
+                      {
+                        "nid": 70,
+                        "strtype": "OBJECT/Align",
+                        "strval": "CENTER",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 90,
+                        "flags": 1048576,
+                        "strtype": "OBJECT/Flags",
+                        "InheritedType": 1
+                      },
+                      {
+                        "nid": 260,
+                        "strtype": "OBJECT/Scroll_on_focus",
+                        "strval": "True",
+                        "InheritedType": 2
+                      },
+                      {
+                        "nid": 300,
+                        "strtype": "OBJECT/Scrollbar_mode",
+                        "strval": "AUTO",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 310,
+                        "strtype": "OBJECT/Scroll_direction",
+                        "strval": "ALL",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 320,
+                        "flags": 1048576,
+                        "strtype": "OBJECT/States",
+                        "InheritedType": 1
+                      },
+                      {
+                        "nid": 1010,
+                        "strtype": "DROPDOWN/Dropdown",
+                        "InheritedType": 1
+                      },
+                      {
+                        "nid": 1020,
+                        "strtype": "DROPDOWN/Options",
+                        "strval": "Africa/Abidjan\\nAfrica/Accra\\nAfrica/Addis_Ababa\\nAfrica/Algiers\\nAfrica/Asmara\\nAfrica/Asmera\\nAfrica/Bamako\\nAfrica/Bangui\\nAfrica/Banjul\\nAfrica/Bissau\\nAfrica/Blantyre\\nAfrica/Brazzaville\\nAfrica/Bujumbura\\nAfrica/Cairo\\nAfrica/Casablanca\\nAfrica/Ceuta\\nAfrica/Conakry\\nAfrica/Dakar\\nAfrica/Dar_es_Salaam\\nAfrica/Djibouti\\nAfrica/Douala\\nAfrica/El_Aaiun\\nAfrica/Freetown\\nAfrica/Gaborone\\nAfrica/Harare\\nAfrica/Johannesburg\\nAfrica/Juba\\nAfrica/Kampala\\nAfrica/Khartoum\\nAfrica/Kigali\\nAfrica/Kinshasa\\nAfrica/Lagos\\nAfrica/Libreville\\nAfrica/Lome\\nAfrica/Luanda\\nAfrica/Lubumbashi\\nAfrica/Lusaka\\nAfrica/Malabo\\nAfrica/Maputo\\nAfrica/Maseru\\nAfrica/Mbabane\\nAfrica/Mogadishu\\nAfrica/Monrovia\\nAfrica/Nairobi\\nAfrica/Ndjamena\\nAfrica/Niamey\\nAfrica/Nouakchott\\nAfrica/Ouagadougou\\nAfrica/Porto-Novo\\nAfrica/Sao_Tome\\nAfrica/Timbuktu\\nAfrica/Tripoli\\nAfrica/Tunis\\nAfrica/Windhoek\\nAmerica/Adak\\nAmerica/Anchorage\\nAmerica/Anguilla\\nAmerica/Antigua\\nAmerica/Araguaina\\nAmerica/Argentina/Buenos_Aires\\nAmerica/Argentina/Catamarca\\nAmerica/Argentina/ComodRivadavia\\nAmerica/Argentina/Cordoba\\nAmerica/Argentina/Jujuy\\nAmerica/Argentina/La_Rioja\\nAmerica/Argentina/Mendoza\\nAmerica/Argentina/Rio_Gallegos\\nAmerica/Argentina/Salta\\nAmerica/Argentina/San_Juan\\nAmerica/Argentina/San_Luis\\nAmerica/Argentina/Tucuman\\nAmerica/Argentina/Ushuaia\\nAmerica/Aruba\\nAmerica/Asuncion\\nAmerica/Atikokan\\nAmerica/Atka\\nAmerica/Bahia\\nAmerica/Bahia_Banderas\\nAmerica/Barbados\\nAmerica/Belem\\nAmerica/Belize\\nAmerica/Blanc-Sablon\\nAmerica/Boa_Vista\\nAmerica/Bogota\\nAmerica/Boise\\nAmerica/Buenos_Aires\\nAmerica/Cambridge_Bay\\nAmerica/Campo_Grande\\nAmerica/Cancun\\nAmerica/Caracas\\nAmerica/Catamarca\\nAmerica/Cayenne\\nAmerica/Cayman\\nAmerica/Chicago\\nAmerica/Chihuahua\\nAmerica/Ciudad_Juarez\\nAmerica/Coral_Harbour\\nAmerica/Cordoba\\nAmerica/Costa_Rica\\nAmerica/Creston\\nAmerica/Cuiaba\\nAmerica/Curacao\\nAmerica/Danmarkshavn\\nAmerica/Dawson\\nAmerica/Dawson_Creek\\nAmerica/Denver\\nAmerica/Detroit\\nAmerica/Dominica\\nAmerica/Edmonton\\nAmerica/Eirunepe\\nAmerica/El_Salvador\\nAmerica/Ensenada\\nAmerica/Fort_Nelson\\nAmerica/Fort_Wayne\\nAmerica/Fortaleza\\nAmerica/Glace_Bay\\nAmerica/Godthab\\nAmerica/Goose_Bay\\nAmerica/Grand_Turk\\nAmerica/Grenada\\nAmerica/Guadeloupe\\nAmerica/Guatemala\\nAmerica/Guayaquil\\nAmerica/Guyana\\nAmerica/Halifax\\nAmerica/Havana\\nAmerica/Hermosillo\\nAmerica/Indiana/Indianapolis\\nAmerica/Indiana/Knox\\nAmerica/Indiana/Marengo\\nAmerica/Indiana/Petersburg\\nAmerica/Indiana/Tell_City\\nAmerica/Indiana/Vevay\\nAmerica/Indiana/Vincennes\\nAmerica/Indiana/Winamac\\nAmerica/Indianapolis\\nAmerica/Inuvik\\nAmerica/Iqaluit\\nAmerica/Jamaica\\nAmerica/Jujuy\\nAmerica/Juneau\\nAmerica/Kentucky/Louisville\\nAmerica/Kentucky/Monticello\\nAmerica/Knox_IN\\nAmerica/Kralendijk\\nAmerica/La_Paz\\nAmerica/Lima\\nAmerica/Los_Angeles\\nAmerica/Louisville\\nAmerica/Lower_Princes\\nAmerica/Maceio\\nAmerica/Managua\\nAmerica/Manaus\\nAmerica/Marigot\\nAmerica/Martinique\\nAmerica/Matamoros\\nAmerica/Mazatlan\\nAmerica/Mendoza\\nAmerica/Menominee\\nAmerica/Merida\\nAmerica/Metlakatla\\nAmerica/Mexico_City\\nAmerica/Miquelon\\nAmerica/Moncton\\nAmerica/Monterrey\\nAmerica/Montevideo\\nAmerica/Montreal\\nAmerica/Montserrat\\nAmerica/Nassau\\nAmerica/New_York\\nAmerica/Nipigon\\nAmerica/Nome\\nAmerica/Noronha\\nAmerica/North_Dakota/Beulah\\nAmerica/North_Dakota/Center\\nAmerica/North_Dakota/New_Salem\\nAmerica/Nuuk\\nAmerica/Ojinaga\\nAmerica/Panama\\nAmerica/Pangnirtung\\nAmerica/Paramaribo\\nAmerica/Phoenix\\nAmerica/Port-au-Prince\\nAmerica/Port_of_Spain\\nAmerica/Porto_Acre\\nAmerica/Porto_Velho\\nAmerica/Puerto_Rico\\nAmerica/Punta_Arenas\\nAmerica/Rainy_River\\nAmerica/Rankin_Inlet\\nAmerica/Recife\\nAmerica/Regina\\nAmerica/Resolute\\nAmerica/Rio_Branco\\nAmerica/Rosario\\nAmerica/Santa_Isabel\\nAmerica/Santarem\\nAmerica/Santiago\\nAmerica/Santo_Domingo\\nAmerica/Sao_Paulo\\nAmerica/Scoresbysund\\nAmerica/Shiprock\\nAmerica/Sitka\\nAmerica/St_Barthelemy\\nAmerica/St_Johns\\nAmerica/St_Kitts\\nAmerica/St_Lucia\\nAmerica/St_Thomas\\nAmerica/St_Vincent\\nAmerica/Swift_Current\\nAmerica/Tegucigalpa\\nAmerica/Thule\\nAmerica/Thunder_Bay\\nAmerica/Tijuana\\nAmerica/Toronto\\nAmerica/Tortola\\nAmerica/Vancouver\\nAmerica/Virgin\\nAmerica/Whitehorse\\nAmerica/Winnipeg\\nAmerica/Yakutat\\nAmerica/Yellowknife\\nAntarctica/Casey\\nAntarctica/Davis\\nAntarctica/DumontDUrville\\nAntarctica/Macquarie\\nAntarctica/Mawson\\nAntarctica/McMurdo\\nAntarctica/Palmer\\nAntarctica/Rothera\\nAntarctica/South_Pole\\nAntarctica/Syowa\\nAntarctica/Troll\\nAntarctica/Vostok\\nArctic/Longyearbyen\\nAsia/Aden\\nAsia/Almaty\\nAsia/Amman\\nAsia/Anadyr\\nAsia/Aqtau\\nAsia/Aqtobe\\nAsia/Ashgabat\\nAsia/Ashkhabad\\nAsia/Atyrau\\nAsia/Baghdad\\nAsia/Bahrain\\nAsia/Baku\\nAsia/Bangkok\\nAsia/Barnaul\\nAsia/Beirut\\nAsia/Bishkek\\nAsia/Brunei\\nAsia/Calcutta\\nAsia/Chita\\nAsia/Choibalsan\\nAsia/Chongqing\\nAsia/Chungking\\nAsia/Colombo\\nAsia/Dacca\\nAsia/Damascus\\nAsia/Dhaka\\nAsia/Dili\\nAsia/Dubai\\nAsia/Dushanbe\\nAsia/Famagusta\\nAsia/Gaza\\nAsia/Harbin\\nAsia/Hebron\\nAsia/Ho_Chi_Minh\\nAsia/Hong_Kong\\nAsia/Hovd\\nAsia/Irkutsk\\nAsia/Istanbul\\nAsia/Jakarta\\nAsia/Jayapura\\nAsia/Jerusalem\\nAsia/Kabul\\nAsia/Kamchatka\\nAsia/Karachi\\nAsia/Kashgar\\nAsia/Kathmandu\\nAsia/Katmandu\\nAsia/Khandyga\\nAsia/Kolkata\\nAsia/Krasnoyarsk\\nAsia/Kuala_Lumpur\\nAsia/Kuching\\nAsia/Kuwait\\nAsia/Macao\\nAsia/Macau\\nAsia/Magadan\\nAsia/Makassar\\nAsia/Manila\\nAsia/Muscat\\nAsia/Nicosia\\nAsia/Novokuznetsk\\nAsia/Novosibirsk\\nAsia/Omsk\\nAsia/Oral\\nAsia/Phnom_Penh\\nAsia/Pontianak\\nAsia/Pyongyang\\nAsia/Qatar\\nAsia/Qostanay\\nAsia/Qyzylorda\\nAsia/Rangoon\\nAsia/Riyadh\\nAsia/Saigon\\nAsia/Sakhalin\\nAsia/Samarkand\\nAsia/Seoul\\nAsia/Shanghai\\nAsia/Singapore\\nAsia/Srednekolymsk\\nAsia/Taipei\\nAsia/Tashkent\\nAsia/Tbilisi\\nAsia/Tehran\\nAsia/Tel_Aviv\\nAsia/Thimbu\\nAsia/Thimphu\\nAsia/Tokyo\\nAsia/Tomsk\\nAsia/Ujung_Pandang\\nAsia/Ulaanbaatar\\nAsia/Ulan_Bator\\nAsia/Urumqi\\nAsia/Ust-Nera\\nAsia/Vientiane\\nAsia/Vladivostok\\nAsia/Yakutsk\\nAsia/Yangon\\nAsia/Yekaterinburg\\nAsia/Yerevan\\nAtlantic/Azores\\nAtlantic/Bermuda\\nAtlantic/Canary\\nAtlantic/Cape_Verde\\nAtlantic/Faeroe\\nAtlantic/Faroe\\nAtlantic/Jan_Mayen\\nAtlantic/Madeira\\nAtlantic/Reykjavik\\nAtlantic/South_Georgia\\nAtlantic/St_Helena\\nAtlantic/Stanley\\nAustralia/ACT\\nAustralia/Adelaide\\nAustralia/Brisbane\\nAustralia/Broken_Hill\\nAustralia/Canberra\\nAustralia/Currie\\nAustralia/Darwin\\nAustralia/Eucla\\nAustralia/Hobart\\nAustralia/LHI\\nAustralia/Lindeman\\nAustralia/Lord_Howe\\nAustralia/Melbourne\\nAustralia/NSW\\nAustralia/North\\nAustralia/Perth\\nAustralia/Queensland\\nAustralia/South\\nAustralia/Sydney\\nAustralia/Tasmania\\nAustralia/Victoria\\nAustralia/West\\nAustralia/Yancowinna\\nBrazil/Acre\\nBrazil/DeNoronha\\nBrazil/East\\nBrazil/West\\nCET\\nCST6CDT\\nCanada/Atlantic\\nCanada/Central\\nCanada/Eastern\\nCanada/Mountain\\nCanada/Newfoundland\\nCanada/Pacific\\nCanada/Saskatchewan\\nCanada/Yukon\\nChile/Continental\\nChile/EasterIsland\\nCuba\\nEET\\nEST\\nEST5EDT\\nEgypt\\nEire\\nEtc/GMT\\nEtc/GMT+0\\nEtc/GMT+1\\nEtc/GMT+10\\nEtc/GMT+11\\nEtc/GMT+12\\nEtc/GMT+2\\nEtc/GMT+3\\nEtc/GMT+4\\nEtc/GMT+5\\nEtc/GMT+6\\nEtc/GMT+7\\nEtc/GMT+8\\nEtc/GMT+9\\nEtc/GMT-0\\nEtc/GMT-1\\nEtc/GMT-10\\nEtc/GMT-11\\nEtc/GMT-12\\nEtc/GMT-13\\nEtc/GMT-14\\nEtc/GMT-2\\nEtc/GMT-3\\nEtc/GMT-4\\nEtc/GMT-5\\nEtc/GMT-6\\nEtc/GMT-7\\nEtc/GMT-8\\nEtc/GMT-9\\nEtc/GMT0\\nEtc/Greenwich\\nEtc/UCT\\nEtc/UTC\\nEtc/Universal\\nEtc/Zulu\\nEurope/Amsterdam\\nEurope/Andorra\\nEurope/Astrakhan\\nEurope/Athens\\nEurope/Belfast\\nEurope/Belgrade\\nEurope/Berlin\\nEurope/Bratislava\\nEurope/Brussels\\nEurope/Bucharest\\nEurope/Budapest\\nEurope/Busingen\\nEurope/Chisinau\\nEurope/Copenhagen\\nEurope/Dublin\\nEurope/Gibraltar\\nEurope/Guernsey\\nEurope/Helsinki\\nEurope/Isle_of_Man\\nEurope/Istanbul\\nEurope/Jersey\\nEurope/Kaliningrad\\nEurope/Kiev\\nEurope/Kirov\\nEurope/Kyiv\\nEurope/Lisbon\\nEurope/Ljubljana\\nEurope/London\\nEurope/Luxembourg\\nEurope/Madrid\\nEurope/Malta\\nEurope/Mariehamn\\nEurope/Minsk\\nEurope/Monaco\\nEurope/Moscow\\nEurope/Nicosia\\nEurope/Oslo\\nEurope/Paris\\nEurope/Podgorica\\nEurope/Prague\\nEurope/Riga\\nEurope/Rome\\nEurope/Samara\\nEurope/San_Marino\\nEurope/Sarajevo\\nEurope/Saratov\\nEurope/Simferopol\\nEurope/Skopje\\nEurope/Sofia\\nEurope/Stockholm\\nEurope/Tallinn\\nEurope/Tirane\\nEurope/Tiraspol\\nEurope/Ulyanovsk\\nEurope/Uzhgorod\\nEurope/Vaduz\\nEurope/Vatican\\nEurope/Vienna\\nEurope/Vilnius\\nEurope/Volgograd\\nEurope/Warsaw\\nEurope/Zagreb\\nEurope/Zaporozhye\\nEurope/Zurich\\nGB\\nGB-Eire\\nGMT\\nGMT+0\\nGMT-0\\nGMT0\\nGreenwich\\nHST\\nHongkong\\nIceland\\nIndian/Antananarivo\\nIndian/Chagos\\nIndian/Christmas\\nIndian/Cocos\\nIndian/Comoro\\nIndian/Kerguelen\\nIndian/Mahe\\nIndian/Maldives\\nIndian/Mauritius\\nIndian/Mayotte\\nIndian/Reunion\\nIran\\nIsrael\\nJamaica\\nJapan\\nKwajalein\\nLibya\\nMET\\nMST\\nMST7MDT\\nMexico/BajaNorte\\nMexico/BajaSur\\nMexico/General\\nNZ\\nNZ-CHAT\\nNavajo\\nPRC\\nPST8PDT\\nPacific/Apia\\nPacific/Auckland\\nPacific/Bougainville\\nPacific/Chatham\\nPacific/Chuuk\\nPacific/Easter\\nPacific/Efate\\nPacific/Enderbury\\nPacific/Fakaofo\\nPacific/Fiji\\nPacific/Funafuti\\nPacific/Galapagos\\nPacific/Gambier\\nPacific/Guadalcanal\\nPacific/Guam\\nPacific/Honolulu\\nPacific/Johnston\\nPacific/Kanton\\nPacific/Kiritimati\\nPacific/Kosrae\\nPacific/Kwajalein\\nPacific/Majuro\\nPacific/Marquesas\\nPacific/Midway\\nPacific/Nauru\\nPacific/Niue\\nPacific/Norfolk\\nPacific/Noumea\\nPacific/Pago_Pago\\nPacific/Palau\\nPacific/Pitcairn\\nPacific/Pohnpei\\nPacific/Ponape\\nPacific/Port_Moresby\\nPacific/Rarotonga\\nPacific/Saipan\\nPacific/Samoa\\nPacific/Tahiti\\nPacific/Tarawa\\nPacific/Tongatapu\\nPacific/Truk\\nPacific/Wake\\nPacific/Wallis\\nPacific/Yap\\nPoland\\nPortugal\\nROC\\nROK\\nSingapore\\nTurkey\\nUCT\\nUS/Alaska\\nUS/Aleutian\\nUS/Arizona\\nUS/Central\\nUS/East-Indiana\\nUS/Eastern\\nUS/Hawaii\\nUS/Indiana-Starke\\nUS/Michigan\\nUS/Mountain\\nUS/Pacific\\nUS/Samoa\\nUTC\\nUniversal\\nW-SU\\nWET\\nZulu",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1030,
+                        "strtype": "DROPDOWN/List_align",
+                        "strval": "BOTTOM",
+                        "InheritedType": 3
+                      },
+                      {
+                        "nid": 1040,
+                        "strtype": "DROPDOWN/Show_selected",
+                        "strval": "True",
+                        "InheritedType": 2
+                      },
+                      {
+                        "nid": 1050,
+                        "strtype": "DROPDOWN/Base_text",
+                        "strval": "",
+                        "InheritedType": 10
+                      },
+                      {
+                        "part": "lv.PART.MAIN",
+                        "childs": [
+                          {
+                            "nid": 10000,
+                            "strtype": "_style/StyleState",
+                            "strval": "DEFAULT",
+                            "childs": [
+                              {
+                                "nid": 10450,
+                                "strtype": "_style/Text_Font",
+                                "strval": "montserrat_14",
+                                "InheritedType": 3
+                              }
+                            ],
+                            "InheritedType": 1
+                          }
+                        ],
+                        "nid": 1060,
+                        "strtype": "DROPDOWN/Style_main",
+                        "strval": "lv.PART.MAIN, Text, Rectangle, Pad, Transform",
+                        "InheritedType": 11
+                      },
+                      {
+                        "part": "lv.PART.INDICATOR",
+                        "childs": [],
+                        "nid": 1070,
+                        "strtype": "DROPDOWN/Style_indicator",
+                        "strval": "lv.PART.INDICATOR, Text",
+                        "InheritedType": 11
+                      },
+                      {
+                        "part": " lv.PART.MAIN",
+                        "childs": [
+                          {
+                            "nid": 10000,
+                            "strtype": "_style/StyleState",
+                            "strval": "DEFAULT",
+                            "childs": [
+                              {
+                                "nid": 10450,
+                                "strtype": "_style/Text_Font",
+                                "strval": "montserrat_14",
+                                "InheritedType": 3
+                              }
+                            ],
+                            "InheritedType": 1
+                          }
+                        ],
+                        "nid": 1080,
+                        "strtype": "DROPDOWN/Style_list_main",
+                        "strval": "{\"python\":\"{0}.get_list()\",\"c\":\"lv_dropdown_get_list({0})\"} lv.PART.MAIN, Text, Rectangle, Pad",
+                        "InheritedType": 11
+                      },
+                      {
+                        "part": " lv.PART.SCROLLBAR",
+                        "childs": [],
+                        "nid": 1090,
+                        "strtype": "DROPDOWN/Style_list_scrollbar",
+                        "strval": "{\"python\":\"{0}.get_list()\",\"c\":\"lv_dropdown_get_list({0})\"} lv.PART.SCROLLBAR, Rectangle, Pad",
+                        "InheritedType": 11
+                      },
+                      {
+                        "part": " lv.PART.SELECTED",
+                        "childs": [
+                          {
+                            "nid": 10000,
+                            "strtype": "_style/StyleState",
+                            "strval": "DEFAULT",
+                            "childs": [
+                              {
+                                "nid": 10450,
+                                "strtype": "_style/Text_Font",
+                                "strval": "montserrat_14",
+                                "InheritedType": 3
+                              }
+                            ],
+                            "InheritedType": 1
+                          }
+                        ],
+                        "nid": 1100,
+                        "strtype": "DROPDOWN/Style_list_selected",
+                        "strval": "{\"python\":\"{0}.get_list()\",\"c\":\"lv_dropdown_get_list({0})\"} lv.PART.SELECTED, Text, Rectangle",
+                        "InheritedType": 11
+                      }
+                    ],
+                    "saved_objtypeKey": "DROPDOWN",
+                    "tree_closed": true
+                  }
+                ],
+                "dont_export": false,
+                "locked": false,
+                "properties": [
+                  {
+                    "nid": 10,
+                    "strtype": "OBJECT/Name",
+                    "strval": "Method Setting Container",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": 20,
+                    "strtype": "OBJECT/Layout",
+                    "InheritedType": 1
+                  },
+                  {
+                    "Flow": 0,
+                    "Wrap": false,
+                    "Reversed": false,
+                    "MainAlignment": 0,
+                    "CrossAlignment": 1,
+                    "TrackAlignment": 1,
+                    "LayoutType": 1,
+                    "nid": 30,
+                    "strtype": "OBJECT/Layout_type",
+                    "strval": "No_layout",
+                    "InheritedType": 13
+                  },
+                  {
+                    "nid": 40,
+                    "strtype": "OBJECT/Transform",
+                    "InheritedType": 1
+                  },
+                  {
+                    "nid": 50,
+                    "flags": 17,
+                    "strtype": "OBJECT/Position",
+                    "intarray": [
+                      0,
+                      0
+                    ],
+                    "InheritedType": 7
+                  },
+                  {
+                    "nid": 60,
+                    "flags": 18,
+                    "strtype": "OBJECT/Size",
+                    "intarray": [
+                      100,
+                      50
+                    ],
+                    "InheritedType": 7
+                  },
+                  {
+                    "nid": 70,
+                    "strtype": "OBJECT/Align",
+                    "strval": "CENTER",
+                    "InheritedType": 3
+                  },
+                  {
+                    "nid": 90,
+                    "flags": 1048576,
+                    "strtype": "OBJECT/Flags",
+                    "InheritedType": 1
+                  },
+                  {
+                    "nid": 110,
+                    "strtype": "OBJECT/Clickable",
+                    "strval": "False",
+                    "InheritedType": 2
+                  },
+                  {
+                    "nid": 230,
+                    "strtype": "OBJECT/Scrollable",
+                    "strval": "False",
+                    "InheritedType": 2
+                  },
+                  {
+                    "nid": 300,
+                    "strtype": "OBJECT/Scrollbar_mode",
+                    "strval": "AUTO",
+                    "InheritedType": 3
+                  },
+                  {
+                    "nid": 310,
+                    "strtype": "OBJECT/Scroll_direction",
+                    "strval": "ALL",
+                    "InheritedType": 3
+                  },
+                  {
+                    "nid": 320,
+                    "flags": 1048576,
+                    "strtype": "OBJECT/States",
+                    "InheritedType": 1
+                  },
+                  {
+                    "part": "lv.PART.MAIN",
+                    "childs": [],
+                    "nid": 1010,
+                    "strtype": "CONTAINER/Style_main",
+                    "strval": "lv.PART.MAIN, Rectangle, Pad, Text, Transform",
+                    "InheritedType": 11
+                  },
+                  {
+                    "part": "lv.PART.SCROLLBAR",
+                    "childs": [],
+                    "nid": 1020,
+                    "strtype": "CONTAINER/Style_scrollbar",
+                    "strval": "lv.PART.SCROLLBAR, Rectangle, Pad",
+                    "InheritedType": 11
+                  }
+                ],
+                "saved_objtypeKey": "CONTAINER"
+              },
+              {
+                "guid": "GUID8269956-791734S6043354",
+                "deepid": 1704576902,
+                "children": [
+                  {
+                    "guid": "GUID39469847-791732S6033354",
+                    "deepid": -660471010,
+                    "dont_export": false,
+                    "locked": false,
+                    "properties": [
+                      {
+                        "nid": 10,
+                        "strtype": "OBJECT/Name",
+                        "strval": "Location Label2",
                         "InheritedType": 10
                       },
                       {
@@ -22461,7 +23040,7 @@
                     "saved_objtypeKey": "LABEL"
                   },
                   {
-                    "guid": "GUID2125397-791726S4063354",
+                    "guid": "GUID83893766-791733S6043354",
                     "deepid": 1176272475,
                     "dont_export": false,
                     "locked": false,
@@ -22469,7 +23048,7 @@
                       {
                         "nid": 10,
                         "strtype": "OBJECT/Name",
-                        "strval": "Dropdown2",
+                        "strval": "Dropdown1",
                         "InheritedType": 10
                       },
                       {
@@ -22582,7 +23161,22 @@
                       },
                       {
                         "part": "lv.PART.MAIN",
-                        "childs": [],
+                        "childs": [
+                          {
+                            "nid": 10000,
+                            "strtype": "_style/StyleState",
+                            "strval": "DEFAULT",
+                            "childs": [
+                              {
+                                "nid": 10450,
+                                "strtype": "_style/Text_Font",
+                                "strval": "montserrat_14",
+                                "InheritedType": 3
+                              }
+                            ],
+                            "InheritedType": 1
+                          }
+                        ],
                         "nid": 1060,
                         "strtype": "DROPDOWN/Style_main",
                         "strval": "lv.PART.MAIN, Text, Rectangle, Pad, Transform",
@@ -22598,7 +23192,22 @@
                       },
                       {
                         "part": " lv.PART.MAIN",
-                        "childs": [],
+                        "childs": [
+                          {
+                            "nid": 10000,
+                            "strtype": "_style/StyleState",
+                            "strval": "DEFAULT",
+                            "childs": [
+                              {
+                                "nid": 10450,
+                                "strtype": "_style/Text_Font",
+                                "strval": "montserrat_14",
+                                "InheritedType": 3
+                              }
+                            ],
+                            "InheritedType": 1
+                          }
+                        ],
                         "nid": 1080,
                         "strtype": "DROPDOWN/Style_list_main",
                         "strval": "{\"python\":\"{0}.get_list()\",\"c\":\"lv_dropdown_get_list({0})\"} lv.PART.MAIN, Text, Rectangle, Pad",
@@ -22614,7 +23223,22 @@
                       },
                       {
                         "part": " lv.PART.SELECTED",
-                        "childs": [],
+                        "childs": [
+                          {
+                            "nid": 10000,
+                            "strtype": "_style/StyleState",
+                            "strval": "DEFAULT",
+                            "childs": [
+                              {
+                                "nid": 10450,
+                                "strtype": "_style/Text_Font",
+                                "strval": "montserrat_14",
+                                "InheritedType": 3
+                              }
+                            ],
+                            "InheritedType": 1
+                          }
+                        ],
                         "nid": 1100,
                         "strtype": "DROPDOWN/Style_list_selected",
                         "strval": "{\"python\":\"{0}.get_list()\",\"c\":\"lv_dropdown_get_list({0})\"} lv.PART.SELECTED, Text, Rectangle",
@@ -22631,7 +23255,7 @@
                   {
                     "nid": 10,
                     "strtype": "OBJECT/Name",
-                    "strval": "Method Setting Container",
+                    "strval": "Method Setting Container1",
                     "InheritedType": 10
                   },
                   {
@@ -22736,8 +23360,7 @@
                     "InheritedType": 11
                   }
                 ],
-                "saved_objtypeKey": "CONTAINER",
-                "tree_closed": true
+                "saved_objtypeKey": "CONTAINER"
               }
             ],
             "dont_export": false,
@@ -22788,7 +23411,7 @@
                 "strtype": "OBJECT/Size",
                 "intarray": [
                   682,
-                  155
+                  222
                 ],
                 "InheritedType": 7
               },
@@ -24347,7 +24970,7 @@
     "uiExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main/ui",
     "projectExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 183,
+    "backup_cnt": 191,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
@@ -24363,7 +24986,7 @@
     "drive_fatfs_path": "",
     "naming": "Name",
     "naming_force_lowercase": false,
-    "nidcnt": 1000508,
+    "nidcnt": 1000518,
     "BitDepth": 16,
     "Name": "3d_printer"
   }

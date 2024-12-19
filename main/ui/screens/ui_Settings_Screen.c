@@ -22,7 +22,7 @@ void ui_Settings_Screen_screen_init(void)
     lv_obj_set_width(ui_Save_Button, 100);
     lv_obj_set_height(ui_Save_Button, 50);
     lv_obj_set_x(ui_Save_Button, 10);
-    lv_obj_set_y(ui_Save_Button, 37);
+    lv_obj_set_y(ui_Save_Button, 120);
     lv_obj_set_align(ui_Save_Button, LV_ALIGN_CENTER);
     lv_obj_set_style_bg_color(ui_Save_Button, lv_color_hex(0xE58300), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Save_Button, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -174,7 +174,7 @@ void ui_Settings_Screen_screen_init(void)
 
     ui_Settings_Content_Panel = lv_obj_create(ui_Settings_Screen);
     lv_obj_set_width(ui_Settings_Content_Panel, 682);
-    lv_obj_set_height(ui_Settings_Content_Panel, 155);
+    lv_obj_set_height(ui_Settings_Content_Panel, 222);
     lv_obj_set_x(ui_Settings_Content_Panel, 40);
     lv_obj_set_y(ui_Settings_Content_Panel, 80);
     lv_obj_set_align(ui_Settings_Content_Panel, LV_ALIGN_TOP_MID);
@@ -219,6 +219,7 @@ void ui_Settings_Screen_screen_init(void)
     lv_textarea_set_text(ui_Latitude, "Latitude");
     lv_textarea_set_placeholder_text(ui_Latitude, "Placeholder...");
     lv_textarea_set_one_line(ui_Latitude, true);
+    lv_obj_set_style_text_font(ui_Latitude, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 
 
@@ -235,6 +236,7 @@ void ui_Settings_Screen_screen_init(void)
     lv_textarea_set_text(ui_Longitude, "Longitude");
     lv_textarea_set_placeholder_text(ui_Longitude, "Placeholder...");
     lv_textarea_set_one_line(ui_Longitude, true);
+    lv_obj_set_style_text_font(ui_Longitude, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 
 
@@ -275,25 +277,64 @@ void ui_Settings_Screen_screen_init(void)
     lv_obj_set_flex_align(ui_Method_Setting_Container, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
     lv_obj_clear_flag(ui_Method_Setting_Container, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_Location_Label1 = lv_label_create(ui_Method_Setting_Container);
-    lv_obj_set_width(ui_Location_Label1, 250);
-    lv_obj_set_height(ui_Location_Label1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_align(ui_Location_Label1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Location_Label1, "Calculation Method");
-    lv_obj_set_style_text_color(ui_Location_Label1, lv_color_hex(0xF19A00), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_Location_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_align(ui_Location_Label1, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Location_Label1, &lv_font_montserrat_24, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_Timezone_Label = lv_label_create(ui_Method_Setting_Container);
+    lv_obj_set_width(ui_Timezone_Label, 250);
+    lv_obj_set_height(ui_Timezone_Label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Timezone_Label, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Timezone_Label, "Timezone");
+    lv_obj_set_style_text_color(ui_Timezone_Label, lv_color_hex(0xF19A00), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Timezone_Label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_Timezone_Label, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Timezone_Label, &lv_font_montserrat_24, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Dropdown2 = lv_dropdown_create(ui_Method_Setting_Container);
-    lv_dropdown_set_options(ui_Dropdown2,
+    ui_Timezone_Dropdown = lv_dropdown_create(ui_Method_Setting_Container);
+    lv_dropdown_set_options(ui_Timezone_Dropdown,
+                            "Africa/Abidjan\nAfrica/Accra\nAfrica/Addis_Ababa\nAfrica/Algiers\nAfrica/Asmara\nAfrica/Asmera\nAfrica/Bamako\nAfrica/Bangui\nAfrica/Banjul\nAfrica/Bissau\nAfrica/Blantyre\nAfrica/Brazzaville\nAfrica/Bujumbura\nAfrica/Cairo\nAfrica/Casablanca\nAfrica/Ceuta\nAfrica/Conakry\nAfrica/Dakar\nAfrica/Dar_es_Salaam\nAfrica/Djibouti\nAfrica/Douala\nAfrica/El_Aaiun\nAfrica/Freetown\nAfrica/Gaborone\nAfrica/Harare\nAfrica/Johannesburg\nAfrica/Juba\nAfrica/Kampala\nAfrica/Khartoum\nAfrica/Kigali\nAfrica/Kinshasa\nAfrica/Lagos\nAfrica/Libreville\nAfrica/Lome\nAfrica/Luanda\nAfrica/Lubumbashi\nAfrica/Lusaka\nAfrica/Malabo\nAfrica/Maputo\nAfrica/Maseru\nAfrica/Mbabane\nAfrica/Mogadishu\nAfrica/Monrovia\nAfrica/Nairobi\nAfrica/Ndjamena\nAfrica/Niamey\nAfrica/Nouakchott\nAfrica/Ouagadougou\nAfrica/Porto-Novo\nAfrica/Sao_Tome\nAfrica/Timbuktu\nAfrica/Tripoli\nAfrica/Tunis\nAfrica/Windhoek\nAmerica/Adak\nAmerica/Anchorage\nAmerica/Anguilla\nAmerica/Antigua\nAmerica/Araguaina\nAmerica/Argentina/Buenos_Aires\nAmerica/Argentina/Catamarca\nAmerica/Argentina/ComodRivadavia\nAmerica/Argentina/Cordoba\nAmerica/Argentina/Jujuy\nAmerica/Argentina/La_Rioja\nAmerica/Argentina/Mendoza\nAmerica/Argentina/Rio_Gallegos\nAmerica/Argentina/Salta\nAmerica/Argentina/San_Juan\nAmerica/Argentina/San_Luis\nAmerica/Argentina/Tucuman\nAmerica/Argentina/Ushuaia\nAmerica/Aruba\nAmerica/Asuncion\nAmerica/Atikokan\nAmerica/Atka\nAmerica/Bahia\nAmerica/Bahia_Banderas\nAmerica/Barbados\nAmerica/Belem\nAmerica/Belize\nAmerica/Blanc-Sablon\nAmerica/Boa_Vista\nAmerica/Bogota\nAmerica/Boise\nAmerica/Buenos_Aires\nAmerica/Cambridge_Bay\nAmerica/Campo_Grande\nAmerica/Cancun\nAmerica/Caracas\nAmerica/Catamarca\nAmerica/Cayenne\nAmerica/Cayman\nAmerica/Chicago\nAmerica/Chihuahua\nAmerica/Ciudad_Juarez\nAmerica/Coral_Harbour\nAmerica/Cordoba\nAmerica/Costa_Rica\nAmerica/Creston\nAmerica/Cuiaba\nAmerica/Curacao\nAmerica/Danmarkshavn\nAmerica/Dawson\nAmerica/Dawson_Creek\nAmerica/Denver\nAmerica/Detroit\nAmerica/Dominica\nAmerica/Edmonton\nAmerica/Eirunepe\nAmerica/El_Salvador\nAmerica/Ensenada\nAmerica/Fort_Nelson\nAmerica/Fort_Wayne\nAmerica/Fortaleza\nAmerica/Glace_Bay\nAmerica/Godthab\nAmerica/Goose_Bay\nAmerica/Grand_Turk\nAmerica/Grenada\nAmerica/Guadeloupe\nAmerica/Guatemala\nAmerica/Guayaquil\nAmerica/Guyana\nAmerica/Halifax\nAmerica/Havana\nAmerica/Hermosillo\nAmerica/Indiana/Indianapolis\nAmerica/Indiana/Knox\nAmerica/Indiana/Marengo\nAmerica/Indiana/Petersburg\nAmerica/Indiana/Tell_City\nAmerica/Indiana/Vevay\nAmerica/Indiana/Vincennes\nAmerica/Indiana/Winamac\nAmerica/Indianapolis\nAmerica/Inuvik\nAmerica/Iqaluit\nAmerica/Jamaica\nAmerica/Jujuy\nAmerica/Juneau\nAmerica/Kentucky/Louisville\nAmerica/Kentucky/Monticello\nAmerica/Knox_IN\nAmerica/Kralendijk\nAmerica/La_Paz\nAmerica/Lima\nAmerica/Los_Angeles\nAmerica/Louisville\nAmerica/Lower_Princes\nAmerica/Maceio\nAmerica/Managua\nAmerica/Manaus\nAmerica/Marigot\nAmerica/Martinique\nAmerica/Matamoros\nAmerica/Mazatlan\nAmerica/Mendoza\nAmerica/Menominee\nAmerica/Merida\nAmerica/Metlakatla\nAmerica/Mexico_City\nAmerica/Miquelon\nAmerica/Moncton\nAmerica/Monterrey\nAmerica/Montevideo\nAmerica/Montreal\nAmerica/Montserrat\nAmerica/Nassau\nAmerica/New_York\nAmerica/Nipigon\nAmerica/Nome\nAmerica/Noronha\nAmerica/North_Dakota/Beulah\nAmerica/North_Dakota/Center\nAmerica/North_Dakota/New_Salem\nAmerica/Nuuk\nAmerica/Ojinaga\nAmerica/Panama\nAmerica/Pangnirtung\nAmerica/Paramaribo\nAmerica/Phoenix\nAmerica/Port-au-Prince\nAmerica/Port_of_Spain\nAmerica/Porto_Acre\nAmerica/Porto_Velho\nAmerica/Puerto_Rico\nAmerica/Punta_Arenas\nAmerica/Rainy_River\nAmerica/Rankin_Inlet\nAmerica/Recife\nAmerica/Regina\nAmerica/Resolute\nAmerica/Rio_Branco\nAmerica/Rosario\nAmerica/Santa_Isabel\nAmerica/Santarem\nAmerica/Santiago\nAmerica/Santo_Domingo\nAmerica/Sao_Paulo\nAmerica/Scoresbysund\nAmerica/Shiprock\nAmerica/Sitka\nAmerica/St_Barthelemy\nAmerica/St_Johns\nAmerica/St_Kitts\nAmerica/St_Lucia\nAmerica/St_Thomas\nAmerica/St_Vincent\nAmerica/Swift_Current\nAmerica/Tegucigalpa\nAmerica/Thule\nAmerica/Thunder_Bay\nAmerica/Tijuana\nAmerica/Toronto\nAmerica/Tortola\nAmerica/Vancouver\nAmerica/Virgin\nAmerica/Whitehorse\nAmerica/Winnipeg\nAmerica/Yakutat\nAmerica/Yellowknife\nAntarctica/Casey\nAntarctica/Davis\nAntarctica/DumontDUrville\nAntarctica/Macquarie\nAntarctica/Mawson\nAntarctica/McMurdo\nAntarctica/Palmer\nAntarctica/Rothera\nAntarctica/South_Pole\nAntarctica/Syowa\nAntarctica/Troll\nAntarctica/Vostok\nArctic/Longyearbyen\nAsia/Aden\nAsia/Almaty\nAsia/Amman\nAsia/Anadyr\nAsia/Aqtau\nAsia/Aqtobe\nAsia/Ashgabat\nAsia/Ashkhabad\nAsia/Atyrau\nAsia/Baghdad\nAsia/Bahrain\nAsia/Baku\nAsia/Bangkok\nAsia/Barnaul\nAsia/Beirut\nAsia/Bishkek\nAsia/Brunei\nAsia/Calcutta\nAsia/Chita\nAsia/Choibalsan\nAsia/Chongqing\nAsia/Chungking\nAsia/Colombo\nAsia/Dacca\nAsia/Damascus\nAsia/Dhaka\nAsia/Dili\nAsia/Dubai\nAsia/Dushanbe\nAsia/Famagusta\nAsia/Gaza\nAsia/Harbin\nAsia/Hebron\nAsia/Ho_Chi_Minh\nAsia/Hong_Kong\nAsia/Hovd\nAsia/Irkutsk\nAsia/Istanbul\nAsia/Jakarta\nAsia/Jayapura\nAsia/Jerusalem\nAsia/Kabul\nAsia/Kamchatka\nAsia/Karachi\nAsia/Kashgar\nAsia/Kathmandu\nAsia/Katmandu\nAsia/Khandyga\nAsia/Kolkata\nAsia/Krasnoyarsk\nAsia/Kuala_Lumpur\nAsia/Kuching\nAsia/Kuwait\nAsia/Macao\nAsia/Macau\nAsia/Magadan\nAsia/Makassar\nAsia/Manila\nAsia/Muscat\nAsia/Nicosia\nAsia/Novokuznetsk\nAsia/Novosibirsk\nAsia/Omsk\nAsia/Oral\nAsia/Phnom_Penh\nAsia/Pontianak\nAsia/Pyongyang\nAsia/Qatar\nAsia/Qostanay\nAsia/Qyzylorda\nAsia/Rangoon\nAsia/Riyadh\nAsia/Saigon\nAsia/Sakhalin\nAsia/Samarkand\nAsia/Seoul\nAsia/Shanghai\nAsia/Singapore\nAsia/Srednekolymsk\nAsia/Taipei\nAsia/Tashkent\nAsia/Tbilisi\nAsia/Tehran\nAsia/Tel_Aviv\nAsia/Thimbu\nAsia/Thimphu\nAsia/Tokyo\nAsia/Tomsk\nAsia/Ujung_Pandang\nAsia/Ulaanbaatar\nAsia/Ulan_Bator\nAsia/Urumqi\nAsia/Ust-Nera\nAsia/Vientiane\nAsia/Vladivostok\nAsia/Yakutsk\nAsia/Yangon\nAsia/Yekaterinburg\nAsia/Yerevan\nAtlantic/Azores\nAtlantic/Bermuda\nAtlantic/Canary\nAtlantic/Cape_Verde\nAtlantic/Faeroe\nAtlantic/Faroe\nAtlantic/Jan_Mayen\nAtlantic/Madeira\nAtlantic/Reykjavik\nAtlantic/South_Georgia\nAtlantic/St_Helena\nAtlantic/Stanley\nAustralia/ACT\nAustralia/Adelaide\nAustralia/Brisbane\nAustralia/Broken_Hill\nAustralia/Canberra\nAustralia/Currie\nAustralia/Darwin\nAustralia/Eucla\nAustralia/Hobart\nAustralia/LHI\nAustralia/Lindeman\nAustralia/Lord_Howe\nAustralia/Melbourne\nAustralia/NSW\nAustralia/North\nAustralia/Perth\nAustralia/Queensland\nAustralia/South\nAustralia/Sydney\nAustralia/Tasmania\nAustralia/Victoria\nAustralia/West\nAustralia/Yancowinna\nBrazil/Acre\nBrazil/DeNoronha\nBrazil/East\nBrazil/West\nCET\nCST6CDT\nCanada/Atlantic\nCanada/Central\nCanada/Eastern\nCanada/Mountain\nCanada/Newfoundland\nCanada/Pacific\nCanada/Saskatchewan\nCanada/Yukon\nChile/Continental\nChile/EasterIsland\nCuba\nEET\nEST\nEST5EDT\nEgypt\nEire\nEtc/GMT\nEtc/GMT+0\nEtc/GMT+1\nEtc/GMT+10\nEtc/GMT+11\nEtc/GMT+12\nEtc/GMT+2\nEtc/GMT+3\nEtc/GMT+4\nEtc/GMT+5\nEtc/GMT+6\nEtc/GMT+7\nEtc/GMT+8\nEtc/GMT+9\nEtc/GMT-0\nEtc/GMT-1\nEtc/GMT-10\nEtc/GMT-11\nEtc/GMT-12\nEtc/GMT-13\nEtc/GMT-14\nEtc/GMT-2\nEtc/GMT-3\nEtc/GMT-4\nEtc/GMT-5\nEtc/GMT-6\nEtc/GMT-7\nEtc/GMT-8\nEtc/GMT-9\nEtc/GMT0\nEtc/Greenwich\nEtc/UCT\nEtc/UTC\nEtc/Universal\nEtc/Zulu\nEurope/Amsterdam\nEurope/Andorra\nEurope/Astrakhan\nEurope/Athens\nEurope/Belfast\nEurope/Belgrade\nEurope/Berlin\nEurope/Bratislava\nEurope/Brussels\nEurope/Bucharest\nEurope/Budapest\nEurope/Busingen\nEurope/Chisinau\nEurope/Copenhagen\nEurope/Dublin\nEurope/Gibraltar\nEurope/Guernsey\nEurope/Helsinki\nEurope/Isle_of_Man\nEurope/Istanbul\nEurope/Jersey\nEurope/Kaliningrad\nEurope/Kiev\nEurope/Kirov\nEurope/Kyiv\nEurope/Lisbon\nEurope/Ljubljana\nEurope/London\nEurope/Luxembourg\nEurope/Madrid\nEurope/Malta\nEurope/Mariehamn\nEurope/Minsk\nEurope/Monaco\nEurope/Moscow\nEurope/Nicosia\nEurope/Oslo\nEurope/Paris\nEurope/Podgorica\nEurope/Prague\nEurope/Riga\nEurope/Rome\nEurope/Samara\nEurope/San_Marino\nEurope/Sarajevo\nEurope/Saratov\nEurope/Simferopol\nEurope/Skopje\nEurope/Sofia\nEurope/Stockholm\nEurope/Tallinn\nEurope/Tirane\nEurope/Tiraspol\nEurope/Ulyanovsk\nEurope/Uzhgorod\nEurope/Vaduz\nEurope/Vatican\nEurope/Vienna\nEurope/Vilnius\nEurope/Volgograd\nEurope/Warsaw\nEurope/Zagreb\nEurope/Zaporozhye\nEurope/Zurich\nGB\nGB-Eire\nGMT\nGMT+0\nGMT-0\nGMT0\nGreenwich\nHST\nHongkong\nIceland\nIndian/Antananarivo\nIndian/Chagos\nIndian/Christmas\nIndian/Cocos\nIndian/Comoro\nIndian/Kerguelen\nIndian/Mahe\nIndian/Maldives\nIndian/Mauritius\nIndian/Mayotte\nIndian/Reunion\nIran\nIsrael\nJamaica\nJapan\nKwajalein\nLibya\nMET\nMST\nMST7MDT\nMexico/BajaNorte\nMexico/BajaSur\nMexico/General\nNZ\nNZ-CHAT\nNavajo\nPRC\nPST8PDT\nPacific/Apia\nPacific/Auckland\nPacific/Bougainville\nPacific/Chatham\nPacific/Chuuk\nPacific/Easter\nPacific/Efate\nPacific/Enderbury\nPacific/Fakaofo\nPacific/Fiji\nPacific/Funafuti\nPacific/Galapagos\nPacific/Gambier\nPacific/Guadalcanal\nPacific/Guam\nPacific/Honolulu\nPacific/Johnston\nPacific/Kanton\nPacific/Kiritimati\nPacific/Kosrae\nPacific/Kwajalein\nPacific/Majuro\nPacific/Marquesas\nPacific/Midway\nPacific/Nauru\nPacific/Niue\nPacific/Norfolk\nPacific/Noumea\nPacific/Pago_Pago\nPacific/Palau\nPacific/Pitcairn\nPacific/Pohnpei\nPacific/Ponape\nPacific/Port_Moresby\nPacific/Rarotonga\nPacific/Saipan\nPacific/Samoa\nPacific/Tahiti\nPacific/Tarawa\nPacific/Tongatapu\nPacific/Truk\nPacific/Wake\nPacific/Wallis\nPacific/Yap\nPoland\nPortugal\nROC\nROK\nSingapore\nTurkey\nUCT\nUS/Alaska\nUS/Aleutian\nUS/Arizona\nUS/Central\nUS/East-Indiana\nUS/Eastern\nUS/Hawaii\nUS/Indiana-Starke\nUS/Michigan\nUS/Mountain\nUS/Pacific\nUS/Samoa\nUTC\nUniversal\nW-SU\nWET\nZulu");
+    lv_obj_set_width(ui_Timezone_Dropdown, 380);
+    lv_obj_set_height(ui_Timezone_Dropdown, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Timezone_Dropdown, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Timezone_Dropdown, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_set_style_text_font(ui_Timezone_Dropdown, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_set_style_text_font(lv_dropdown_get_list(ui_Timezone_Dropdown), &lv_font_montserrat_14,
+                               LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_set_style_text_font(lv_dropdown_get_list(ui_Timezone_Dropdown), &lv_font_montserrat_14,
+                               LV_PART_SELECTED | LV_STATE_DEFAULT);
+
+    ui_Method_Setting_Container1 = lv_obj_create(ui_Settings_Content_Panel);
+    lv_obj_remove_style_all(ui_Method_Setting_Container1);
+    lv_obj_set_height(ui_Method_Setting_Container1, 50);
+    lv_obj_set_width(ui_Method_Setting_Container1, lv_pct(100));
+    lv_obj_set_align(ui_Method_Setting_Container1, LV_ALIGN_CENTER);
+    lv_obj_set_flex_flow(ui_Method_Setting_Container1, LV_FLEX_FLOW_ROW);
+    lv_obj_set_flex_align(ui_Method_Setting_Container1, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_Method_Setting_Container1, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_Location_Label2 = lv_label_create(ui_Method_Setting_Container1);
+    lv_obj_set_width(ui_Location_Label2, 250);
+    lv_obj_set_height(ui_Location_Label2, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Location_Label2, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Location_Label2, "Calculation Method");
+    lv_obj_set_style_text_color(ui_Location_Label2, lv_color_hex(0xF19A00), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Location_Label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_Location_Label2, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Location_Label2, &lv_font_montserrat_24, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Dropdown1 = lv_dropdown_create(ui_Method_Setting_Container1);
+    lv_dropdown_set_options(ui_Dropdown1,
                             "2 - Islamic Society of North America\n3 - Muslim World League\n4 - Umm Al-Qura University, Makkah\n8 - Gulf Region\n13 - Diyanet İşleri Başkanlığı, Turkey");
-    lv_obj_set_width(ui_Dropdown2, 380);
-    lv_obj_set_height(ui_Dropdown2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_align(ui_Dropdown2, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Dropdown2, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_set_width(ui_Dropdown1, 380);
+    lv_obj_set_height(ui_Dropdown1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Dropdown1, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Dropdown1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_set_style_text_font(ui_Dropdown1, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    lv_obj_set_style_text_font(lv_dropdown_get_list(ui_Dropdown1), &lv_font_montserrat_14,
+                               LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    lv_obj_set_style_text_font(lv_dropdown_get_list(ui_Dropdown1), &lv_font_montserrat_14,
+                               LV_PART_SELECTED | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_Button14, ui_event_Button14, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button19, ui_event_Button19, LV_EVENT_ALL, NULL);
