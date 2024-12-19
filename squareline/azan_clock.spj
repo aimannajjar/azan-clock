@@ -12103,7 +12103,7 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      70,
+                      25,
                       -70
                     ],
                     "InheritedType": 7
@@ -12168,7 +12168,7 @@
                   {
                     "nid": 1030,
                     "strtype": "LABEL/Text",
-                    "strval": "5:00\\nPM",
+                    "strval": "05:00\\nPM",
                     "InheritedType": 10
                   },
                   {
@@ -12705,8 +12705,7 @@
                         "InheritedType": 11
                       }
                     ],
-                    "saved_objtypeKey": "CONTAINER",
-                    "tree_closed": true
+                    "saved_objtypeKey": "CONTAINER"
                   },
                   {
                     "guid": "GUID98930901-317739S8303354",
@@ -18443,7 +18442,7 @@
     "uiExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main/ui",
     "projectExportFolderPath": "/home/aimannajjar/Develop/azan-clock/main",
     "custom_variable_prefix": "uic",
-    "backup_cnt": 144,
+    "backup_cnt": 145,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
