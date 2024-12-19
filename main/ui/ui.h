@@ -64,8 +64,8 @@ extern lv_obj_t * ui_Label5;
 void ui_event_Button3(lv_event_t * e);
 extern lv_obj_t * ui_Button3;
 extern lv_obj_t * ui_Label6;
-void ui_event_Button10(lv_event_t * e);
-extern lv_obj_t * ui_Button10;
+void ui_event_Settings_Button(lv_event_t * e);
+extern lv_obj_t * ui_Settings_Button;
 extern lv_obj_t * ui_Label3;
 extern lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
@@ -151,6 +151,8 @@ extern lv_obj_t * ui_WiFi_Status1;
 void ui_Settings_Screen_screen_init(void);
 extern lv_obj_t * ui_Settings_Screen;
 extern lv_obj_t * ui_Background4;
+extern lv_obj_t * ui_Save_Button;
+extern lv_obj_t * ui_Label24;
 extern lv_obj_t * ui_Panel1;
 void ui_event_Button14(lv_event_t * e);
 extern lv_obj_t * ui_Button14;
@@ -163,13 +165,18 @@ extern lv_obj_t * ui_Label21;
 extern lv_obj_t * ui_Button17;
 extern lv_obj_t * ui_Label20;
 extern lv_obj_t * ui_Settings_Content_Panel;
-extern lv_obj_t * ui_Container1;
+extern lv_obj_t * ui_Location_Settings_Container;
 extern lv_obj_t * ui_Location_Label;
 extern lv_obj_t * ui_Latitude;
+extern lv_obj_t * ui_Spacer1;
 extern lv_obj_t * ui_Longitude;
+extern lv_obj_t * ui_Spacer;
 extern lv_obj_t * ui_Locate_Me;
 extern lv_obj_t * ui_Label23;
 extern lv_obj_t * ui_Location_Name;
+extern lv_obj_t * ui_Method_Setting_Container;
+extern lv_obj_t * ui_Location_Label1;
+extern lv_obj_t * ui_Dropdown2;
 // CUSTOM VARIABLES
 
 // EVENTS

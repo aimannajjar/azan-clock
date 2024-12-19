@@ -58,8 +58,8 @@ lv_obj_t * ui_Label5;
 void ui_event_Button3(lv_event_t * e);
 lv_obj_t * ui_Button3;
 lv_obj_t * ui_Label6;
-void ui_event_Button10(lv_event_t * e);
-lv_obj_t * ui_Button10;
+void ui_event_Settings_Button(lv_event_t * e);
+lv_obj_t * ui_Settings_Button;
 lv_obj_t * ui_Label3;
 lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
@@ -148,6 +148,8 @@ lv_obj_t * ui_WiFi_Status1;
 void ui_Settings_Screen_screen_init(void);
 lv_obj_t * ui_Settings_Screen;
 lv_obj_t * ui_Background4;
+lv_obj_t * ui_Save_Button;
+lv_obj_t * ui_Label24;
 lv_obj_t * ui_Panel1;
 void ui_event_Button14(lv_event_t * e);
 lv_obj_t * ui_Button14;
@@ -160,13 +162,18 @@ lv_obj_t * ui_Label21;
 lv_obj_t * ui_Button17;
 lv_obj_t * ui_Label20;
 lv_obj_t * ui_Settings_Content_Panel;
-lv_obj_t * ui_Container1;
+lv_obj_t * ui_Location_Settings_Container;
 lv_obj_t * ui_Location_Label;
 lv_obj_t * ui_Latitude;
+lv_obj_t * ui_Spacer1;
 lv_obj_t * ui_Longitude;
+lv_obj_t * ui_Spacer;
 lv_obj_t * ui_Locate_Me;
 lv_obj_t * ui_Label23;
 lv_obj_t * ui_Location_Name;
+lv_obj_t * ui_Method_Setting_Container;
+lv_obj_t * ui_Location_Label1;
+lv_obj_t * ui_Dropdown2;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -356,12 +363,15 @@ void ui_event_Button3(lv_event_t * e)
     }
 }
 
-void ui_event_Button10(lv_event_t * e)
+void ui_event_Settings_Button(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
         _ui_screen_change(&ui_Prayers_Screen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Prayers_Screen_screen_init);
+    }
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_Settings_Screen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Settings_Screen_screen_init);
     }
 }
 

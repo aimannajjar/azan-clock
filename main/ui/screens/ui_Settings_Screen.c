@@ -18,6 +18,22 @@ void ui_Settings_Screen_screen_init(void)
     lv_obj_set_align(ui_Background4, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_Background4, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
 
+    ui_Save_Button = lv_btn_create(ui_Settings_Screen);
+    lv_obj_set_width(ui_Save_Button, 100);
+    lv_obj_set_height(ui_Save_Button, 50);
+    lv_obj_set_x(ui_Save_Button, 10);
+    lv_obj_set_y(ui_Save_Button, 37);
+    lv_obj_set_align(ui_Save_Button, LV_ALIGN_CENTER);
+    lv_obj_set_style_bg_color(ui_Save_Button, lv_color_hex(0xE58300), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Save_Button, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Label24 = lv_label_create(ui_Save_Button);
+    lv_obj_set_width(ui_Label24, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label24, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Label24, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label24, "Save");
+    lv_obj_set_style_text_font(ui_Label24, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     ui_Panel1 = lv_obj_create(ui_Settings_Screen);
     lv_obj_set_width(ui_Panel1, 70);
     lv_obj_set_height(ui_Panel1, 480);
@@ -157,35 +173,44 @@ void ui_Settings_Screen_screen_init(void)
     lv_obj_set_style_text_font(ui_Label20, &ui_font_FontAwesome_Solid_24_1, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Settings_Content_Panel = lv_obj_create(ui_Settings_Screen);
-    lv_obj_set_width(ui_Settings_Content_Panel, 720);
-    lv_obj_set_height(ui_Settings_Content_Panel, 420);
-    lv_obj_set_align(ui_Settings_Content_Panel, LV_ALIGN_BOTTOM_RIGHT);
-    lv_obj_set_flex_flow(ui_Settings_Content_Panel, LV_FLEX_FLOW_ROW);
+    lv_obj_set_width(ui_Settings_Content_Panel, 682);
+    lv_obj_set_height(ui_Settings_Content_Panel, 155);
+    lv_obj_set_x(ui_Settings_Content_Panel, 40);
+    lv_obj_set_y(ui_Settings_Content_Panel, 80);
+    lv_obj_set_align(ui_Settings_Content_Panel, LV_ALIGN_TOP_MID);
+    lv_obj_set_flex_flow(ui_Settings_Content_Panel, LV_FLEX_FLOW_COLUMN);
     lv_obj_set_flex_align(ui_Settings_Content_Panel, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START);
     lv_obj_clear_flag(ui_Settings_Content_Panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_bg_color(ui_Settings_Content_Panel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_Settings_Content_Panel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Settings_Content_Panel, 180, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(ui_Settings_Content_Panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Settings_Content_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_width(ui_Settings_Content_Panel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_color(ui_Settings_Content_Panel, lv_color_hex(0xFF8500), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_opa(ui_Settings_Content_Panel, 100, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_width(ui_Settings_Content_Panel, 8, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_spread(ui_Settings_Content_Panel, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Container1 = lv_obj_create(ui_Settings_Content_Panel);
-    lv_obj_remove_style_all(ui_Container1);
-    lv_obj_set_height(ui_Container1, 50);
-    lv_obj_set_width(ui_Container1, lv_pct(100));
-    lv_obj_set_align(ui_Container1, LV_ALIGN_CENTER);
-    lv_obj_set_flex_flow(ui_Container1, LV_FLEX_FLOW_ROW);
-    lv_obj_set_flex_align(ui_Container1, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_Container1, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    ui_Location_Settings_Container = lv_obj_create(ui_Settings_Content_Panel);
+    lv_obj_remove_style_all(ui_Location_Settings_Container);
+    lv_obj_set_height(ui_Location_Settings_Container, 50);
+    lv_obj_set_width(ui_Location_Settings_Container, lv_pct(100));
+    lv_obj_set_align(ui_Location_Settings_Container, LV_ALIGN_CENTER);
+    lv_obj_set_flex_flow(ui_Location_Settings_Container, LV_FLEX_FLOW_ROW);
+    lv_obj_set_flex_align(ui_Location_Settings_Container, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_Location_Settings_Container, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_Location_Label = lv_label_create(ui_Container1);
-    lv_obj_set_width(ui_Location_Label, 150);
+    ui_Location_Label = lv_label_create(ui_Location_Settings_Container);
+    lv_obj_set_width(ui_Location_Label, 120);
     lv_obj_set_height(ui_Location_Label, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Location_Label, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Location_Label, "Location");
-    lv_obj_set_style_text_color(ui_Location_Label, lv_color_hex(0x855500), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Location_Label, lv_color_hex(0xF19A00), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Location_Label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Location_Label, &lv_font_montserrat_30, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_Location_Label, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Location_Label, &lv_font_montserrat_24, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Latitude = lv_textarea_create(ui_Container1);
+    ui_Latitude = lv_textarea_create(ui_Location_Settings_Container);
     lv_obj_set_width(ui_Latitude, 120);
     lv_obj_set_height(ui_Latitude, LV_SIZE_CONTENT);    /// 70
     lv_obj_set_x(ui_Latitude, -69);
@@ -197,7 +222,13 @@ void ui_Settings_Screen_screen_init(void)
 
 
 
-    ui_Longitude = lv_textarea_create(ui_Container1);
+    ui_Spacer1 = lv_label_create(ui_Location_Settings_Container);
+    lv_obj_set_width(ui_Spacer1, 5);
+    lv_obj_set_height(ui_Spacer1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Spacer1, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Spacer1, "");
+
+    ui_Longitude = lv_textarea_create(ui_Location_Settings_Container);
     lv_obj_set_width(ui_Longitude, 120);
     lv_obj_set_height(ui_Longitude, LV_SIZE_CONTENT);    /// 70
     lv_obj_set_align(ui_Longitude, LV_ALIGN_CENTER);
@@ -207,7 +238,13 @@ void ui_Settings_Screen_screen_init(void)
 
 
 
-    ui_Locate_Me = lv_btn_create(ui_Container1);
+    ui_Spacer = lv_label_create(ui_Location_Settings_Container);
+    lv_obj_set_width(ui_Spacer, 5);
+    lv_obj_set_height(ui_Spacer, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Spacer, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Spacer, "");
+
+    ui_Locate_Me = lv_btn_create(ui_Location_Settings_Container);
     lv_obj_set_width(ui_Locate_Me, 120);
     lv_obj_set_height(ui_Locate_Me, 40);
     lv_obj_set_align(ui_Locate_Me, LV_ALIGN_CENTER);
@@ -221,13 +258,42 @@ void ui_Settings_Screen_screen_init(void)
     lv_label_set_text(ui_Label23, "Locate Me");
     lv_obj_set_style_text_font(ui_Label23, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Location_Name = lv_label_create(ui_Container1);
+    ui_Location_Name = lv_label_create(ui_Location_Settings_Container);
     lv_obj_set_width(ui_Location_Name, 150);
     lv_obj_set_height(ui_Location_Name, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Location_Name, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Location_Name, "Mount Holly, NJ");
     lv_obj_set_style_text_align(ui_Location_Name, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Location_Name, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Method_Setting_Container = lv_obj_create(ui_Settings_Content_Panel);
+    lv_obj_remove_style_all(ui_Method_Setting_Container);
+    lv_obj_set_height(ui_Method_Setting_Container, 50);
+    lv_obj_set_width(ui_Method_Setting_Container, lv_pct(100));
+    lv_obj_set_align(ui_Method_Setting_Container, LV_ALIGN_CENTER);
+    lv_obj_set_flex_flow(ui_Method_Setting_Container, LV_FLEX_FLOW_ROW);
+    lv_obj_set_flex_align(ui_Method_Setting_Container, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_Method_Setting_Container, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_Location_Label1 = lv_label_create(ui_Method_Setting_Container);
+    lv_obj_set_width(ui_Location_Label1, 250);
+    lv_obj_set_height(ui_Location_Label1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Location_Label1, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Location_Label1, "Calculation Method");
+    lv_obj_set_style_text_color(ui_Location_Label1, lv_color_hex(0xF19A00), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Location_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_Location_Label1, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Location_Label1, &lv_font_montserrat_24, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Dropdown2 = lv_dropdown_create(ui_Method_Setting_Container);
+    lv_dropdown_set_options(ui_Dropdown2,
+                            "2 - Islamic Society of North America\n3 - Muslim World League\n4 - Umm Al-Qura University, Makkah\n8 - Gulf Region\n13 - Diyanet İşleri Başkanlığı, Turkey");
+    lv_obj_set_width(ui_Dropdown2, 380);
+    lv_obj_set_height(ui_Dropdown2, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Dropdown2, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Dropdown2, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+
+
 
     lv_obj_add_event_cb(ui_Button14, ui_event_Button14, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button19, ui_event_Button19, LV_EVENT_ALL, NULL);
