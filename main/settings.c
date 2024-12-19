@@ -67,9 +67,7 @@ void get_user_location(lv_event_t *e) {
     memset(location_response, 0, sizeof(location_response));
 
     char url[256];
-    const char *api_key = "22862314071ccda94c8a4f3c5384e28f"; // Replace with your actual API key
-
-    snprintf(url, sizeof(url), "http://api.ipstack.com/check?access_key=%s&fields=time_zone.id,city,latitude,longitude", api_key);
+    snprintf(url, sizeof(url), "https://locate.hurranet.net/prod/check");
 
     esp_http_client_config_t config = {
         .url = url,

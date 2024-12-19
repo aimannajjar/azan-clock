@@ -21,7 +21,7 @@ void ui_Settings_Screen_screen_init(void)
     ui_Save_Button = lv_btn_create(ui_Settings_Screen);
     lv_obj_set_width(ui_Save_Button, 100);
     lv_obj_set_height(ui_Save_Button, 50);
-    lv_obj_set_x(ui_Save_Button, 10);
+    lv_obj_set_x(ui_Save_Button, 35);
     lv_obj_set_y(ui_Save_Button, 120);
     lv_obj_set_align(ui_Save_Button, LV_ALIGN_CENTER);
     lv_obj_set_style_bg_color(ui_Save_Button, lv_color_hex(0xE58300), LV_PART_MAIN | LV_STATE_DEFAULT);
