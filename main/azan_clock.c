@@ -15,10 +15,12 @@ extern SemaphoreHandle_t lvgl_mux;
 extern lv_obj_t *cui_Main_Button;
 
 typedef struct {
-    bool wifi_previously_connected;
+    bool wifi_initialized;
     bool clock_initialized;
     bool weather_initialized;
+    bool systime_initialized;
     bool prayers_initialized;
+    bool settings_initialized;
     float latitude;
     float longitude;
     char city[64];
@@ -26,7 +28,7 @@ typedef struct {
     uint8_t calculation_method;
 } state_t;
 
-state_t state = { .wifi_previously_connected = false, .clock_initialized = false };
+state_t state = { .wifi_initialized = false, .clock_initialized = false };
 
 extern lv_obj_t *ui_Loading_Status_Text;
 void azan_clock() {
@@ -42,6 +44,17 @@ void azan_clock() {
 
     ui_init();
     wifi_init();
+
+    // Sequences
+    // * Initital (boot):
+    //       wifi -> systime -> settings -> prayers -> clock
+    //                                   -> weather
+    // * Wi-Fi Reconnect (background):
+    //       wifi -> systime -> prayers -> clock
+    //
+    // * New Wi-Fi Network Setup (Setup Screen):
+    //       wifi -> systime -> settings -> prayers -> clock
+
 }
 
 void reset_nvs() {
@@ -53,12 +66,12 @@ void reset_nvs() {
     }
 }
 
-void set_wifi_previously_connected() {
-    state.wifi_previously_connected = true;
+void set_wifi_initialized() {
+    state.wifi_initialized = true;
 }
 
-bool is_wifi_previously_connected() {
-    return state.wifi_previously_connected;
+bool is_wifi_initialized() {
+    return state.wifi_initialized;
 }
 
 void set_clock_initialized() {
@@ -77,12 +90,28 @@ bool is_weather_initialized() {
     return state.weather_initialized;
 }
 
+void set_systime_initialized() {
+    state.systime_initialized = true;
+}
+
+bool is_systime_initialized() {
+    return state.systime_initialized;
+}
+
 bool is_prayers_initialized(void) {
     return state.prayers_initialized;
 }
 
 void set_prayers_initialized(void) {
     state.prayers_initialized = true;
+}
+
+bool is_settings_initialized(void) {
+    return state.settings_initialized;
+}
+
+void set_settings_initialized(void) {
+    state.settings_initialized = true;
 }
 
 void set_current_latitude(float lat) {

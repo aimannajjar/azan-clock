@@ -173,7 +173,7 @@ static void prayers_update_task(void *arg) {
         
         if (result == ESP_OK) {
             retry_delay = MIN_RETRY_DELAY;
-            vTaskDelay(TWELVE_HOURS);
+            ulTaskNotifyTake(pdTRUE, TWELVE_HOURS);
         } else {
             ESP_LOGW(TAG, "Prayer times update failed, retrying in %lu ms", pdTICKS_TO_MS(retry_delay));
             vTaskDelay(retry_delay);

@@ -214,9 +214,11 @@ static void update_time_ui() {
 
 // Task to update the LVGL label every minute
 static void time_update_task(void *arg) {
-    take_ui_mutex("update_time_ui");
-    lv_label_set_text(ui_Loading_Status_Text, "Synchronizing Clock...");
-    give_ui_mutex("update_time_ui");    
+    if (!is_clock_initialized()) {
+        take_ui_mutex("time_update_task");
+        lv_label_set_text(ui_Loading_Status_Text, "Synchronizing Clock...");
+        give_ui_mutex("time_update_task");    
+    }
 
     while (true) {
         take_ui_mutex("time_update_task");

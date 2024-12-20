@@ -101,7 +101,7 @@ void ui_Setup_Screen_screen_init(void)
 
 
     ui_Keyboard1 = lv_keyboard_create(ui_Setup_Screen);
-    lv_obj_set_height(ui_Keyboard1, 262);
+    lv_obj_set_height(ui_Keyboard1, 230);
     lv_obj_set_width(ui_Keyboard1, lv_pct(100));
     lv_obj_set_align(ui_Keyboard1, LV_ALIGN_BOTTOM_LEFT);
     lv_obj_add_flag(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN);     /// Flags
@@ -111,6 +111,37 @@ void ui_Setup_Screen_screen_init(void)
     lv_obj_set_style_shadow_spread(ui_Keyboard1, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_set_style_text_font(ui_Keyboard1, &lv_font_montserrat_18, LV_PART_ITEMS | LV_STATE_DEFAULT);
+
+    ui_Connecting_Modal = lv_obj_create(ui_Setup_Screen);
+    lv_obj_remove_style_all(ui_Connecting_Modal);
+    lv_obj_set_width(ui_Connecting_Modal, lv_pct(100));
+    lv_obj_set_height(ui_Connecting_Modal, lv_pct(100));
+    lv_obj_set_align(ui_Connecting_Modal, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Connecting_Modal, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_clear_flag(ui_Connecting_Modal, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_Connecting_Modal, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Connecting_Modal, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Spinner1 = lv_spinner_create(ui_Connecting_Modal, 1000, 90);
+    lv_obj_set_width(ui_Spinner1, 80);
+    lv_obj_set_height(ui_Spinner1, 80);
+    lv_obj_set_align(ui_Spinner1, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_Spinner1, LV_OBJ_FLAG_CLICKABLE);      /// Flags
+
+    lv_obj_set_style_arc_color(ui_Spinner1, lv_color_hex(0xDC9300), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+    lv_obj_set_style_arc_opa(ui_Spinner1, 255, LV_PART_INDICATOR | LV_STATE_DEFAULT);
+
+    ui_Connection_Failed_Label = lv_label_create(ui_Setup_Screen);
+    lv_obj_set_width(ui_Connection_Failed_Label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Connection_Failed_Label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Connection_Failed_Label, 1);
+    lv_obj_set_y(ui_Connection_Failed_Label, -12);
+    lv_obj_set_align(ui_Connection_Failed_Label, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Connection_Failed_Label, "Connection Failed!");
+    lv_obj_add_flag(ui_Connection_Failed_Label, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_text_color(ui_Connection_Failed_Label, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Connection_Failed_Label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Connection_Failed_Label, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_WiFi_Password, ui_event_WiFi_Password, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Label10, ui_event_Label10, LV_EVENT_ALL, NULL);

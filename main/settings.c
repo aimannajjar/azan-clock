@@ -252,6 +252,7 @@ void update_azan_clock() {
     set_current_city(city_name);
     set_current_timezone(tz_index);
     set_current_calculation_method(calc_method);
+    set_settings_initialized();
     if (is_prayers_initialized()) {
         notify_prayers();
     } else {

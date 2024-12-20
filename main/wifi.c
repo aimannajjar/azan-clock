@@ -4,6 +4,7 @@
 #include "nvs_flash.h"
 #include "azan_clock.h"
 #include "systime.h"
+#include "freertos/semphr.h"
 #include "ui/components/ui_comp_leftpanel.h"
 
 #define TAG "WiFi"
@@ -17,6 +18,8 @@ extern lv_obj_t *ui_LeftPanel_Main;
 extern lv_obj_t *ui_LeftPanel_Prayers;
 extern lv_obj_t *ui_LeftPanel_Setup;
 extern lv_obj_t *ui_LeftPanel_Settings;
+extern lv_obj_t *ui_Connecting_Modal;
+extern lv_obj_t *ui_Connection_Failed_Label;
 
 static int current_retries = 0;
 static char ssid[33];
@@ -27,18 +30,12 @@ extern lv_obj_t *ui_Main_Screen;
 extern lv_obj_t *ui_Setup_Screen;
 extern lv_obj_t *ui_Loading_Screen;
 extern lv_obj_t *ui_Loading_Status_Text;
-static lv_obj_t *modal_msgbox = NULL; // Message box object
 static TaskHandle_t wifi_scan_task_handle = NULL;
 static bool is_scanning = false;
-static SemaphoreHandle_t is_scanning_mux = NULL;
 
 static void save_connection_params(const char *ssid, const char *password);
 static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, size_t password_size);
 static void lock_and_wifi_setup_mode();
-static void lock_and_close_message_box_cb(lv_timer_t *timer);
-static void lock_and_show_message_box(const char *text);
-static void show_message_box(const char *text);
-
 static void connect_to_saved_wifi();
 static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data);
 
@@ -46,8 +43,6 @@ void wifi_init() {
     take_ui_mutex("wifi_init");
     lv_label_set_text(ui_Loading_Status_Text, "Connecting to Wi-Fi...");
     give_ui_mutex("wifi_init");
-
-    xSemaphoreCreateMutex(&is_scanning_mux);
 
     // Initialize WiFI stack
     esp_netif_create_default_wifi_sta();
@@ -82,33 +77,31 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
         // Save the parameters on successful connection
         save_connection_params(ssid, password);
 
-        if (lv_scr_act() == ui_Setup_Screen) {
-            lock_and_show_message_box("Connected");
-            lv_timer_create(lock_and_close_message_box_cb, 2000, NULL); // Close after 2 seconds    
-        }
-
-        take_ui_mutex("wifi_event_handler");
-        if (!is_wifi_previously_connected()) {
-            // If system has not been initialized
-            // show the loading screen, that's because we are still waiting for IP address
+        if (!is_wifi_initialized()) {
+            // We are going through boot init sequence
+            set_wifi_initialized();
+            take_ui_mutex("wifi_event_handler");
             lv_label_set_text(ui_Loading_Status_Text, "Requesting IP address...");
-            lv_scr_load(ui_Loading_Screen);
-            set_wifi_previously_connected();
+            give_ui_mutex("wifi_event_handler");
+            // Next event that will take place is IP address assignment
+            // proceed tracing in the IP event handler branch below
         } else {
-            // If system has already been initialized
-            // TODO: Update the Wi-Fi status icon on the main screen
-            lv_scr_load(ui_Main_Screen);
+            // We are either reconnecting or new wi-fi network was  manually chosen
+            if (lv_scr_act() == ui_Setup_Screen) {
+                // If it was manual Wi-Fi setup, hide spinner and show the main screen on successful connection
+                take_ui_mutex("wifi_event_handler");
+                lv_obj_add_flag(ui_Connecting_Modal, LV_OBJ_FLAG_HIDDEN);
+                lv_obj_clear_flag(ui_Connection_Failed_Label, LV_OBJ_FLAG_HIDDEN);
+                lv_scr_load(ui_Main_Screen);
+                give_ui_mutex("wifi_event_handler");
+            }
         }
-        give_ui_mutex("wifi_event_handler");
-
-        // Next event that will take place is IP address assignment
-        // proceed tracing in the IP event handler branch below
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
-        ESP_LOGI(TAG, "Wi-Fi connection failed.");
+        ESP_LOGE(TAG, "Wi-Fi connection disconnected.");
 
-        if (lv_scr_act() != ui_Setup_Screen && !is_wifi_previously_connected()) {
+        if (lv_scr_act() != ui_Setup_Screen && !is_wifi_initialized()) {
             // If we are not on the setup screen already and system has not been initialized
-            // this means we failed to connect during boot, so show the setup screen
+            // this means we failed to connect during boot, so show the setup screen after exhausting retries
             if (current_retries < MAX_RETRIES) {
                 current_retries++;
                 ESP_LOGI(TAG, "Retry #%d to connect to Wi-Fi...", current_retries);
@@ -118,11 +111,13 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
                 lock_and_wifi_setup_mode();
             }
         } else if (lv_scr_act() == ui_Setup_Screen) {
-            // if we are already on setup screen, show a message box
-            lock_and_show_message_box("Failed to connect...");
+            take_ui_mutex("wifi_event_handler");
+            lv_obj_add_flag(ui_Connecting_Modal, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(ui_Connection_Failed_Label, LV_OBJ_FLAG_HIDDEN);
+            give_ui_mutex("wifi_event_handler");
             start_scan_task(NULL);
-            lv_timer_create(lock_and_close_message_box_cb, 2000, NULL); // Close after 2 seconds    
         } else {
+            // We have lost Wi-Fi connection after having been fully initialized before
             if (current_retries < MAX_RETRIES) {
                 current_retries++;
                 ESP_LOGI(TAG, "Retry #%d to connect to Wi-Fi...", current_retries);
@@ -132,15 +127,18 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
             }
         }
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE) {
-        xSemaphoreTake(is_scanning_mux, portMAX_DELAY);
         is_scanning = false; // Update scanning state
-        xSemaphoreGive(is_scanning_mux, portMAX_DELAY);
         ESP_LOGI(TAG, "Wi-Fi scan complete.");
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         // Whenever we get a new IP address, (re-)initialize the system time
         ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
         ESP_LOGI(TAG, "Got IP Address: " IPSTR, IP2STR(&event->ip_info.ip));
-        systime_init();
+
+        if (!is_systime_initialized()) {
+            systime_init();
+        } else {
+            notify_systime();
+        }
     }    
 }
 
@@ -177,6 +175,10 @@ static void lock_and_wifi_setup_mode() {
 
 // Connect button callback
 void connect_wifi(lv_event_t *e) {
+    // Show connecting spinner and hide previous failure message if any
+    lv_obj_clear_flag(ui_Connecting_Modal, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_Connection_Failed_Label, LV_OBJ_FLAG_HIDDEN);
+
     // Disconnect from any existing connection first
     esp_wifi_disconnect();
     
@@ -191,14 +193,13 @@ void connect_wifi(lv_event_t *e) {
 
     // Stop scanning before configuring new connection
     stop_scan_task(NULL);
+    vTaskDelay(pdMS_TO_TICKS(1000));
 
     // Wait for any ongoing scan operation to complete
-    xSemaphoreTake(is_scanning_mux, portMAX_DELAY);
     while (is_scanning) {
         ESP_LOGI(TAG, "Waiting for scan operation to complete...");
-        vTaskDelay(pdMS_TO_TICKS(100));
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
-    xSemaphoreGive(is_scanning_mux, portMAX_DELAY);
 
     // Configure Wi-Fi connection
     wifi_config_t wifi_config = {
@@ -210,7 +211,6 @@ void connect_wifi(lv_event_t *e) {
     strncpy((char *)wifi_config.sta.password, password, sizeof(wifi_config.sta.password));
 
     ESP_LOGI(TAG, "Connecting to SSID: %s", ssid);
-    show_message_box("Connecting...");
 
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_connect());
@@ -273,10 +273,8 @@ void wifi_scan_task(void *param) {
             .channel = 0,
             .show_hidden = false
         };
-        xSemaphoreTake(is_scanning_mux, portMAX_DELAY);
         is_scanning = true; // Update scanning state
         ESP_ERROR_CHECK(esp_wifi_scan_start(&scan_config, true));
-        xSemaphoreGive(is_scanning_mux, portMAX_DELAY);
 
         char *dropdown_options = generate_wifi_list();
         if (dropdown_options) {
@@ -347,39 +345,4 @@ esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *password, s
     nvs_close(nvs_handle);
     ESP_LOGI(TAG, "Loaded Wi-Fi parameters from NVS: SSID=%s", ssid);
     return ESP_OK;
-}
-
-// ----------------------------------------
-// Helper Functions to show/hide message box
-// ----------------------------------------
-static void lock_and_show_message_box(const char *text) {
-    if (lv_scr_act() != ui_Setup_Screen)
-        return;
-    take_ui_mutex("lock_and_show_message_box");
-    show_message_box(text);
-    give_ui_mutex("lock_and_show_message_box");
-}
-
-static void show_message_box(const char *text) {
-    if (lv_scr_act() != ui_Setup_Screen)
-        return;
-    if (!modal_msgbox) {
-        modal_msgbox = lv_msgbox_create(NULL, text, text, NULL, false);
-        lv_obj_align(modal_msgbox, LV_ALIGN_CENTER, 0, 0);
-    } else {
-        // Locate the internal label and update its text
-        lv_obj_t *label = lv_msgbox_get_text(modal_msgbox);
-        lv_label_set_text(label, text);
-    }
-    lv_obj_set_style_bg_color(modal_msgbox, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN);
-}
-
-static void lock_and_close_message_box_cb(lv_timer_t *timer) {
-    take_ui_mutex("lock_and_close_message_box_cb");
-    if (modal_msgbox) {
-        lv_obj_del(lv_obj_get_parent(modal_msgbox));
-        modal_msgbox = NULL;
-    }
-    give_ui_mutex("lock_and_close_message_box_cb");
-    lv_timer_del(timer);
 }

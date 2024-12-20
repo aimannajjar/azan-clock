@@ -5,12 +5,16 @@
 
 void azan_clock(void);
 void update_status_text(const char *text);
-void set_wifi_previously_connected();
-bool is_wifi_previously_connected();
+void set_wifi_initialized();
+bool is_wifi_initialized();
 void set_clock_initialized();
 bool is_clock_initialized();
 void set_weather_initialized();
 bool is_weather_initialized();
+void set_systime_initialized();
+bool is_settings_initialized();
+void set_settings_initialized();
+bool is_systime_initialized();
 bool is_prayers_initialized(void);
 void set_prayers_initialized(void);
 

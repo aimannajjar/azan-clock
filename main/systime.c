@@ -22,12 +22,7 @@ extern lv_obj_t *ui_Loading_Status_Text;
 #define INET6_ADDRSTRLEN 48
 #endif
 
-static void obtain_time(void);
-
-void time_sync_notification_cb(struct timeval *tv)
-{
-    ESP_LOGI(TAG, "Notification of a time synchronization event");
-}
+static void print_servers(void);
 
 void systime_init(void)
 {
@@ -37,37 +32,58 @@ void systime_init(void)
     xTaskCreate(systime_task, "systime_task", 4096, NULL, 5, NULL);
 }
 
+void notify_systime(void) {
+    xTaskCreate(systime_task, "systime_task", 4096, NULL, 5, NULL);
+    ESP_LOGI(TAG, "Updating systime");
+}
+
 void systime_task(void *pvParameters)
 {
-    time_t now;
-    struct tm timeinfo;
-    time(&now);
-    localtime_r(&now, &timeinfo);
-    // Is time set? If not, tm_year will be (1970 - 1900).
-    if (timeinfo.tm_year < (2016 - 1900)) {
-        ESP_LOGE(TAG, "Time is not set yet. Connecting to WiFi and getting time over NTP.");
-        obtain_time();
-        time(&now);
-    }
+    ESP_LOGI(TAG, "Initializing and starting SNTP");
+    esp_sntp_config_t config = ESP_NETIF_SNTP_DEFAULT_CONFIG_MULTIPLE(5,
+                                ESP_SNTP_SERVER_LIST("time.nist.gov", "time.cloudflare.com", "time.aws.com", "pool.ntp.org", "time.google.com" ) );
 
-    char strftime_buf[64];
-
-    // Set timezone to Eastern Standard Time and print local time
+    // TODO: Move to settings init
     setenv("TZ", "EST5EDT,M3.2.0/2,M11.1.0", 1);
     tzset();
-    localtime_r(&now, &timeinfo);
-    strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
-    ESP_LOGI(TAG, "The current date/time in New York is: %s", strftime_buf);
 
-    if (sntp_get_sync_mode() == SNTP_SYNC_MODE_SMOOTH) {
-        struct timeval outdelta;
-        while (sntp_get_sync_status() == SNTP_SYNC_STATUS_IN_PROGRESS) {
-            adjtime(NULL, &outdelta);
-            ESP_LOGI(TAG, "Waiting for adjusting time ... outdelta = %jd sec: %li ms: %li us",
-                     (intmax_t)outdelta.tv_sec, (long)outdelta.tv_usec / 1000, (long)outdelta.tv_usec % 1000);
-            vTaskDelay(2000 / portTICK_PERIOD_MS);
-        }
+    // sync with sntp
+    esp_netif_sntp_init(&config);
+    print_servers();
+
+    // wait for time to be set
+    time_t now = 0;
+    struct tm timeinfo = { 0 };
+    int retry = 0;
+    const int retry_count = 30;
+    while (esp_netif_sntp_sync_wait(1000 / portTICK_PERIOD_MS) == ESP_ERR_TIMEOUT && ++retry < retry_count) {
+        ESP_LOGI(TAG, "Waiting for system time to be set... (%d/%d)", retry, retry_count);
     }
+    time(&now);
+    localtime_r(&now, &timeinfo);
+
+    esp_netif_sntp_deinit();
+
+    if (!is_settings_initialized()) {
+        // We are going through initializtion sequence, proceed to settings_init
+        settings_init();
+    } else {
+        // otherwise, we can skip settings init and skip directly to notifying prayers of systime change
+        notify_prayers();
+    }
+
+    // time(&now);
+
+
+    // if (sntp_get_sync_mode() == SNTP_SYNC_MODE_SMOOTH) {
+    //     struct timeval outdelta;
+    //     while (sntp_get_sync_status() == SNTP_SYNC_STATUS_IN_PROGRESS) {
+    //         adjtime(NULL, &outdelta);
+    //         ESP_LOGI(TAG, "Waiting for adjusting time ... outdelta = %jd sec: %li ms: %li us",
+    //                  (intmax_t)outdelta.tv_sec, (long)outdelta.tv_usec / 1000, (long)outdelta.tv_usec % 1000);
+    //         vTaskDelay(2000 / portTICK_PERIOD_MS);
+    //     }
+    // }
 
     vTaskDelete(NULL); // Delete the task once time synchronization is done
 }
@@ -87,32 +103,4 @@ static void print_servers(void)
                 ESP_LOGI(TAG, "server %d: %s", i, buff);
         }
     }
-}
-
-static void obtain_time(void)
-{
-    ESP_LOGI(TAG, "Initializing and starting SNTP");
-
-    esp_sntp_config_t config = ESP_NETIF_SNTP_DEFAULT_CONFIG_MULTIPLE(5,
-                               ESP_SNTP_SERVER_LIST("time.nist.gov", "time.cloudflare.com", "time.aws.com", "pool.ntp.org", "time.google.com" ) );
-    config.sync_cb = time_sync_notification_cb; // Note: This is only needed if we want
-
-    esp_netif_sntp_init(&config);
-
-    print_servers();
-
-    // wait for time to be set
-    time_t now = 0;
-    struct tm timeinfo = { 0 };
-    int retry = 0;
-    const int retry_count = 30;
-    while (esp_netif_sntp_sync_wait(1000 / portTICK_PERIOD_MS) == ESP_ERR_TIMEOUT && ++retry < retry_count) {
-        ESP_LOGI(TAG, "Waiting for system time to be set... (%d/%d)", retry, retry_count);
-    }
-    time(&now);
-    localtime_r(&now, &timeinfo);
-
-    esp_netif_sntp_deinit();
-
-    settings_init();
 }

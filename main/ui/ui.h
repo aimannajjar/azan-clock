@@ -66,6 +66,9 @@ extern lv_obj_t * ui_Label11;
 extern lv_obj_t * ui_Left_Panel_Setup;
 void ui_event_Keyboard1(lv_event_t * e);
 extern lv_obj_t * ui_Keyboard1;
+extern lv_obj_t * ui_Connecting_Modal;
+extern lv_obj_t * ui_Spinner1;
+extern lv_obj_t * ui_Connection_Failed_Label;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Prayers_Screen

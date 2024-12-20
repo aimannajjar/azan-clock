@@ -59,6 +59,9 @@ lv_obj_t * ui_Label11;
 lv_obj_t * ui_Left_Panel_Setup;
 void ui_event_Keyboard1(lv_event_t * e);
 lv_obj_t * ui_Keyboard1;
+lv_obj_t * ui_Connecting_Modal;
+lv_obj_t * ui_Spinner1;
+lv_obj_t * ui_Connection_Failed_Label;
 // CUSTOM VARIABLES
 
 
