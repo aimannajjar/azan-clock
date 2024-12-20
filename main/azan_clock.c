@@ -18,6 +18,11 @@ typedef struct {
     bool clock_initialized;
     bool weather_initialized;
     bool prayers_initialized;
+    float latitude;
+    float longitude;
+    char city[64];
+    uint16_t timezone;
+    uint8_t calculation_method;
 } state_t;
 
 state_t state = { .wifi_previously_connected = false, .clock_initialized = false };
@@ -35,8 +40,6 @@ void azan_clock() {
     ESP_ERROR_CHECK(esp_event_loop_create_default());
 
     ui_init();
-    // lvgl_mutex = xSemaphoreCreateMutex();
-
     wifi_init();
 }
 
@@ -79,6 +82,47 @@ bool is_prayers_initialized(void) {
 
 void set_prayers_initialized(void) {
     state.prayers_initialized = true;
+}
+
+void set_current_latitude(float lat) {
+    state.latitude = lat;
+}
+
+void set_current_longitude(float lon) {
+    state.longitude = lon;
+}
+
+void set_current_city(const char* city) {
+    strncpy(state.city, city, sizeof(state.city) - 1);
+    state.city[sizeof(state.city) - 1] = '\0';
+}
+
+void set_current_timezone(uint16_t tz) {
+    state.timezone = tz;
+}
+
+void set_current_calculation_method(uint8_t method) {
+    state.calculation_method = method;
+}
+
+float get_current_latitude(void) {
+    return state.latitude;
+}
+
+float get_current_longitude(void) {
+    return state.longitude;
+}
+
+const char* get_current_city(void) {
+    return state.city;
+}
+
+uint16_t get_current_timezone(void) {
+    return state.timezone;
+}
+
+uint8_t get_current_calculation_method(void) {
+    return state.calculation_method;
 }
 
 void take_ui_mutex(const char *caller) {

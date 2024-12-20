@@ -319,19 +319,19 @@ void ui_Settings_Screen_screen_init(void)
     lv_obj_set_style_text_align(ui_Location_Label2, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Location_Label2, &lv_font_montserrat_24, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Dropdown1 = lv_dropdown_create(ui_Method_Setting_Container1);
-    lv_dropdown_set_options(ui_Dropdown1,
+    ui_Calculation_Method_Dropdown = lv_dropdown_create(ui_Method_Setting_Container1);
+    lv_dropdown_set_options(ui_Calculation_Method_Dropdown,
                             "2 - Islamic Society of North America\n3 - Muslim World League\n4 - Umm Al-Qura University, Makkah\n8 - Gulf Region\n13 - Diyanet İşleri Başkanlığı, Turkey");
-    lv_obj_set_width(ui_Dropdown1, 380);
-    lv_obj_set_height(ui_Dropdown1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_align(ui_Dropdown1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Dropdown1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_set_style_text_font(ui_Dropdown1, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_width(ui_Calculation_Method_Dropdown, 380);
+    lv_obj_set_height(ui_Calculation_Method_Dropdown, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_align(ui_Calculation_Method_Dropdown, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Calculation_Method_Dropdown, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_set_style_text_font(ui_Calculation_Method_Dropdown, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    lv_obj_set_style_text_font(lv_dropdown_get_list(ui_Dropdown1), &lv_font_montserrat_14,
+    lv_obj_set_style_text_font(lv_dropdown_get_list(ui_Calculation_Method_Dropdown), &lv_font_montserrat_14,
                                LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    lv_obj_set_style_text_font(lv_dropdown_get_list(ui_Dropdown1), &lv_font_montserrat_14,
+    lv_obj_set_style_text_font(lv_dropdown_get_list(ui_Calculation_Method_Dropdown), &lv_font_montserrat_14,
                                LV_PART_SELECTED | LV_STATE_DEFAULT);
 
     ui_Label25 = lv_label_create(ui_Settings_Screen);

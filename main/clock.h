@@ -21,4 +21,6 @@ void start_time_update_task(void);
 // Set the timezone (default is EST)
 void clock_set_timezone(const char *timezone);
 
+void notify_clock(void);
+
 #endif // CLOCK_H

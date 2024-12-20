@@ -1,4 +1,5 @@
 #include "prayers.h"
+#include "clock.h"
 #include "esp_log.h"
 #include "esp_http_client.h"
 #include "cJSON.h"
@@ -20,6 +21,17 @@ extern lv_obj_t *ui_Duhur_Time;
 extern lv_obj_t *ui_Asr_Time;
 extern lv_obj_t *ui_Maghrib_Time;
 extern lv_obj_t *ui_Isha_Time;
+
+// Add task handle
+static TaskHandle_t prayers_update_task_handle = NULL;
+
+// Add notification function
+void notify_prayers(void) {
+    if (prayers_update_task_handle != NULL) {
+        xTaskNotifyGive(prayers_update_task_handle);
+        ESP_LOGI(TAG, "Notification sent to prayers update task");
+    }
+}
 
 // Convert 24-hour format to 12-hour AM/PM format
 static void convert_to_12hour(const char* time24, char* time12, size_t size) {
@@ -136,6 +148,7 @@ esp_err_t get_prayer_times(float latitude, float longitude) {
 
     ESP_LOGI(TAG, "Cleaning up HTTP client");
     esp_http_client_cleanup(client);
+    notify_clock();
     return result;
 }
 
@@ -159,14 +172,15 @@ static void prayers_update_task(void *arg) {
     }
 }
 
+// Modify task creation to store handle
 void prayers_init(void) {
     if (is_prayers_initialized()) {
         ESP_LOGI(TAG, "Prayers already initialized, skipping...");
         return;
     }
     
-    vTaskDelay(5000); // 5 seocnds initial delay
-    xTaskCreate(prayers_update_task, "prayers_update_task", 5120, NULL, 5, NULL);
+    vTaskDelay(5000); // 5 seconds initial delay
+    xTaskCreate(prayers_update_task, "prayers_update_task", 5120, NULL, 5, &prayers_update_task_handle);
     set_prayers_initialized();
     ESP_LOGI(TAG, "Prayer times service initialized successfully");
 }

@@ -171,7 +171,7 @@ extern lv_obj_t * ui_Timezone_Label;
 extern lv_obj_t * ui_Timezone_Dropdown;
 extern lv_obj_t * ui_Method_Setting_Container1;
 extern lv_obj_t * ui_Location_Label2;
-extern lv_obj_t * ui_Dropdown1;
+extern lv_obj_t * ui_Calculation_Method_Dropdown;
 extern lv_obj_t * ui_Label25;
 extern lv_obj_t * ui_Label26;
 extern lv_obj_t * ui_LocatorQR;

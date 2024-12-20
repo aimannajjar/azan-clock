@@ -168,7 +168,7 @@ lv_obj_t * ui_Timezone_Label;
 lv_obj_t * ui_Timezone_Dropdown;
 lv_obj_t * ui_Method_Setting_Container1;
 lv_obj_t * ui_Location_Label2;
-lv_obj_t * ui_Dropdown1;
+lv_obj_t * ui_Calculation_Method_Dropdown;
 lv_obj_t * ui_Label25;
 lv_obj_t * ui_Label26;
 lv_obj_t * ui_LocatorQR;

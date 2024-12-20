@@ -17,4 +17,16 @@ void set_prayers_initialized(void);
 void take_ui_mutex(const char *caller);
 void give_ui_mutex(const char *caller);
 
+void set_current_latitude(float lat);
+void set_current_longitude(float lon);
+void set_current_city(const char* city);
+void set_current_timezone(uint16_t tz);
+void set_current_calculation_method(uint8_t method);
+
+float get_current_latitude(void);
+float get_current_longitude(void);
+const char* get_current_city(void);
+uint16_t get_current_timezone(void);
+uint8_t get_current_calculation_method(void);
+
 #endif
