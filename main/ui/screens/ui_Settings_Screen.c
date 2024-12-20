@@ -257,6 +257,8 @@ void ui_Settings_Screen_screen_init(void)
     lv_obj_add_state(ui_comp_get_child(ui_Left_Panel_Settings, UI_COMP_LEFTPANEL_SETTINGS_BUTTON),
                      LV_STATE_FOCUSED);       /// States
 
+
+
     lv_obj_add_event_cb(ui_Save_Button, ui_event_Save_Button, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Latitude, ui_event_Latitude, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Longitude, ui_event_Longitude, LV_EVENT_ALL, NULL);

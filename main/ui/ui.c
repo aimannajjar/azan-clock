@@ -39,7 +39,6 @@ lv_obj_t * ui_Weather_Image;
 lv_obj_t * ui_Weather_Condition_Panel1;
 lv_obj_t * ui_Current_Date;
 lv_obj_t * ui_LeftPanel_Main;
-lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
 
 
@@ -101,7 +100,6 @@ lv_obj_t * ui_Maghrib_Time;
 lv_obj_t * ui_Isha_Container;
 lv_obj_t * ui_Isha_Label;
 lv_obj_t * ui_Isha_Time;
-lv_obj_t * ui_WiFi_Status1;
 lv_obj_t * ui_Left_Panel_Prayers;
 // CUSTOM VARIABLES
 
@@ -144,7 +142,6 @@ lv_obj_t * ui_Left_Panel_Settings;
 lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
-const lv_img_dsc_t * ui_imgset_icn_time_[2] = {&ui_img_icn_time_1_png, &ui_img_icn_time_2_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16

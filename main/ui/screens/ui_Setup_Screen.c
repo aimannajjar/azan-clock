@@ -98,6 +98,8 @@ void ui_Setup_Screen_screen_init(void)
 
 
 
+
+
     ui_Keyboard1 = lv_keyboard_create(ui_Setup_Screen);
     lv_obj_set_height(ui_Keyboard1, 262);
     lv_obj_set_width(ui_Keyboard1, lv_pct(100));
@@ -108,7 +110,7 @@ void ui_Setup_Screen_screen_init(void)
     lv_obj_set_style_shadow_width(ui_Keyboard1, 8, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_shadow_spread(ui_Keyboard1, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    lv_obj_set_style_text_font(ui_Keyboard1, &lv_font_montserrat_14, LV_PART_ITEMS | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Keyboard1, &lv_font_montserrat_18, LV_PART_ITEMS | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_WiFi_Password, ui_event_WiFi_Password, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Label10, ui_event_Label10, LV_EVENT_ALL, NULL);

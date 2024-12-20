@@ -426,15 +426,6 @@ void ui_Prayers_Screen_screen_init(void)
     lv_obj_set_style_text_align(ui_Isha_Time, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Isha_Time, &lv_font_montserrat_34, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WiFi_Status1 = lv_img_create(ui_Prayers_Screen);
-    lv_img_set_src(ui_WiFi_Status1, &ui_img_icn_wifi_png);
-    lv_obj_set_width(ui_WiFi_Status1, LV_SIZE_CONTENT);   /// 100
-    lv_obj_set_height(ui_WiFi_Status1, LV_SIZE_CONTENT);    /// 50
-    lv_obj_set_x(ui_WiFi_Status1, -10);
-    lv_obj_set_y(ui_WiFi_Status1, 10);
-    lv_obj_set_align(ui_WiFi_Status1, LV_ALIGN_TOP_RIGHT);
-    lv_obj_add_flag(ui_WiFi_Status1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-
     ui_Left_Panel_Prayers = ui_LeftPanel_create(ui_Prayers_Screen);
     lv_obj_set_x(ui_Left_Panel_Prayers, 0);
     lv_obj_set_y(ui_Left_Panel_Prayers, 0);
@@ -443,6 +434,8 @@ void ui_Prayers_Screen_screen_init(void)
 
     lv_obj_add_state(ui_comp_get_child(ui_Left_Panel_Prayers, UI_COMP_LEFTPANEL_PRAYERS_BUTTON),
                      LV_STATE_FOCUSED);       /// States
+
+
 
 
 

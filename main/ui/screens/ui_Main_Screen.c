@@ -160,14 +160,8 @@ void ui_Main_Screen_screen_init(void)
 
 
 
-    ui_WiFi_Status = lv_img_create(ui_Main_Screen);
-    lv_img_set_src(ui_WiFi_Status, &ui_img_icn_wifi_png);
-    lv_obj_set_width(ui_WiFi_Status, LV_SIZE_CONTENT);   /// 100
-    lv_obj_set_height(ui_WiFi_Status, LV_SIZE_CONTENT);    /// 50
-    lv_obj_set_x(ui_WiFi_Status, -10);
-    lv_obj_set_y(ui_WiFi_Status, 10);
-    lv_obj_set_align(ui_WiFi_Status, LV_ALIGN_TOP_RIGHT);
-    lv_obj_add_flag(ui_WiFi_Status, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+
+
 
 
 }

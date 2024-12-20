@@ -203,6 +203,27 @@ lv_obj_t * ui_LeftPanel_create(lv_obj_t * comp_parent)
     lv_label_set_text(cui_Label3, "");
     lv_obj_set_style_text_font(cui_Label3, &ui_font_FontAwesome_Solid_24_1, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    lv_obj_t * cui_WiFi_Disconnected;
+    cui_WiFi_Disconnected = lv_obj_create(cui_LeftPanel);
+    lv_obj_remove_style_all(cui_WiFi_Disconnected);
+    lv_obj_set_width(cui_WiFi_Disconnected, 50);
+    lv_obj_set_height(cui_WiFi_Disconnected, 50);
+    lv_obj_set_x(cui_WiFi_Disconnected, -369);
+    lv_obj_set_y(cui_WiFi_Disconnected, 70);
+    lv_obj_set_align(cui_WiFi_Disconnected, LV_ALIGN_CENTER);
+    lv_obj_add_flag(cui_WiFi_Disconnected, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_clear_flag(cui_WiFi_Disconnected, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    lv_obj_t * cui_Image6;
+    cui_Image6 = lv_img_create(cui_WiFi_Disconnected);
+    lv_img_set_src(cui_Image6, &ui_img_no_wifi_png);
+    lv_obj_set_width(cui_Image6, 32);
+    lv_obj_set_height(cui_Image6, LV_SIZE_CONTENT);    /// 50
+    lv_obj_set_align(cui_Image6, LV_ALIGN_CENTER);
+    lv_obj_add_flag(cui_Image6, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(cui_Image6, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_img_set_zoom(cui_Image6, 255);
+
     lv_obj_t ** children = lv_mem_alloc(sizeof(lv_obj_t *) * _UI_COMP_LEFTPANEL_NUM);
     children[UI_COMP_LEFTPANEL_LEFTPANEL] = cui_LeftPanel;
     children[UI_COMP_LEFTPANEL_MAIN_BUTTON] = cui_Main_Button;
@@ -213,6 +234,8 @@ lv_obj_t * ui_LeftPanel_create(lv_obj_t * comp_parent)
     children[UI_COMP_LEFTPANEL_SETUP_BUTTON_LABEL5] = cui_Label5;
     children[UI_COMP_LEFTPANEL_SETTINGS_BUTTON] = cui_Settings_Button;
     children[UI_COMP_LEFTPANEL_SETTINGS_BUTTON_LABEL3] = cui_Label3;
+    children[UI_COMP_LEFTPANEL_WIFI_DISCONNECTED] = cui_WiFi_Disconnected;
+    children[UI_COMP_LEFTPANEL_WIFI_DISCONNECTED_IMAGE6] = cui_Image6;
     lv_obj_add_event_cb(cui_LeftPanel, get_component_child_event_cb, LV_EVENT_GET_COMP_CHILD, children);
     lv_obj_add_event_cb(cui_LeftPanel, del_component_child_event_cb, LV_EVENT_DELETE, children);
     lv_obj_add_event_cb(cui_Main_Button, ui_event_comp_LeftPanel_Main_Button, LV_EVENT_ALL, children);

@@ -22,7 +22,9 @@ extern "C" {
 #define UI_COMP_LEFTPANEL_SETUP_BUTTON_LABEL5 6
 #define UI_COMP_LEFTPANEL_SETTINGS_BUTTON 7
 #define UI_COMP_LEFTPANEL_SETTINGS_BUTTON_LABEL3 8
-#define _UI_COMP_LEFTPANEL_NUM 9
+#define UI_COMP_LEFTPANEL_WIFI_DISCONNECTED 9
+#define UI_COMP_LEFTPANEL_WIFI_DISCONNECTED_IMAGE6 10
+#define _UI_COMP_LEFTPANEL_NUM 11
 lv_obj_t * ui_LeftPanel_create(lv_obj_t * comp_parent);
 void ui_event_comp_LeftPanel_Main_Button(lv_event_t * e);
 void ui_event_comp_LeftPanel_Prayers_Button(lv_event_t * e);

@@ -188,8 +188,6 @@ void prayers_init(void) {
         ESP_LOGI(TAG, "Prayers already initialized, skipping...");
         return;
     }
-
-    vTaskDelay(5000); // 5 seconds initial delay
     xTaskCreate(prayers_update_task, "prayers_update_task", 5120, NULL, 5, &prayers_update_task_handle);
     ESP_LOGI(TAG, "Prayer times service initialized successfully");
 }

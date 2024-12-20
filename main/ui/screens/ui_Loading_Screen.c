@@ -21,7 +21,7 @@ void ui_Loading_Screen_screen_init(void)
     ui_Spinner2 = lv_spinner_create(ui_Loading_Screen, 1000, 90);
     lv_obj_set_width(ui_Spinner2, 50);
     lv_obj_set_height(ui_Spinner2, 50);
-    lv_obj_set_x(ui_Spinner2, 50);
+    lv_obj_set_x(ui_Spinner2, 35);
     lv_obj_set_y(ui_Spinner2, 0);
     lv_obj_set_align(ui_Spinner2, LV_ALIGN_CENTER);
     lv_obj_clear_flag(ui_Spinner2, LV_OBJ_FLAG_CLICKABLE);      /// Flags
@@ -32,7 +32,7 @@ void ui_Loading_Screen_screen_init(void)
     ui_Loading_Status_Text = lv_label_create(ui_Loading_Screen);
     lv_obj_set_width(ui_Loading_Status_Text, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Loading_Status_Text, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Loading_Status_Text, 43);
+    lv_obj_set_x(ui_Loading_Status_Text, 35);
     lv_obj_set_y(ui_Loading_Status_Text, -20);
     lv_obj_set_align(ui_Loading_Status_Text, LV_ALIGN_BOTTOM_MID);
     lv_label_set_text(ui_Loading_Status_Text, "Initializing...");

@@ -47,7 +47,6 @@ extern lv_obj_t * ui_Weather_Image;
 extern lv_obj_t * ui_Weather_Condition_Panel1;
 extern lv_obj_t * ui_Current_Date;
 extern lv_obj_t * ui_LeftPanel_Main;
-extern lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Setup_Screen
@@ -107,7 +106,6 @@ extern lv_obj_t * ui_Maghrib_Time;
 extern lv_obj_t * ui_Isha_Container;
 extern lv_obj_t * ui_Isha_Label;
 extern lv_obj_t * ui_Isha_Time;
-extern lv_obj_t * ui_WiFi_Status1;
 extern lv_obj_t * ui_Left_Panel_Prayers;
 // CUSTOM VARIABLES
 
@@ -150,12 +148,8 @@ extern lv_obj_t * ui____initial_actions0;
 
 // IMAGES AND IMAGE SETS
 LV_IMG_DECLARE(ui_img_minaret_bg_png);    // assets/minaret_bg.png
-LV_IMG_DECLARE(ui_img_icn_wifi_png);    // assets/icn_wifi.png
+LV_IMG_DECLARE(ui_img_no_wifi_png);    // assets/no_wifi.png
 LV_IMG_DECLARE(ui_img_locatorqr_png);    // assets/locatorqr.png
-LV_IMG_DECLARE(ui_img_arrow_down_png);    // assets/arrow_down.png
-LV_IMG_DECLARE(ui_img_arrow_left_png);    // assets/arrow_left.png
-LV_IMG_DECLARE(ui_img_arrow_right_png);    // assets/arrow_right.png
-LV_IMG_DECLARE(ui_img_arrow_up_png);    // assets/arrow_up.png
 LV_IMG_DECLARE(ui_img_day_clear_png);    // assets/day_clear.png
 LV_IMG_DECLARE(ui_img_day_fog_png);    // assets/day_fog.png
 LV_IMG_DECLARE(ui_img_day_heavy_rain_png);    // assets/day_heavy_rain.png
@@ -169,13 +163,7 @@ LV_IMG_DECLARE(ui_img_day_rime_fog_png);    // assets/day_rime_fog.png
 LV_IMG_DECLARE(ui_img_day_snowflake_png);    // assets/day_snowflake.png
 LV_IMG_DECLARE(ui_img_day_thunderstorm_png);    // assets/day_thunderstorm.png
 LV_IMG_DECLARE(ui_img_icn_bed_png);    // assets/icn_bed.png
-LV_IMG_DECLARE(ui_img_icn_head_png);    // assets/icn_head.png
-LV_IMG_DECLARE(ui_img_icn_pause_png);    // assets/icn_pause.png
-LV_IMG_DECLARE(ui_img_icn_pc_png);    // assets/icn_pc.png
 LV_IMG_DECLARE(ui_img_icn_stop_png);    // assets/icn_stop.png
-LV_IMG_DECLARE(ui_img_icn_time_1_png);    // assets/icn_time_1.png
-LV_IMG_DECLARE(ui_img_icn_time_2_png);    // assets/icn_time_2.png
-LV_IMG_DECLARE(ui_img_icn_usb_png);    // assets/icn_usb.png
 LV_IMG_DECLARE(ui_img_night_clear_png);    // assets/night_clear.png
 LV_IMG_DECLARE(ui_img_night_fog_png);    // assets/night_fog.png
 LV_IMG_DECLARE(ui_img_night_heavy_rain_png);    // assets/night_heavy_rain.png

@@ -9,12 +9,8 @@ SET(SOURCES components/ui_comp_leftpanel.c
     components/ui_comp_hook.c
     ui_helpers.c
     images/ui_img_minaret_bg_png.c
-    images/ui_img_icn_wifi_png.c
+    images/ui_img_no_wifi_png.c
     images/ui_img_locatorqr_png.c
-    images/ui_img_arrow_down_png.c
-    images/ui_img_arrow_left_png.c
-    images/ui_img_arrow_right_png.c
-    images/ui_img_arrow_up_png.c
     images/ui_img_day_clear_png.c
     images/ui_img_day_fog_png.c
     images/ui_img_day_heavy_rain_png.c
@@ -28,13 +24,7 @@ SET(SOURCES components/ui_comp_leftpanel.c
     images/ui_img_day_snowflake_png.c
     images/ui_img_day_thunderstorm_png.c
     images/ui_img_icn_bed_png.c
-    images/ui_img_icn_head_png.c
-    images/ui_img_icn_pause_png.c
-    images/ui_img_icn_pc_png.c
     images/ui_img_icn_stop_png.c
-    images/ui_img_icn_time_1_png.c
-    images/ui_img_icn_time_2_png.c
-    images/ui_img_icn_usb_png.c
     images/ui_img_night_clear_png.c
     images/ui_img_night_fog_png.c
     images/ui_img_night_heavy_rain_png.c
