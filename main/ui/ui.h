@@ -13,6 +13,8 @@ extern "C" {
 #include "lvgl/lvgl.h"
 
 #include "ui_helpers.h"
+#include "components/ui_comp.h"
+#include "components/ui_comp_hook.h"
 #include "ui_events.h"
 
 void OpaOn_Animation(lv_obj_t * TargetObject, int delay);
@@ -44,42 +46,26 @@ extern lv_obj_t * ui_Weather_Condition_Panel;
 extern lv_obj_t * ui_Weather_Image;
 extern lv_obj_t * ui_Weather_Condition_Panel1;
 extern lv_obj_t * ui_Current_Date;
-extern lv_obj_t * ui_Left_Panel;
-extern lv_obj_t * ui_Button1;
-extern lv_obj_t * ui_Label1;
-void ui_event_Button2(lv_event_t * e);
-extern lv_obj_t * ui_Button2;
-extern lv_obj_t * ui_Label5;
-void ui_event_Button3(lv_event_t * e);
-extern lv_obj_t * ui_Button3;
-extern lv_obj_t * ui_Label6;
-void ui_event_Settings_Button(lv_event_t * e);
-extern lv_obj_t * ui_Settings_Button;
-extern lv_obj_t * ui_Label3;
+extern lv_obj_t * ui_LeftPanel_Main;
 extern lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Setup_Screen
 void ui_Setup_Screen_screen_init(void);
+void ui_event_Setup_Screen(lv_event_t * e);
 extern lv_obj_t * ui_Setup_Screen;
 extern lv_obj_t * ui_Background1;
 extern lv_obj_t * ui_Panel_Header1;
-extern lv_obj_t * ui_Panel8;
-void ui_event_Button4(lv_event_t * e);
-extern lv_obj_t * ui_Button4;
-extern lv_obj_t * ui_Label16;
-extern lv_obj_t * ui_Button5;
-extern lv_obj_t * ui_Label17;
-extern lv_obj_t * ui_Button6;
-extern lv_obj_t * ui_Label18;
 extern lv_obj_t * ui_WiFi_Networks;
+void ui_event_WiFi_Password(lv_event_t * e);
 extern lv_obj_t * ui_WiFi_Password;
-extern lv_obj_t * ui_Spinner1;
 void ui_event_ConnectButton(lv_event_t * e);
 extern lv_obj_t * ui_ConnectButton;
 void ui_event_Label10(lv_event_t * e);
 extern lv_obj_t * ui_Label10;
 extern lv_obj_t * ui_Label11;
+extern lv_obj_t * ui_Left_Panel_Setup;
+void ui_event_Keyboard1(lv_event_t * e);
 extern lv_obj_t * ui_Keyboard1;
 // CUSTOM VARIABLES
 
@@ -121,19 +107,8 @@ extern lv_obj_t * ui_Maghrib_Time;
 extern lv_obj_t * ui_Isha_Container;
 extern lv_obj_t * ui_Isha_Label;
 extern lv_obj_t * ui_Isha_Time;
-extern lv_obj_t * ui_Left_Panel1;
-void ui_event_Button12(lv_event_t * e);
-extern lv_obj_t * ui_Button12;
-extern lv_obj_t * ui_Label9;
-void ui_event_Button11(lv_event_t * e);
-extern lv_obj_t * ui_Button11;
-extern lv_obj_t * ui_Label8;
-extern lv_obj_t * ui_Button13;
-extern lv_obj_t * ui_Label14;
-void ui_event_Button15(lv_event_t * e);
-extern lv_obj_t * ui_Button15;
-extern lv_obj_t * ui_Label15;
 extern lv_obj_t * ui_WiFi_Status1;
+extern lv_obj_t * ui_Left_Panel_Prayers;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Settings_Screen
@@ -143,17 +118,6 @@ extern lv_obj_t * ui_Background4;
 void ui_event_Save_Button(lv_event_t * e);
 extern lv_obj_t * ui_Save_Button;
 extern lv_obj_t * ui_Label24;
-extern lv_obj_t * ui_Panel1;
-void ui_event_Button14(lv_event_t * e);
-extern lv_obj_t * ui_Button14;
-extern lv_obj_t * ui_Label4;
-void ui_event_Button19(lv_event_t * e);
-extern lv_obj_t * ui_Button19;
-extern lv_obj_t * ui_Label22;
-extern lv_obj_t * ui_Button18;
-extern lv_obj_t * ui_Label21;
-extern lv_obj_t * ui_Button17;
-extern lv_obj_t * ui_Label20;
 extern lv_obj_t * ui_Settings_Content_Panel;
 extern lv_obj_t * ui_Location_Settings_Container;
 extern lv_obj_t * ui_Location_Label;
@@ -178,6 +142,7 @@ extern lv_obj_t * ui_Label26;
 extern lv_obj_t * ui_LocatorQR;
 void ui_event_Keypad(lv_event_t * e);
 extern lv_obj_t * ui_Keypad;
+extern lv_obj_t * ui_Left_Panel_Settings;
 // CUSTOM VARIABLES
 
 // EVENTS

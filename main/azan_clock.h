@@ -29,4 +29,6 @@ const char* get_current_city(void);
 uint16_t get_current_timezone(void);
 uint8_t get_current_calculation_method(void);
 
+void change_screen(lv_event_t *t);
+
 #endif

@@ -1,4 +1,6 @@
-SET(SOURCES screens/ui_Loading_Screen.c
+SET(SOURCES components/ui_comp_leftpanel.c
+    components/ui_comp.c
+    screens/ui_Loading_Screen.c
     screens/ui_Main_Screen.c
     screens/ui_Setup_Screen.c
     screens/ui_Prayers_Screen.c

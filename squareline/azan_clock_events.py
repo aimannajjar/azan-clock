@@ -34,3 +34,7 @@ def keypad_ready(event_struct):
 def save_settings(event_struct):
     return
 
+
+def change_screen(event_struct):
+    return
+

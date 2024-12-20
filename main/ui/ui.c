@@ -38,43 +38,27 @@ lv_obj_t * ui_Weather_Condition_Panel;
 lv_obj_t * ui_Weather_Image;
 lv_obj_t * ui_Weather_Condition_Panel1;
 lv_obj_t * ui_Current_Date;
-lv_obj_t * ui_Left_Panel;
-lv_obj_t * ui_Button1;
-lv_obj_t * ui_Label1;
-void ui_event_Button2(lv_event_t * e);
-lv_obj_t * ui_Button2;
-lv_obj_t * ui_Label5;
-void ui_event_Button3(lv_event_t * e);
-lv_obj_t * ui_Button3;
-lv_obj_t * ui_Label6;
-void ui_event_Settings_Button(lv_event_t * e);
-lv_obj_t * ui_Settings_Button;
-lv_obj_t * ui_Label3;
+lv_obj_t * ui_LeftPanel_Main;
 lv_obj_t * ui_WiFi_Status;
 // CUSTOM VARIABLES
 
 
 // SCREEN: ui_Setup_Screen
 void ui_Setup_Screen_screen_init(void);
+void ui_event_Setup_Screen(lv_event_t * e);
 lv_obj_t * ui_Setup_Screen;
 lv_obj_t * ui_Background1;
 lv_obj_t * ui_Panel_Header1;
-lv_obj_t * ui_Panel8;
-void ui_event_Button4(lv_event_t * e);
-lv_obj_t * ui_Button4;
-lv_obj_t * ui_Label16;
-lv_obj_t * ui_Button5;
-lv_obj_t * ui_Label17;
-lv_obj_t * ui_Button6;
-lv_obj_t * ui_Label18;
 lv_obj_t * ui_WiFi_Networks;
+void ui_event_WiFi_Password(lv_event_t * e);
 lv_obj_t * ui_WiFi_Password;
-lv_obj_t * ui_Spinner1;
 void ui_event_ConnectButton(lv_event_t * e);
 lv_obj_t * ui_ConnectButton;
 void ui_event_Label10(lv_event_t * e);
 lv_obj_t * ui_Label10;
 lv_obj_t * ui_Label11;
+lv_obj_t * ui_Left_Panel_Setup;
+void ui_event_Keyboard1(lv_event_t * e);
 lv_obj_t * ui_Keyboard1;
 // CUSTOM VARIABLES
 
@@ -117,19 +101,8 @@ lv_obj_t * ui_Maghrib_Time;
 lv_obj_t * ui_Isha_Container;
 lv_obj_t * ui_Isha_Label;
 lv_obj_t * ui_Isha_Time;
-lv_obj_t * ui_Left_Panel1;
-void ui_event_Button12(lv_event_t * e);
-lv_obj_t * ui_Button12;
-lv_obj_t * ui_Label9;
-void ui_event_Button11(lv_event_t * e);
-lv_obj_t * ui_Button11;
-lv_obj_t * ui_Label8;
-lv_obj_t * ui_Button13;
-lv_obj_t * ui_Label14;
-void ui_event_Button15(lv_event_t * e);
-lv_obj_t * ui_Button15;
-lv_obj_t * ui_Label15;
 lv_obj_t * ui_WiFi_Status1;
+lv_obj_t * ui_Left_Panel_Prayers;
 // CUSTOM VARIABLES
 
 
@@ -140,17 +113,6 @@ lv_obj_t * ui_Background4;
 void ui_event_Save_Button(lv_event_t * e);
 lv_obj_t * ui_Save_Button;
 lv_obj_t * ui_Label24;
-lv_obj_t * ui_Panel1;
-void ui_event_Button14(lv_event_t * e);
-lv_obj_t * ui_Button14;
-lv_obj_t * ui_Label4;
-void ui_event_Button19(lv_event_t * e);
-lv_obj_t * ui_Button19;
-lv_obj_t * ui_Label22;
-lv_obj_t * ui_Button18;
-lv_obj_t * ui_Label21;
-lv_obj_t * ui_Button17;
-lv_obj_t * ui_Label20;
 lv_obj_t * ui_Settings_Content_Panel;
 lv_obj_t * ui_Location_Settings_Container;
 lv_obj_t * ui_Location_Label;
@@ -175,6 +137,7 @@ lv_obj_t * ui_Label26;
 lv_obj_t * ui_LocatorQR;
 void ui_event_Keypad(lv_event_t * e);
 lv_obj_t * ui_Keypad;
+lv_obj_t * ui_Left_Panel_Settings;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -326,44 +289,21 @@ void ScreenOut_Animation(lv_obj_t * TargetObject, int delay)
 }
 
 ///////////////////// FUNCTIONS ////////////////////
-void ui_event_Button2(lv_event_t * e)
+void ui_event_Setup_Screen(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Setup_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Setup_Screen_screen_init);
-        start_scan_task(e);
+    if(event_code == LV_EVENT_SCREEN_UNLOADED) {
+        _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
     }
 }
 
-void ui_event_Button3(lv_event_t * e)
+void ui_event_WiFi_Password(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Prayers_Screen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Prayers_Screen_screen_init);
-    }
-}
-
-void ui_event_Settings_Button(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Prayers_Screen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Prayers_Screen_screen_init);
-    }
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Settings_Screen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Settings_Screen_screen_init);
-    }
-}
-
-void ui_event_Button4(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Main_Screen_screen_init);
-        stop_scan_task(e);
+        _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
     }
 }
 
@@ -385,32 +325,15 @@ void ui_event_Label10(lv_event_t * e)
     }
 }
 
-void ui_event_Button12(lv_event_t * e)
+void ui_event_Keyboard1(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Setup_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Setup_Screen_screen_init);
-        start_scan_task(e);
+    if(event_code == LV_EVENT_READY) {
+        _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
     }
-}
-
-void ui_event_Button11(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Setup_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Setup_Screen_screen_init);
-        start_scan_task(e);
-    }
-}
-
-void ui_event_Button15(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Prayers_Screen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Prayers_Screen_screen_init);
+    if(event_code == LV_EVENT_CANCEL) {
+        _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
     }
 }
 
@@ -420,25 +343,6 @@ void ui_event_Save_Button(lv_event_t * e)
 
     if(event_code == LV_EVENT_CLICKED) {
         save_settings(e);
-    }
-}
-
-void ui_event_Button14(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Main_Screen_screen_init);
-        stop_scan_task(e);
-    }
-}
-
-void ui_event_Button19(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Prayers_Screen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Prayers_Screen_screen_init);
     }
 }
 
@@ -489,6 +393,8 @@ void ui_event_Keypad(lv_event_t * e)
 
 void ui_init(void)
 {
+    LV_EVENT_GET_COMP_CHILD = lv_event_register_id();
+
     lv_disp_t * dispp = lv_disp_get_default();
     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
                                                false, LV_FONT_DEFAULT);

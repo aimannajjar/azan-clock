@@ -12,6 +12,7 @@
 LV_FONT_DECLARE(noto_naskh_80)
 
 extern SemaphoreHandle_t lvgl_mux;
+extern lv_obj_t *cui_Main_Button;
 
 typedef struct {
     bool wifi_previously_connected;
@@ -123,6 +124,44 @@ uint16_t get_current_timezone(void) {
 
 uint8_t get_current_calculation_method(void) {
     return state.calculation_method;
+}
+
+void stringToAscii(const char *str) {
+    printf("String: %s\n", str);
+    printf("ASCII values:\n");
+
+    for (size_t i = 0; i < strlen(str); i++) {
+        printf("Character: %c, ASCII: %d\n", str[i], (int)str[i]);
+    }
+}
+
+#define MAIN_BTN_ASCII 151
+#define PRAYERS_BTN_ASCII 137
+#define SETUP_BTN_ASCII 171
+#define SETTINGS_BTN_ASCII 147
+
+void change_screen(lv_event_t *t) {
+    lv_obj_t *btn = lv_event_get_target(t);
+    lv_obj_t *label = lv_obj_get_child(btn, 0);
+    const char* text = lv_label_get_text(label);
+    switch ((int)text[2]) {
+        case MAIN_BTN_ASCII:
+            lv_scr_load(ui_Main_Screen);
+            break;
+        case PRAYERS_BTN_ASCII:
+            lv_scr_load(ui_Prayers_Screen);
+            break;
+        case SETUP_BTN_ASCII:
+            lv_scr_load(ui_Setup_Screen);
+            break;
+        case SETTINGS_BTN_ASCII:
+            lv_scr_load(ui_Settings_Screen);
+            break;
+        default:
+            ESP_LOGI(TAG, "Unknown button pressed");
+            break;
+    }
+
 }
 
 void take_ui_mutex(const char *caller) {

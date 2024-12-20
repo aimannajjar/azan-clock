@@ -11,7 +11,7 @@
 #define PRAYERS_API_URL "https://prayers.hurranet.net/prod/prayers?latitude=%f&longitude=%f&method=3"
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 
-static char prayers_info[1024];
+static char prayers_info[256];
 static size_t prayers_info_len = 0;
 
 // External LVGL label references
@@ -102,7 +102,7 @@ esp_err_t get_prayer_times(float latitude, float longitude) {
     ESP_LOGI(TAG, "Initializing HTTP client");
     esp_http_client_handle_t client = esp_http_client_init(&config);
     
-    ESP_LOGI(TAG, "Performing HTTP request");
+    ESP_LOGI(TAG, "Performing HTTP request. Free HEAP size: %lu", esp_get_free_heap_size());
     esp_err_t err = esp_http_client_perform(client);
 
     if (err == ESP_OK) {
