@@ -1,5 +1,3 @@
-// ...existing code...
-
 #include "esp_http_client.h"
 #include "esp_err.h"
 #include "esp_log.h"
@@ -9,10 +7,13 @@
 #include "timezones.h"
 #include "nvs_flash.h"
 #include "nvs.h"
+#include "prayers.h"
+#include "settings.h"
 
 #define TAG "Settings"
 #define SETTINGS_NAMESPACE "settings"
 #define MAX_STR_LEN 64
+#define FLOAT_BLOB_SIZE sizeof(float)
 
 extern lv_obj_t *ui_Latitude;
 extern lv_obj_t *ui_Longitude;
@@ -20,11 +21,11 @@ extern lv_obj_t *ui_Location_Name;
 extern lv_obj_t *ui_Timezone_Dropdown;
 extern lv_obj_t *ui_Calculation_Method_Dropdown;
 extern lv_obj_t *ui_Keypad;
-extern lv_obj_t *ui_Setting_Screen;
+extern lv_obj_t *ui_Settings_Screen;
 
 void first_time_settings() {
     take_ui_mutex("first_time_settings");
-    lv_scr_load(ui_Setting_Screen);
+    lv_scr_load(ui_Settings_Screen);
     give_ui_mutex("first_time_settings");
 }
 
@@ -39,20 +40,24 @@ void settings_init(void) {
         return;
     }
 
-    // Check latitude
+    // Check latitude using blob
     float latitude;
-    err = nvs_get_float(handle, "latitude", &latitude);
-    if (err != ESP_OK) {
+    size_t blob_size = FLOAT_BLOB_SIZE;
+    err = nvs_get_blob(handle, "latitude", &latitude, &blob_size);
+    if (err != ESP_OK || blob_size != FLOAT_BLOB_SIZE) {
         ESP_LOGW(TAG, "Latitude not found in settings");
         first_time_settings();
+        return;
     }
 
-    // Check longitude
+    // Check longitude using blob
     float longitude;
-    err = nvs_get_float(handle, "longitude", &longitude);
-    if (err != ESP_OK) {
+    blob_size = FLOAT_BLOB_SIZE;
+    err = nvs_get_blob(handle, "longitude", &longitude, &blob_size);
+    if (err != ESP_OK || blob_size != FLOAT_BLOB_SIZE) {
         ESP_LOGW(TAG, "Longitude not found in settings");
         first_time_settings();
+        return;
     }
 
     // Check timezone
@@ -61,6 +66,7 @@ void settings_init(void) {
     if (err != ESP_OK) {
         ESP_LOGW(TAG, "Timezone not found in settings");
         first_time_settings();
+        return;
     }
 
     // Check calculation method
@@ -69,6 +75,7 @@ void settings_init(void) {
     if (err != ESP_OK) {
         ESP_LOGW(TAG, "Calculation method not found in settings");
         first_time_settings();
+        return;
     }
 
     nvs_close(handle);
@@ -204,9 +211,11 @@ esp_err_t load_settings(void) {
     }
 
     take_ui_mutex("load_settings");
+    size_t blob_size = FLOAT_BLOB_SIZE;
+
     // Load latitude
     float latitude = 0.0f;
-    err = nvs_get_float(handle, "latitude", &latitude);
+    err = nvs_get_blob(handle, "latitude", &latitude, &blob_size);
     if (err == ESP_OK) {
         char lat_str[16];
         snprintf(lat_str, sizeof(lat_str), "%f", latitude);
@@ -216,7 +225,7 @@ esp_err_t load_settings(void) {
 
     // Load longitude
     float longitude = 0.0f;
-    err = nvs_get_float(handle, "longitude", &longitude);
+    err = nvs_get_blob(handle, "longitude", &latitude, &blob_size);
     if (err == ESP_OK) {
         char lon_str[16];
         snprintf(lon_str, sizeof(lon_str), "%f", longitude);
@@ -279,17 +288,18 @@ esp_err_t save_settings(void) {
 
     // Save latitude
     float latitude = atof(lv_textarea_get_text(ui_Latitude));
-    err = nvs_set_float(handle, "latitude", latitude);
+    err = nvs_set_blob(handle, "latitude", &latitude, FLOAT_BLOB_SIZE);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "Error saving latitude: %s", esp_err_to_name(err));
         nvs_close(handle);
         return err;
     }
+
     ESP_LOGI(TAG, "Saved latitude: %f", latitude);
 
-    // Save longitude
+    // Save longitude using blob
     float longitude = atof(lv_textarea_get_text(ui_Longitude));
-    err = nvs_set_float(handle, "longitude", longitude);
+    err = nvs_set_blob(handle, "longitude", &longitude, FLOAT_BLOB_SIZE);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "Error saving longitude: %s", esp_err_to_name(err));
         nvs_close(handle);
@@ -340,7 +350,16 @@ esp_err_t save_settings(void) {
         set_current_city(city_name);
         set_current_timezone(tz_index);
         set_current_calculation_method(calc_method);
-        notify_prayers();
+        if (is_prayers_initialized()) {
+            notify_prayers();
+        } else {
+            prayers_init();
+        }
+        if (is_weather_initialized()) {
+            notify_weather();
+        } else {
+            weather_init();
+        }
         ESP_LOGI(TAG, "Updated application state with saved settings");
     }
 

@@ -84,6 +84,10 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
 }
 
 esp_err_t get_prayer_times(float latitude, float longitude) {
+    take_ui_mutex("get_prayer_times");
+    lv_label_set_text(ui_Loading_Status_Text, "Synchronizing Prayer Times...");
+    give_ui_mutex("get_prayer_times");
+
     esp_err_t result = ESP_FAIL;
     char url[256];
     char formatted_time[16];
@@ -140,6 +144,11 @@ esp_err_t get_prayer_times(float latitude, float longitude) {
             }
             result = ESP_OK;
             cJSON_Delete(json);
+            if (is_clock_initialized()) {
+                notify_clock();
+            } else {
+                clock_init();
+            }        
         }
     } else {
         ESP_LOGE(TAG, "HTTP request failed: %s", esp_err_to_name(err));
@@ -148,7 +157,6 @@ esp_err_t get_prayer_times(float latitude, float longitude) {
 
     ESP_LOGI(TAG, "Cleaning up HTTP client");
     esp_http_client_cleanup(client);
-    notify_clock();
     return result;
 }
 

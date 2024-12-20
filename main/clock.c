@@ -10,6 +10,9 @@
 
 #define TAG "Clock"
 
+// Add task handle
+static TaskHandle_t time_update_task_handle = NULL;
+
 extern lv_obj_t *ui_Next_Prayer_Panel;
 extern lv_obj_t *ui_Next_Prayer_Panel1;
 
@@ -216,6 +219,14 @@ static void time_update_task(void *arg) {
     }
 }
 
+// Add notification function
+void notify_clock(void) {
+    if (time_update_task_handle != NULL) {
+        xTaskNotifyGive(time_update_task_handle);
+        ESP_LOGI(TAG, "Notification sent to clock update task");
+    }
+}
+
 // Function to initialize the clock module
 void clock_init(void) {
     if (is_clock_initialized()) {
@@ -223,7 +234,7 @@ void clock_init(void) {
         return;
     }
     
-    xTaskCreate(time_update_task, "time_update_task", 4096, NULL, 5, NULL);
+    xTaskCreate(time_update_task, "time_update_task", 4096, NULL, 5, &time_update_task_handle);
     set_clock_initialized();
     ESP_LOGI(TAG, "Clock initialized successfully");
 }
