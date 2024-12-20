@@ -115,7 +115,4 @@ static void obtain_time(void)
     esp_netif_sntp_deinit();
 
     settings_init();
-    take_ui_mutex("obtain_time");
-    lv_scr_load(ui_Main_Screen);
-    give_ui_mutex("obtain_time");
 }

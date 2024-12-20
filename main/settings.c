@@ -9,6 +9,7 @@
 #include "nvs.h"
 #include "prayers.h"
 #include "settings.h"
+#include "weather.h"
 
 #define TAG "Settings"
 #define SETTINGS_NAMESPACE "settings"
@@ -37,6 +38,7 @@ void settings_init(void) {
     err = nvs_open(SETTINGS_NAMESPACE, NVS_READONLY, &handle);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "Error opening NVS handle: %s", esp_err_to_name(err));
+        first_time_settings();
         return;
     }
 
@@ -46,6 +48,7 @@ void settings_init(void) {
     err = nvs_get_blob(handle, "latitude", &latitude, &blob_size);
     if (err != ESP_OK || blob_size != FLOAT_BLOB_SIZE) {
         ESP_LOGW(TAG, "Latitude not found in settings");
+        nvs_close(handle);
         first_time_settings();
         return;
     }
@@ -56,6 +59,7 @@ void settings_init(void) {
     err = nvs_get_blob(handle, "longitude", &longitude, &blob_size);
     if (err != ESP_OK || blob_size != FLOAT_BLOB_SIZE) {
         ESP_LOGW(TAG, "Longitude not found in settings");
+        nvs_close(handle);
         first_time_settings();
         return;
     }
@@ -65,6 +69,7 @@ void settings_init(void) {
     err = nvs_get_u16(handle, "timezone", &tz_index);
     if (err != ESP_OK) {
         ESP_LOGW(TAG, "Timezone not found in settings");
+        nvs_close(handle);
         first_time_settings();
         return;
     }
@@ -74,6 +79,7 @@ void settings_init(void) {
     err = nvs_get_u8(handle, "calc_method", &calc_method);
     if (err != ESP_OK) {
         ESP_LOGW(TAG, "Calculation method not found in settings");
+        nvs_close(handle);
         first_time_settings();
         return;
     }
@@ -87,8 +93,187 @@ void settings_init(void) {
     } else {
         ESP_LOGI(TAG, "Settings loaded successfully");
     }
+    update_azan_clock();
 }
 
+// Load settings from NVS
+esp_err_t load_settings(void) {
+    ESP_LOGI(TAG, "Loading settings from NVS");
+    nvs_handle_t handle;
+    esp_err_t err;
+
+    err = nvs_open(SETTINGS_NAMESPACE, NVS_READONLY, &handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error opening NVS handle: %s", esp_err_to_name(err));
+        return err;
+    }
+
+    take_ui_mutex("load_settings");
+    size_t blob_size = FLOAT_BLOB_SIZE;
+
+    // Load latitude
+    float latitude = 0.0f;
+    err = nvs_get_blob(handle, "latitude", &latitude, &blob_size);
+    if (err == ESP_OK) {
+        char lat_str[16];
+        snprintf(lat_str, sizeof(lat_str), "%f", latitude);
+        lv_textarea_set_text(ui_Latitude, lat_str);
+        ESP_LOGI(TAG, "Loaded latitude: %f", latitude);
+    }
+
+    // Load longitude
+    float longitude = 0.0f;
+    err = nvs_get_blob(handle, "longitude", &longitude, &blob_size);
+    if (err == ESP_OK) {
+        char lon_str[16];
+        snprintf(lon_str, sizeof(lon_str), "%f", longitude);
+        lv_textarea_set_text(ui_Longitude, lon_str);
+        ESP_LOGI(TAG, "Loaded longitude: %f", longitude);
+    }
+
+    // Load city name
+    char city_name[MAX_STR_LEN] = {0};
+    size_t city_len = sizeof(city_name);
+    err = nvs_get_str(handle, "city_name", city_name, &city_len);
+    if (err == ESP_OK) {
+        lv_label_set_text(ui_Location_Name, city_name);
+        ESP_LOGI(TAG, "Loaded city name: %s", city_name);
+    }
+
+    // Load timezone index
+    uint16_t tz_index = 0;
+    err = nvs_get_u16(handle, "timezone", &tz_index);
+    if (err == ESP_OK) {
+        lv_dropdown_set_selected(ui_Timezone_Dropdown, tz_index);
+        ESP_LOGI(TAG, "Loaded timezone index: %d", tz_index);
+    }
+
+    // Load calculation method
+    uint8_t calc_method = 0;
+    err = nvs_get_u8(handle, "calc_method", &calc_method);
+    if (err == ESP_OK) {
+        lv_dropdown_set_selected(ui_Calculation_Method_Dropdown, calc_method);
+        ESP_LOGI(TAG, "Loaded calculation method: %d", calc_method);
+    }
+    give_ui_mutex("load_settings");
+    nvs_close(handle);
+    return ESP_OK;
+}
+
+// Save settings to NVS
+esp_err_t save_settings(lv_event_t *e) {
+    ESP_LOGI(TAG, "Saving settings to NVS");
+    nvs_handle_t handle;
+    esp_err_t err;
+
+    err = nvs_open(SETTINGS_NAMESPACE, NVS_READWRITE, &handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error opening NVS handle: %s", esp_err_to_name(err));
+        return err;
+    }
+
+    // Save latitude
+    float latitude = atof(lv_textarea_get_text(ui_Latitude));
+    err = nvs_set_blob(handle, "latitude", &latitude, FLOAT_BLOB_SIZE);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error saving latitude: %s", esp_err_to_name(err));
+        nvs_close(handle);
+        return err;
+    }
+
+    ESP_LOGI(TAG, "Saved latitude: %f", latitude);
+
+    // Save longitude using blob
+    float longitude = atof(lv_textarea_get_text(ui_Longitude));
+    err = nvs_set_blob(handle, "longitude", &longitude, FLOAT_BLOB_SIZE);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error saving longitude: %s", esp_err_to_name(err));
+        nvs_close(handle);
+        return err;
+    }
+    ESP_LOGI(TAG, "Saved longitude: %f", longitude);
+
+    // Save city name
+    const char* city_name = lv_label_get_text(ui_Location_Name);
+    err = nvs_set_str(handle, "city_name", city_name);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error saving city name: %s", esp_err_to_name(err));
+        nvs_close(handle);
+        return err;
+    }
+    ESP_LOGI(TAG, "Saved city name: %s", city_name);
+
+    // Save timezone index
+    uint16_t tz_index = lv_dropdown_get_selected(ui_Timezone_Dropdown);
+    err = nvs_set_u16(handle, "timezone", tz_index);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error saving timezone: %s", esp_err_to_name(err));
+        nvs_close(handle);
+        return err;
+    }
+    ESP_LOGI(TAG, "Saved timezone index: %d", tz_index);
+
+    // Save calculation method
+    uint8_t calc_method = lv_dropdown_get_selected(ui_Calculation_Method_Dropdown);
+    err = nvs_set_u8(handle, "calc_method", calc_method);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error saving calculation method: %s", esp_err_to_name(err));
+        nvs_close(handle);
+        return err;
+    }
+    ESP_LOGI(TAG, "Saved calculation method: %d", calc_method);
+
+    // Commit changes
+    err = nvs_commit(handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error committing settings: %s", esp_err_to_name(err));
+        nvs_close(handle);
+        return err;
+    }
+
+    nvs_close(handle);
+    ESP_LOGI(TAG, "Settings saved successfully");
+    update_azan_clock();
+    return ESP_OK;
+}
+
+
+// Updates App State or Proceed Initialization Sequence if not already initialized
+void update_azan_clock() {
+    // Read settings from UI components
+    float latitude = atof(lv_textarea_get_text(ui_Latitude));
+    float longitude = atof(lv_textarea_get_text(ui_Longitude));
+    const char* city_name = lv_label_get_text(ui_Location_Name);
+    uint16_t tz_index = lv_dropdown_get_selected(ui_Timezone_Dropdown);
+    uint8_t calc_method = lv_dropdown_get_selected(ui_Calculation_Method_Dropdown);
+
+    set_current_latitude(latitude);
+    set_current_longitude(longitude);
+    set_current_city(city_name);
+    set_current_timezone(tz_index);
+    set_current_calculation_method(calc_method);
+    if (is_prayers_initialized()) {
+        notify_prayers();
+    } else {
+        prayers_init();
+    }
+    if (is_weather_initialized()) {
+        notify_weather();
+    } else {
+        weather_init();
+    }
+    ESP_LOGI(TAG, "Updated application state with saved settings");
+}
+
+void keypad_ready(lv_event_t *e)
+{
+    // Clear city name when keypad is used
+    lv_label_set_text(ui_Location_Name, "");
+}
+
+// --------------------------------
+// Location Finder
+// --------------------------------
 // Declare response buffer and length
 static char location_response[1024];
 static int response_len = 0;
@@ -190,188 +375,4 @@ void get_user_location(lv_event_t *e) {
     }
 
     esp_http_client_cleanup(client);
-}
-
-void keypad_ready(lv_event_t *e)
-{
-    // Clear city name when keypad is used
-    lv_label_set_text(ui_Location_Name, "");
-}
-
-// Load settings from NVS
-esp_err_t load_settings(void) {
-    ESP_LOGI(TAG, "Loading settings from NVS");
-    nvs_handle_t handle;
-    esp_err_t err;
-
-    err = nvs_open(SETTINGS_NAMESPACE, NVS_READONLY, &handle);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error opening NVS handle: %s", esp_err_to_name(err));
-        return err;
-    }
-
-    take_ui_mutex("load_settings");
-    size_t blob_size = FLOAT_BLOB_SIZE;
-
-    // Load latitude
-    float latitude = 0.0f;
-    err = nvs_get_blob(handle, "latitude", &latitude, &blob_size);
-    if (err == ESP_OK) {
-        char lat_str[16];
-        snprintf(lat_str, sizeof(lat_str), "%f", latitude);
-        lv_textarea_set_text(ui_Latitude, lat_str);
-        ESP_LOGI(TAG, "Loaded latitude: %f", latitude);
-    }
-
-    // Load longitude
-    float longitude = 0.0f;
-    err = nvs_get_blob(handle, "longitude", &latitude, &blob_size);
-    if (err == ESP_OK) {
-        char lon_str[16];
-        snprintf(lon_str, sizeof(lon_str), "%f", longitude);
-        lv_textarea_set_text(ui_Longitude, lon_str);
-        ESP_LOGI(TAG, "Loaded longitude: %f", longitude);
-    }
-
-    // Load city name
-    char city_name[MAX_STR_LEN] = {0};
-    size_t city_len = sizeof(city_name);
-    err = nvs_get_str(handle, "city_name", city_name, &city_len);
-    if (err == ESP_OK) {
-        lv_label_set_text(ui_Location_Name, city_name);
-        ESP_LOGI(TAG, "Loaded city name: %s", city_name);
-    }
-
-    // Load timezone index
-    uint16_t tz_index = 0;
-    err = nvs_get_u16(handle, "timezone", &tz_index);
-    if (err == ESP_OK) {
-        lv_dropdown_set_selected(ui_Timezone_Dropdown, tz_index);
-        ESP_LOGI(TAG, "Loaded timezone index: %d", tz_index);
-    }
-
-    // Load calculation method
-    uint8_t calc_method = 0;
-    err = nvs_get_u8(handle, "calc_method", &calc_method);
-    if (err == ESP_OK) {
-        lv_dropdown_set_selected(ui_Calculation_Method_Dropdown, calc_method);
-        ESP_LOGI(TAG, "Loaded calculation method: %d", calc_method);
-    }
-    give_ui_mutex("load_settings");
-
-    if (err == ESP_OK) {
-        // Update state after successful load
-        set_current_latitude(latitude);
-        set_current_longitude(longitude);
-        set_current_city(city_name);
-        set_current_timezone(tz_index);
-        set_current_calculation_method(calc_method);
-        notify_prayers();
-        ESP_LOGI(TAG, "Updated application state with loaded settings");
-    }
-
-    nvs_close(handle);
-    return ESP_OK;
-}
-
-// Save settings to NVS
-esp_err_t save_settings(void) {
-    ESP_LOGI(TAG, "Saving settings to NVS");
-    nvs_handle_t handle;
-    esp_err_t err;
-
-    err = nvs_open(SETTINGS_NAMESPACE, NVS_READWRITE, &handle);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error opening NVS handle: %s", esp_err_to_name(err));
-        return err;
-    }
-
-    // Save latitude
-    float latitude = atof(lv_textarea_get_text(ui_Latitude));
-    err = nvs_set_blob(handle, "latitude", &latitude, FLOAT_BLOB_SIZE);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error saving latitude: %s", esp_err_to_name(err));
-        nvs_close(handle);
-        return err;
-    }
-
-    ESP_LOGI(TAG, "Saved latitude: %f", latitude);
-
-    // Save longitude using blob
-    float longitude = atof(lv_textarea_get_text(ui_Longitude));
-    err = nvs_set_blob(handle, "longitude", &longitude, FLOAT_BLOB_SIZE);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error saving longitude: %s", esp_err_to_name(err));
-        nvs_close(handle);
-        return err;
-    }
-    ESP_LOGI(TAG, "Saved longitude: %f", longitude);
-
-    // Save city name
-    const char* city_name = lv_label_get_text(ui_Location_Name);
-    err = nvs_set_str(handle, "city_name", city_name);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error saving city name: %s", esp_err_to_name(err));
-        nvs_close(handle);
-        return err;
-    }
-    ESP_LOGI(TAG, "Saved city name: %s", city_name);
-
-    // Save timezone index
-    uint16_t tz_index = lv_dropdown_get_selected(ui_Timezone_Dropdown);
-    err = nvs_set_u16(handle, "timezone", tz_index);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error saving timezone: %s", esp_err_to_name(err));
-        nvs_close(handle);
-        return err;
-    }
-    ESP_LOGI(TAG, "Saved timezone index: %d", tz_index);
-
-    // Save calculation method
-    uint8_t calc_method = lv_dropdown_get_selected(ui_Calculation_Method_Dropdown);
-    err = nvs_set_u8(handle, "calc_method", calc_method);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error saving calculation method: %s", esp_err_to_name(err));
-        nvs_close(handle);
-        return err;
-    }
-    ESP_LOGI(TAG, "Saved calculation method: %d", calc_method);
-
-    if (err == ESP_OK) {
-        // Update state after successful save
-        float latitude = atof(lv_textarea_get_text(ui_Latitude));
-        float longitude = atof(lv_textarea_get_text(ui_Longitude));
-        const char* city_name = lv_label_get_text(ui_Location_Name);
-        uint16_t tz_index = lv_dropdown_get_selected(ui_Timezone_Dropdown);
-        uint8_t calc_method = lv_dropdown_get_selected(ui_Calculation_Method_Dropdown);
-
-        set_current_latitude(latitude);
-        set_current_longitude(longitude);
-        set_current_city(city_name);
-        set_current_timezone(tz_index);
-        set_current_calculation_method(calc_method);
-        if (is_prayers_initialized()) {
-            notify_prayers();
-        } else {
-            prayers_init();
-        }
-        if (is_weather_initialized()) {
-            notify_weather();
-        } else {
-            weather_init();
-        }
-        ESP_LOGI(TAG, "Updated application state with saved settings");
-    }
-
-    // Commit changes
-    err = nvs_commit(handle);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error committing settings: %s", esp_err_to_name(err));
-        nvs_close(handle);
-        return err;
-    }
-
-    nvs_close(handle);
-    ESP_LOGI(TAG, "Settings saved successfully");
-    return ESP_OK;
 }

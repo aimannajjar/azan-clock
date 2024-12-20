@@ -21,6 +21,7 @@ extern lv_obj_t *ui_Duhur_Time;
 extern lv_obj_t *ui_Asr_Time;
 extern lv_obj_t *ui_Maghrib_Time;
 extern lv_obj_t *ui_Isha_Time;
+extern lv_obj_t *ui_Loading_Status_Text;
 
 // Add task handle
 static TaskHandle_t prayers_update_task_handle = NULL;
@@ -84,10 +85,6 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
 }
 
 esp_err_t get_prayer_times(float latitude, float longitude) {
-    take_ui_mutex("get_prayer_times");
-    lv_label_set_text(ui_Loading_Status_Text, "Synchronizing Prayer Times...");
-    give_ui_mutex("get_prayer_times");
-
     esp_err_t result = ESP_FAIL;
     char url[256];
     char formatted_time[16];
@@ -144,6 +141,7 @@ esp_err_t get_prayer_times(float latitude, float longitude) {
             }
             result = ESP_OK;
             cJSON_Delete(json);
+            set_prayers_initialized();
             if (is_clock_initialized()) {
                 notify_clock();
             } else {
@@ -161,13 +159,17 @@ esp_err_t get_prayer_times(float latitude, float longitude) {
 }
 
 static void prayers_update_task(void *arg) {
+    take_ui_mutex("prayers_init");
+    lv_label_set_text(ui_Loading_Status_Text, "Synchronizing Prayer Times...");
+    give_ui_mutex("prayers_init");    
+
     const TickType_t TWELVE_HOURS = pdMS_TO_TICKS(12 * 60 * 60 * 1000);
-    const TickType_t MIN_RETRY_DELAY = pdMS_TO_TICKS(5 * 1000);      // 1 minute
-    const TickType_t MAX_RETRY_DELAY = pdMS_TO_TICKS(1 * 60 * 1000); // 30 minutes
+    const TickType_t MIN_RETRY_DELAY = pdMS_TO_TICKS(1000); // 1 minute
+    const TickType_t MAX_RETRY_DELAY = pdMS_TO_TICKS(5000); // 5 seconds
     TickType_t retry_delay = MIN_RETRY_DELAY;
 
     while (true) {
-        esp_err_t result = get_prayer_times(40.7128, -74.0060); // Example coordinates
+        esp_err_t result = get_prayer_times(get_current_latitude(), get_current_longitude()); // Example coordinates
         
         if (result == ESP_OK) {
             retry_delay = MIN_RETRY_DELAY;
@@ -186,9 +188,8 @@ void prayers_init(void) {
         ESP_LOGI(TAG, "Prayers already initialized, skipping...");
         return;
     }
-    
+
     vTaskDelay(5000); // 5 seconds initial delay
     xTaskCreate(prayers_update_task, "prayers_update_task", 5120, NULL, 5, &prayers_update_task_handle);
-    set_prayers_initialized();
     ESP_LOGI(TAG, "Prayer times service initialized successfully");
 }

@@ -30,3 +30,7 @@ def hide_keypad(event_struct):
 def keypad_ready(event_struct):
     return
 
+
+def save_settings(event_struct):
+    return
+

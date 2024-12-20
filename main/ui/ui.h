@@ -140,6 +140,7 @@ extern lv_obj_t * ui_WiFi_Status1;
 void ui_Settings_Screen_screen_init(void);
 extern lv_obj_t * ui_Settings_Screen;
 extern lv_obj_t * ui_Background4;
+void ui_event_Save_Button(lv_event_t * e);
 extern lv_obj_t * ui_Save_Button;
 extern lv_obj_t * ui_Label24;
 extern lv_obj_t * ui_Panel1;

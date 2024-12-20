@@ -15,6 +15,17 @@ static char weather_info[512];
 static size_t weather_info_len = 0; // Add this variable to keep track of buffer length
 extern lv_obj_t *ui_Weather_Image;
 
+// Add task handle
+static TaskHandle_t weather_update_task_handle = NULL;
+
+// Add notification function
+void notify_weather(void) {
+    if (weather_update_task_handle != NULL) {
+        xTaskNotifyGive(weather_update_task_handle);
+        ESP_LOGI(TAG, "Notification sent to weather update task");
+    }
+}
+
 // Define a structure for mapping weather codes to images
 typedef struct {
     int code;
@@ -200,6 +211,7 @@ esp_err_t get_weather_forecast(float latitude, float longitude) {
     return result;
 }
 
+// Modify the weather_update_task to wait for notification
 static void weather_update_task(void *arg) {
     const TickType_t THREE_HOURS = pdMS_TO_TICKS(3 * 60 * 60 * 1000); // 3 hours in milliseconds
     const TickType_t MIN_RETRY_DELAY = pdMS_TO_TICKS(60 * 1000);      // 1 minute
@@ -213,7 +225,8 @@ static void weather_update_task(void *arg) {
         if (result == ESP_OK) {
             // Success - reset retry delay and wait for full interval
             retry_delay = MIN_RETRY_DELAY;
-            vTaskDelay(THREE_HOURS);
+            // Wait for notification or timeout
+            ulTaskNotifyTake(pdTRUE, THREE_HOURS);
         } else {
             // On failure, use exponential backoff
             ESP_LOGW(TAG, "Weather update failed, retrying in %lu ms", pdTICKS_TO_MS(retry_delay));
@@ -223,14 +236,14 @@ static void weather_update_task(void *arg) {
     }
 }
 
-// Function to initialize the weather module
+// Modify task creation to store handle
 void weather_init(void) {
     if (is_weather_initialized()) {
         ESP_LOGI(TAG, "Weather already initialized, skipping...");
         return;
     }
     
-    xTaskCreate(weather_update_task, "weather_update_task", 4096, NULL, 5, NULL);
+    xTaskCreate(weather_update_task, "weather_update_task", 4096, NULL, 5, &weather_update_task_handle);
     set_weather_initialized();
     ESP_LOGI(TAG, "Weather initialized successfully");
 }

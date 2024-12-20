@@ -15,6 +15,8 @@ static TaskHandle_t time_update_task_handle = NULL;
 
 extern lv_obj_t *ui_Next_Prayer_Panel;
 extern lv_obj_t *ui_Next_Prayer_Panel1;
+extern lv_obj_t *ui_Loading_Status_Text;
+extern lv_obj_t *ui_Main_Screen;
 
 // External LVGL container references
 extern lv_obj_t *ui_Fajr_Container;
@@ -99,118 +101,123 @@ static void update_time_ui() {
     // Update the ui_Current_Date label
     lv_label_set_text(ui_Current_Date, date_str);
 
-    if (is_prayers_initialized()) {
-        // Setup prayer times array with names and UI elements
-        struct {
-            const char *name;
-            lv_obj_t *container;
-            lv_obj_t *time_label;
-        } prayers[] = {
-            {"Fajr", ui_Fajr_Container, ui_Fajr_Time},
-            {"Sunrise", ui_Sunrise_Container, ui_Sunrise_Time},
-            {"Duhur", ui_Duhur_Container, ui_Duhur_Time},
-            {"Asr", ui_Asr_Container, ui_Asr_Time},
-            {"Maghrib", ui_Maghrib_Container, ui_Maghrib_Time},
-            {"Isha", ui_Isha_Container, ui_Isha_Time}
-        };
+    // Setup prayer times array with names and UI elements
+    struct {
+        const char *name;
+        lv_obj_t *container;
+        lv_obj_t *time_label;
+    } prayers[] = {
+        {"Fajr", ui_Fajr_Container, ui_Fajr_Time},
+        {"Sunrise", ui_Sunrise_Container, ui_Sunrise_Time},
+        {"Duhur", ui_Duhur_Container, ui_Duhur_Time},
+        {"Asr", ui_Asr_Container, ui_Asr_Time},
+        {"Maghrib", ui_Maghrib_Container, ui_Maghrib_Time},
+        {"Isha", ui_Isha_Container, ui_Isha_Time}
+    };
 
-        // Reset all containers to default color
-        for (int i = 0; i < 6; i++) {
-            lv_obj_set_style_bg_color(prayers[i].container, lv_color_hex(0xE8E8E8), LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_bg_opa(prayers[i].container, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-        }
+    // Reset all containers to default color
+    for (int i = 0; i < 6; i++) {
+        lv_obj_set_style_bg_color(prayers[i].container, lv_color_hex(0xE8E8E8), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_bg_opa(prayers[i].container, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
 
-        // Find next prayer time and previous prayer
-        int next_prayer_idx = -1;
-        int prev_prayer_idx = -1;
-        int min_time_diff = 24 * 60; // Maximum minutes in a day
-        const char* next_prayer_time = NULL;
+    // Find next prayer time and previous prayer
+    int next_prayer_idx = -1;
+    int prev_prayer_idx = -1;
+    int min_time_diff = 24 * 60; // Maximum minutes in a day
+    const char* next_prayer_time = NULL;
 
-        // Find the next prayer
-        for (int i = 0; i < 6; i++) {
-            const char* prayer_time = lv_label_get_text(prayers[i].time_label);
-            int prayer_minutes = get_prayer_minutes(prayer_time);
+    // Find the next prayer
+    for (int i = 0; i < 6; i++) {
+        const char* prayer_time = lv_label_get_text(prayers[i].time_label);
+        int prayer_minutes = get_prayer_minutes(prayer_time);
 
-            if (prayer_minutes >= 0) {
-                int time_diff = prayer_minutes - current_minutes;
-                if (time_diff < 0) time_diff += 24 * 60; // Adjust for next day
+        if (prayer_minutes >= 0) {
+            int time_diff = prayer_minutes - current_minutes;
+            if (time_diff < 0) time_diff += 24 * 60; // Adjust for next day
 
-                if (time_diff < min_time_diff) {
-                    min_time_diff = time_diff;
-                    next_prayer_idx = i;
-                    next_prayer_time = prayer_time;
-                }
+            if (time_diff < min_time_diff) {
+                min_time_diff = time_diff;
+                next_prayer_idx = i;
+                next_prayer_time = prayer_time;
             }
-        }
-
-        // Determine previous prayer
-        if (next_prayer_idx >= 0) {
-            prev_prayer_idx = (next_prayer_idx - 1 + 6) % 6;
-
-            // Get previous and next prayer times in minutes
-            const char* prev_prayer_time_str = lv_label_get_text(prayers[prev_prayer_idx].time_label);
-            int prev_prayer_minutes = get_prayer_minutes(prev_prayer_time_str);
-            int next_prayer_minutes = get_prayer_minutes(next_prayer_time);
-
-            // Calculate time window between prayers
-            int time_window = next_prayer_minutes - prev_prayer_minutes;
-            if (time_window <= 0) time_window += 24 * 60; // Adjust for next day
-
-            // Calculate gradient stop value using dynamic time window
-            int stop_value = 255 - ((min_time_diff * 255) / time_window);
-            if (stop_value < 0) stop_value = 0;
-            if (stop_value > 255) stop_value = 255;
-
-            // Update gradient stop for both panels
-            lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel, stop_value, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel1, stop_value, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-            ESP_LOGI(TAG, "Prayer window: %s (%d min) -> %s (%d min), window: %d minutes", 
-                    prayers[prev_prayer_idx].name, prev_prayer_minutes,
-                    prayers[next_prayer_idx].name, next_prayer_minutes,
-                    time_window);
-
-            // Format remaining time
-            int hours = min_time_diff / 60;
-            int minutes = min_time_diff % 60;
-            snprintf(remaining_time_str, sizeof(remaining_time_str), "%d:%02d", hours, minutes);
-
-            // Set color based on remaining time
-            lv_color_t remaining_time_color = (min_time_diff > 60) ? 
-                lv_color_hex(0x00FF37) :  // Green for > 1 hour
-                lv_color_hex(0xFF0000);   // Red for <= 1 hour
-
-            // Update all next prayer related labels
-            lv_label_set_text(ui_Next_Prayer, prayers[next_prayer_idx].name);
-            lv_label_set_text(ui_Next_Prayer1, prayers[next_prayer_idx].name);
-            
-            // Update container highlight and UI elements
-            lv_obj_set_style_bg_color(prayers[next_prayer_idx].container, lv_color_hex(0xFFD29C), LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_bg_opa(prayers[next_prayer_idx].container, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-            // Update remaining time labels with color
-            lv_label_set_text(ui_Next_Prayer_Remaining, remaining_time_str);
-            lv_label_set_text(ui_Next_Prayer_Remaining1, remaining_time_str);
-            lv_obj_set_style_text_color(ui_Next_Prayer_Remaining, remaining_time_color, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_text_color(ui_Next_Prayer_Remaining1, remaining_time_color, LV_PART_MAIN | LV_STATE_DEFAULT);
-            
-            lv_label_set_text(ui_Next_Prayer_Time, next_prayer_time);
-            lv_label_set_text(ui_Next_Prayer_Time1, next_prayer_time);
-
-            ESP_LOGI(TAG, "Next prayer: %s in %s (%s) [Color: %s, Gradient: %d]", 
-                    prayers[next_prayer_idx].name, 
-                    remaining_time_str, 
-                    next_prayer_time,
-                    min_time_diff > 60 ? "Green" : "Red",
-                    stop_value);
         }
     }
 
+    // Determine previous prayer
+    if (next_prayer_idx >= 0) {
+        prev_prayer_idx = (next_prayer_idx - 1 + 6) % 6;
+
+        // Get previous and next prayer times in minutes
+        const char* prev_prayer_time_str = lv_label_get_text(prayers[prev_prayer_idx].time_label);
+        int prev_prayer_minutes = get_prayer_minutes(prev_prayer_time_str);
+        int next_prayer_minutes = get_prayer_minutes(next_prayer_time);
+
+        // Calculate time window between prayers
+        int time_window = next_prayer_minutes - prev_prayer_minutes;
+        if (time_window <= 0) time_window += 24 * 60; // Adjust for next day
+
+        // Calculate gradient stop value using dynamic time window
+        int stop_value = 255 - ((min_time_diff * 255) / time_window);
+        if (stop_value < 0) stop_value = 0;
+        if (stop_value > 255) stop_value = 255;
+
+        // Update gradient stop for both panels
+        lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel, stop_value, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel1, stop_value, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+        ESP_LOGI(TAG, "Prayer window: %s (%d min) -> %s (%d min), window: %d minutes", 
+                prayers[prev_prayer_idx].name, prev_prayer_minutes,
+                prayers[next_prayer_idx].name, next_prayer_minutes,
+                time_window);
+
+        // Format remaining time
+        int hours = min_time_diff / 60;
+        int minutes = min_time_diff % 60;
+        snprintf(remaining_time_str, sizeof(remaining_time_str), "%d:%02d", hours, minutes);
+
+        // Set color based on remaining time
+        lv_color_t remaining_time_color = (min_time_diff > 60) ? 
+            lv_color_hex(0x00FF37) :  // Green for > 1 hour
+            lv_color_hex(0xFF0000);   // Red for <= 1 hour
+
+        // Update all next prayer related labels
+        lv_label_set_text(ui_Next_Prayer, prayers[next_prayer_idx].name);
+        lv_label_set_text(ui_Next_Prayer1, prayers[next_prayer_idx].name);
+        
+        // Update container highlight and UI elements
+        lv_obj_set_style_bg_color(prayers[next_prayer_idx].container, lv_color_hex(0xFFD29C), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_bg_opa(prayers[next_prayer_idx].container, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+        // Update remaining time labels with color
+        lv_label_set_text(ui_Next_Prayer_Remaining, remaining_time_str);
+        lv_label_set_text(ui_Next_Prayer_Remaining1, remaining_time_str);
+        lv_obj_set_style_text_color(ui_Next_Prayer_Remaining, remaining_time_color, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_text_color(ui_Next_Prayer_Remaining1, remaining_time_color, LV_PART_MAIN | LV_STATE_DEFAULT);
+        
+        lv_label_set_text(ui_Next_Prayer_Time, next_prayer_time);
+        lv_label_set_text(ui_Next_Prayer_Time1, next_prayer_time);
+
+        ESP_LOGI(TAG, "Next prayer: %s in %s (%s) [Color: %s, Gradient: %d]", 
+                prayers[next_prayer_idx].name, 
+                remaining_time_str, 
+                next_prayer_time,
+                min_time_diff > 60 ? "Green" : "Red",
+                stop_value);
+    }
     ESP_LOGI(TAG, "Time updated: %s", time_str);
+    if (!is_clock_initialized()) {
+        set_clock_initialized();
+        lv_scr_load(ui_Main_Screen);
+    }
 }
 
 // Task to update the LVGL label every minute
 static void time_update_task(void *arg) {
+    take_ui_mutex("update_time_ui");
+    lv_label_set_text(ui_Loading_Status_Text, "Synchronizing Clock...");
+    give_ui_mutex("update_time_ui");    
+
     while (true) {
         take_ui_mutex("time_update_task");
         update_time_ui();
@@ -233,8 +240,7 @@ void clock_init(void) {
         ESP_LOGI(TAG, "Clock already initialized, skipping...");
         return;
     }
-    
+
     xTaskCreate(time_update_task, "time_update_task", 4096, NULL, 5, &time_update_task_handle);
-    set_clock_initialized();
     ESP_LOGI(TAG, "Clock initialized successfully");
 }

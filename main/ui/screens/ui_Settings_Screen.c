@@ -384,6 +384,7 @@ void ui_Settings_Screen_screen_init(void)
     lv_obj_set_style_shadow_width(ui_Keypad, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_shadow_spread(ui_Keypad, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    lv_obj_add_event_cb(ui_Save_Button, ui_event_Save_Button, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button14, ui_event_Button14, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button19, ui_event_Button19, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Latitude, ui_event_Latitude, LV_EVENT_ALL, NULL);
