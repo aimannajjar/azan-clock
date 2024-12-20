@@ -30,8 +30,8 @@ else()
     message(UI_SOURCES="${UI_SOURCES}")
     
     idf_component_register(
-        SRCS "settings.c"
-             "timezones.c"
+        SRCS "timezones.c"
+             "settings.c"
              "prayers.c"
              "weather.c"
              "wifi.c"

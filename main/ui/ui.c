@@ -19,17 +19,6 @@ void ScreenOut_Animation(lv_obj_t * TargetObject, int delay);
 void ui_Loading_Screen_screen_init(void);
 lv_obj_t * ui_Loading_Screen;
 lv_obj_t * ui_Background2;
-lv_obj_t * ui_Panel2;
-void ui_event_Button7(lv_event_t * e);
-lv_obj_t * ui_Button7;
-lv_obj_t * ui_Label7;
-lv_obj_t * ui_Button8;
-lv_obj_t * ui_Label12;
-lv_obj_t * ui_Button9;
-lv_obj_t * ui_Label13;
-void ui_event_Button16(lv_event_t * e);
-lv_obj_t * ui_Button16;
-lv_obj_t * ui_Label19;
 lv_obj_t * ui_Spinner2;
 lv_obj_t * ui_Loading_Status_Text;
 // CUSTOM VARIABLES
@@ -164,8 +153,10 @@ lv_obj_t * ui_Label20;
 lv_obj_t * ui_Settings_Content_Panel;
 lv_obj_t * ui_Location_Settings_Container;
 lv_obj_t * ui_Location_Label;
+void ui_event_Latitude(lv_event_t * e);
 lv_obj_t * ui_Latitude;
 lv_obj_t * ui_Spacer1;
+void ui_event_Longitude(lv_event_t * e);
 lv_obj_t * ui_Longitude;
 lv_obj_t * ui_Spacer;
 void ui_event_Locate_Me(lv_event_t * e);
@@ -178,6 +169,11 @@ lv_obj_t * ui_Timezone_Dropdown;
 lv_obj_t * ui_Method_Setting_Container1;
 lv_obj_t * ui_Location_Label2;
 lv_obj_t * ui_Dropdown1;
+lv_obj_t * ui_Label25;
+lv_obj_t * ui_Label26;
+lv_obj_t * ui_LocatorQR;
+void ui_event_Keypad(lv_event_t * e);
+lv_obj_t * ui_Keypad;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -329,25 +325,6 @@ void ScreenOut_Animation(lv_obj_t * TargetObject, int delay)
 }
 
 ///////////////////// FUNCTIONS ////////////////////
-void ui_event_Button7(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Main_Screen, LV_SCR_LOAD_ANIM_NONE, 0, 0, &ui_Main_Screen_screen_init);
-        stop_scan_task(e);
-    }
-}
-
-void ui_event_Button16(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(&ui_Prayers_Screen, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Prayers_Screen_screen_init);
-    }
-}
-
 void ui_event_Button2(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -455,12 +432,46 @@ void ui_event_Button19(lv_event_t * e)
     }
 }
 
+void ui_event_Latitude(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_keyboard_set_target(ui_Keypad,  ui_Latitude);
+        _ui_flag_modify(ui_Keypad, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+    }
+}
+
+void ui_event_Longitude(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_keyboard_set_target(ui_Keypad,  ui_Longitude);
+        _ui_flag_modify(ui_Keypad, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+    }
+}
+
 void ui_event_Locate_Me(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
     if(event_code == LV_EVENT_CLICKED) {
         get_user_location(e);
+    }
+}
+
+void ui_event_Keypad(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_READY) {
+        _ui_flag_modify(ui_Keypad, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+        keypad_ready(e);
+    }
+    if(event_code == LV_EVENT_CANCEL) {
+        _ui_flag_modify(ui_Keypad, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+        keypad_ready(e);
     }
 }
 

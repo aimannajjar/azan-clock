@@ -26,17 +26,6 @@ void ScreenOut_Animation(lv_obj_t * TargetObject, int delay);
 void ui_Loading_Screen_screen_init(void);
 extern lv_obj_t * ui_Loading_Screen;
 extern lv_obj_t * ui_Background2;
-extern lv_obj_t * ui_Panel2;
-void ui_event_Button7(lv_event_t * e);
-extern lv_obj_t * ui_Button7;
-extern lv_obj_t * ui_Label7;
-extern lv_obj_t * ui_Button8;
-extern lv_obj_t * ui_Label12;
-extern lv_obj_t * ui_Button9;
-extern lv_obj_t * ui_Label13;
-void ui_event_Button16(lv_event_t * e);
-extern lv_obj_t * ui_Button16;
-extern lv_obj_t * ui_Label19;
 extern lv_obj_t * ui_Spinner2;
 extern lv_obj_t * ui_Loading_Status_Text;
 // CUSTOM VARIABLES
@@ -167,8 +156,10 @@ extern lv_obj_t * ui_Label20;
 extern lv_obj_t * ui_Settings_Content_Panel;
 extern lv_obj_t * ui_Location_Settings_Container;
 extern lv_obj_t * ui_Location_Label;
+void ui_event_Latitude(lv_event_t * e);
 extern lv_obj_t * ui_Latitude;
 extern lv_obj_t * ui_Spacer1;
+void ui_event_Longitude(lv_event_t * e);
 extern lv_obj_t * ui_Longitude;
 extern lv_obj_t * ui_Spacer;
 void ui_event_Locate_Me(lv_event_t * e);
@@ -181,6 +172,11 @@ extern lv_obj_t * ui_Timezone_Dropdown;
 extern lv_obj_t * ui_Method_Setting_Container1;
 extern lv_obj_t * ui_Location_Label2;
 extern lv_obj_t * ui_Dropdown1;
+extern lv_obj_t * ui_Label25;
+extern lv_obj_t * ui_Label26;
+extern lv_obj_t * ui_LocatorQR;
+void ui_event_Keypad(lv_event_t * e);
+extern lv_obj_t * ui_Keypad;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -189,6 +185,7 @@ extern lv_obj_t * ui____initial_actions0;
 // IMAGES AND IMAGE SETS
 LV_IMG_DECLARE(ui_img_minaret_bg_png);    // assets/minaret_bg.png
 LV_IMG_DECLARE(ui_img_icn_wifi_png);    // assets/icn_wifi.png
+LV_IMG_DECLARE(ui_img_locatorqr_png);    // assets/locatorqr.png
 LV_IMG_DECLARE(ui_img_arrow_down_png);    // assets/arrow_down.png
 LV_IMG_DECLARE(ui_img_arrow_left_png);    // assets/arrow_left.png
 LV_IMG_DECLARE(ui_img_arrow_right_png);    // assets/arrow_right.png

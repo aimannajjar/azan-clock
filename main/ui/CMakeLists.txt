@@ -8,6 +8,7 @@ SET(SOURCES screens/ui_Loading_Screen.c
     ui_helpers.c
     images/ui_img_minaret_bg_png.c
     images/ui_img_icn_wifi_png.c
+    images/ui_img_locatorqr_png.c
     images/ui_img_arrow_down_png.c
     images/ui_img_arrow_left_png.c
     images/ui_img_arrow_right_png.c

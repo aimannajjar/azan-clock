@@ -21,9 +21,9 @@ void ui_Settings_Screen_screen_init(void)
     ui_Save_Button = lv_btn_create(ui_Settings_Screen);
     lv_obj_set_width(ui_Save_Button, 100);
     lv_obj_set_height(ui_Save_Button, 50);
-    lv_obj_set_x(ui_Save_Button, 35);
-    lv_obj_set_y(ui_Save_Button, 120);
-    lv_obj_set_align(ui_Save_Button, LV_ALIGN_CENTER);
+    lv_obj_set_x(ui_Save_Button, -58);
+    lv_obj_set_y(ui_Save_Button, 100);
+    lv_obj_set_align(ui_Save_Button, LV_ALIGN_RIGHT_MID);
     lv_obj_set_style_bg_color(ui_Save_Button, lv_color_hex(0xE58300), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Save_Button, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -216,10 +216,9 @@ void ui_Settings_Screen_screen_init(void)
     lv_obj_set_x(ui_Latitude, -69);
     lv_obj_set_y(ui_Latitude, -7);
     lv_obj_set_align(ui_Latitude, LV_ALIGN_CENTER);
-    lv_textarea_set_text(ui_Latitude, "Latitude");
-    lv_textarea_set_placeholder_text(ui_Latitude, "Placeholder...");
+    lv_textarea_set_placeholder_text(ui_Latitude, "Latitude");
     lv_textarea_set_one_line(ui_Latitude, true);
-    lv_obj_set_style_text_font(ui_Latitude, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Latitude, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 
 
@@ -233,10 +232,9 @@ void ui_Settings_Screen_screen_init(void)
     lv_obj_set_width(ui_Longitude, 120);
     lv_obj_set_height(ui_Longitude, LV_SIZE_CONTENT);    /// 70
     lv_obj_set_align(ui_Longitude, LV_ALIGN_CENTER);
-    lv_textarea_set_text(ui_Longitude, "Longitude");
-    lv_textarea_set_placeholder_text(ui_Longitude, "Placeholder...");
+    lv_textarea_set_placeholder_text(ui_Longitude, "Longitude");
     lv_textarea_set_one_line(ui_Longitude, true);
-    lv_obj_set_style_text_font(ui_Longitude, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Longitude, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 
 
@@ -336,8 +334,61 @@ void ui_Settings_Screen_screen_init(void)
     lv_obj_set_style_text_font(lv_dropdown_get_list(ui_Dropdown1), &lv_font_montserrat_14,
                                LV_PART_SELECTED | LV_STATE_DEFAULT);
 
+    ui_Label25 = lv_label_create(ui_Settings_Screen);
+    lv_obj_set_width(ui_Label25, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label25, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Label25, 100);
+    lv_obj_set_y(ui_Label25, 90);
+    lv_obj_set_align(ui_Label25, LV_ALIGN_LEFT_MID);
+    lv_label_set_text(ui_Label25, "Instructions");
+    lv_obj_set_style_text_color(ui_Label25, lv_color_hex(0xC05A00), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Label25, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Label25, &lv_font_montserrat_24, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Label26 = lv_label_create(ui_Settings_Screen);
+    lv_obj_set_width(ui_Label26, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label26, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Label26, 102);
+    lv_obj_set_y(ui_Label26, 163);
+    lv_obj_set_align(ui_Label26, LV_ALIGN_LEFT_MID);
+    lv_label_set_text(ui_Label26,
+                      "You can try to automatically fill the settings by \nclicking on \"Locate Me\", however, if that fails to\nprovide an accurate result. Please scan the QR code\nwith your phone and use the website to help you\nselect the appropriate settings for your location");
+    lv_obj_set_style_text_color(ui_Label26, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Label26, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Label26, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_LocatorQR = lv_img_create(ui_Settings_Screen);
+    lv_img_set_src(ui_LocatorQR, &ui_img_locatorqr_png);
+    lv_obj_set_width(ui_LocatorQR, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_LocatorQR, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_LocatorQR, 292);
+    lv_obj_set_y(ui_LocatorQR, 181);
+    lv_obj_set_align(ui_LocatorQR, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_LocatorQR, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_LocatorQR, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_img_set_zoom(ui_LocatorQR, 200);
+
+    ui_Keypad = lv_keyboard_create(ui_Settings_Screen);
+    lv_keyboard_set_mode(ui_Keypad, LV_KEYBOARD_MODE_NUMBER);
+    lv_obj_set_height(ui_Keypad, 313);
+    lv_obj_set_width(ui_Keypad, lv_pct(100));
+    lv_obj_set_x(ui_Keypad, 0);
+    lv_obj_set_y(ui_Keypad, 84);
+    lv_obj_set_align(ui_Keypad, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Keypad, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_set_style_border_color(ui_Keypad, lv_color_hex(0x9C5100), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_opa(ui_Keypad, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_Keypad, LV_BORDER_SIDE_TOP, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_color(ui_Keypad, lv_color_hex(0x9C5100), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_opa(ui_Keypad, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_width(ui_Keypad, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_shadow_spread(ui_Keypad, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     lv_obj_add_event_cb(ui_Button14, ui_event_Button14, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button19, ui_event_Button19, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Latitude, ui_event_Latitude, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Longitude, ui_event_Longitude, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Locate_Me, ui_event_Locate_Me, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Keypad, ui_event_Keypad, LV_EVENT_ALL, NULL);
 
 }

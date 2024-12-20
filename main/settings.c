@@ -14,6 +14,7 @@ extern lv_obj_t *ui_Latitude;
 extern lv_obj_t *ui_Longitude;
 extern lv_obj_t *ui_Location_Name;
 extern lv_obj_t *ui_Timezone_Dropdown;
+extern lv_obj_t *ui_Keypad;
 
 // Declare response buffer and length
 static char location_response[1024];
@@ -116,4 +117,10 @@ void get_user_location(lv_event_t *e) {
     }
 
     esp_http_client_cleanup(client);
+}
+
+void keypad_ready(lv_event_t *e)
+{
+    // Clear city name when keypad is used
+    lv_label_set_text(ui_Location_Name, "");
 }

@@ -2,5 +2,5 @@
 #define SETTINGS_H
 
 void get_user_location(lv_event_t *e);
-
-#endif // SETTINGS_H
+void keypad_ready(lv_event_t *e);
+#endif // SETTINGS_H    
