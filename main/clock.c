@@ -166,7 +166,7 @@ static void update_time_ui() {
         lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel, stop_value, LV_PART_MAIN | LV_STATE_DEFAULT);
         lv_obj_set_style_bg_main_stop(ui_Next_Prayer_Panel1, stop_value, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-        ESP_LOGI(TAG, "Prayer window: %s (%d min) -> %s (%d min), window: %d minutes", 
+        ESP_LOGD(TAG, "Prayer window: %s (%d min) -> %s (%d min), window: %d minutes", 
                 prayers[prev_prayer_idx].name, prev_prayer_minutes,
                 prayers[next_prayer_idx].name, next_prayer_minutes,
                 time_window);
@@ -198,14 +198,14 @@ static void update_time_ui() {
         lv_label_set_text(ui_Next_Prayer_Time, next_prayer_time);
         lv_label_set_text(ui_Next_Prayer_Time1, next_prayer_time);
 
-        ESP_LOGI(TAG, "Next prayer: %s in %s (%s) [Color: %s, Gradient: %d]", 
+        ESP_LOGD(TAG, "Next prayer: %s in %s (%s) [Color: %s, Gradient: %d]", 
                 prayers[next_prayer_idx].name, 
                 remaining_time_str, 
                 next_prayer_time,
                 min_time_diff > 60 ? "Green" : "Red",
                 stop_value);
     }
-    ESP_LOGI(TAG, "Time updated: %s", time_str);
+    ESP_LOGD(TAG, "Time updated: %s", time_str);
     if (!is_clock_initialized()) {
         set_clock_initialized();
         lv_scr_load(ui_Main_Screen);

@@ -14,10 +14,10 @@
 
 #define MAX_RETRIES 3
 
-extern lv_obj_t *ui_LeftPanel_Main;
-extern lv_obj_t *ui_LeftPanel_Prayers;
-extern lv_obj_t *ui_LeftPanel_Setup;
-extern lv_obj_t *ui_LeftPanel_Settings;
+extern lv_obj_t *ui_Left_Panel_Main;
+extern lv_obj_t *ui_Left_Panel_Prayers;
+extern lv_obj_t *ui_Left_Panel_Setup;
+extern lv_obj_t *ui_Left_Panel_Settings;
 extern lv_obj_t *ui_Connecting_Modal;
 extern lv_obj_t *ui_Connection_Failed_Label;
 
@@ -31,6 +31,8 @@ extern lv_obj_t *ui_Setup_Screen;
 extern lv_obj_t *ui_Loading_Screen;
 extern lv_obj_t *ui_Loading_Status_Text;
 static TaskHandle_t wifi_scan_task_handle = NULL;
+static TaskHandle_t retry_saved_connection_handle = NULL;
+static SemaphoreHandle_t wifi_mux = NULL;
 static bool is_scanning = false;
 
 static void save_connection_params(const char *ssid, const char *password);
@@ -38,11 +40,15 @@ static esp_err_t load_connection_params(char *ssid, size_t ssid_size, char *pass
 static void lock_and_wifi_setup_mode();
 static void connect_to_saved_wifi();
 static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data);
+static void show_disconnected_icon();
+static void hide_disconnected_icon();
 
 void wifi_init() {
     take_ui_mutex("wifi_init");
     lv_label_set_text(ui_Loading_Status_Text, "Connecting to Wi-Fi...");
     give_ui_mutex("wifi_init");
+
+    wifi_mux = xSemaphoreCreateMutex();
 
     // Initialize WiFI stack
     esp_netif_create_default_wifi_sta();
@@ -82,17 +88,23 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
             set_wifi_initialized();
             take_ui_mutex("wifi_event_handler");
             lv_label_set_text(ui_Loading_Status_Text, "Requesting IP address...");
+            lv_obj_add_flag(ui_Connecting_Modal, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(ui_Connection_Failed_Label, LV_OBJ_FLAG_HIDDEN);
             give_ui_mutex("wifi_event_handler");
             // Next event that will take place is IP address assignment
             // proceed tracing in the IP event handler branch below
         } else {
-            // We are either reconnecting or new wi-fi network was  manually chosen
+            // We are either reconnecting or new wi-fi network was manually chosen
+            // If it was manual Wi-Fi setup, hide spinner and show the main screen on successful connection
             if (lv_scr_act() == ui_Setup_Screen) {
-                // If it was manual Wi-Fi setup, hide spinner and show the main screen on successful connection
                 take_ui_mutex("wifi_event_handler");
                 lv_obj_add_flag(ui_Connecting_Modal, LV_OBJ_FLAG_HIDDEN);
                 lv_obj_clear_flag(ui_Connection_Failed_Label, LV_OBJ_FLAG_HIDDEN);
                 lv_scr_load(ui_Main_Screen);
+                give_ui_mutex("wifi_event_handler");
+            } else {
+                take_ui_mutex("wifi_event_handler");
+                hide_disconnected_icon();
                 give_ui_mutex("wifi_event_handler");
             }
         }
@@ -111,19 +123,20 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
                 lock_and_wifi_setup_mode();
             }
         } else if (lv_scr_act() == ui_Setup_Screen) {
+            // Connection failed during setup screen
             take_ui_mutex("wifi_event_handler");
             lv_obj_add_flag(ui_Connecting_Modal, LV_OBJ_FLAG_HIDDEN);
             lv_obj_clear_flag(ui_Connection_Failed_Label, LV_OBJ_FLAG_HIDDEN);
+
             give_ui_mutex("wifi_event_handler");
             start_scan_task(NULL);
         } else {
             // We have lost Wi-Fi connection after having been fully initialized before
-            if (current_retries < MAX_RETRIES) {
-                current_retries++;
-                ESP_LOGI(TAG, "Retry #%d to connect to Wi-Fi...", current_retries);
-                connect_to_saved_wifi();
-            } else {
-                lv_obj_clear_flag(ui_comp_get_child(ui_LeftPanel_Main, UI_COMP_LEFTPANEL_WIFI_DISCONNECTED), LV_OBJ_FLAG_HIDDEN);      /// Flags
+            take_ui_mutex("wifi_event_handler");
+            show_disconnected_icon();
+            give_ui_mutex("wifi_event_handler");            
+            if (retry_saved_connection_handle == NULL) {
+                xTaskCreate(wifi_scan_task, "retry_saved_connection", 4096, NULL, 5, &retry_saved_connection_handle);
             }
         }
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE) {
@@ -142,6 +155,23 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
     }    
 }
 
+// Helper function to set/clear disconnected wi-fi icon
+static void show_disconnected_icon() {
+    ESP_LOGI(TAG, "Showing disconnected icon...");
+    lv_obj_clear_flag(ui_comp_get_child(ui_Left_Panel_Main, UI_COMP_LEFTPANEL_WIFI_DISCONNECTED), LV_OBJ_FLAG_HIDDEN);
+    lv_obj_clear_flag(ui_comp_get_child(ui_Left_Panel_Prayers, UI_COMP_LEFTPANEL_WIFI_DISCONNECTED), LV_OBJ_FLAG_HIDDEN);
+    lv_obj_clear_flag(ui_comp_get_child(ui_Left_Panel_Settings, UI_COMP_LEFTPANEL_WIFI_DISCONNECTED), LV_OBJ_FLAG_HIDDEN);
+    lv_obj_clear_flag(ui_comp_get_child(ui_Left_Panel_Setup, UI_COMP_LEFTPANEL_WIFI_DISCONNECTED), LV_OBJ_FLAG_HIDDEN);
+}
+
+static void hide_disconnected_icon() {
+    ESP_LOGI(TAG, "Hiding disconnected icon...");
+    lv_obj_add_flag(ui_comp_get_child(ui_Left_Panel_Main, UI_COMP_LEFTPANEL_WIFI_DISCONNECTED), LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_comp_get_child(ui_Left_Panel_Prayers, UI_COMP_LEFTPANEL_WIFI_DISCONNECTED), LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_comp_get_child(ui_Left_Panel_Settings, UI_COMP_LEFTPANEL_WIFI_DISCONNECTED), LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_comp_get_child(ui_Left_Panel_Setup, UI_COMP_LEFTPANEL_WIFI_DISCONNECTED), LV_OBJ_FLAG_HIDDEN);
+}
+
 // ---------------------------------------------------
 // Helper Function to connect to saved Wi-Fi
 // ---------------------------------------------------
@@ -156,9 +186,11 @@ static void connect_to_saved_wifi() {
     strncpy((char *)wifi_config.sta.password, password, sizeof(wifi_config.sta.password));
 
     ESP_LOGI(TAG, "Using saved Wi-Fi parameters to connect...");
+    // xSemaphoreTake(wifi_mux, portMAX_DELAY);
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
     ESP_ERROR_CHECK(esp_wifi_connect());
+    // xSemaphoreGive(wifi_mux);
 }
 
 // ---------------------------------------------------
@@ -180,8 +212,10 @@ void connect_wifi(lv_event_t *e) {
     lv_obj_add_flag(ui_Connection_Failed_Label, LV_OBJ_FLAG_HIDDEN);
 
     // Disconnect from any existing connection first
+    // xSemaphoreTake(wifi_mux, portMAX_DELAY);
     esp_wifi_disconnect();
-    
+    // xSemaphoreGive(wifi_mux);
+
     // This gets called when the "Connect" button is pressed
     // Get the selected Wi-Fi SSID from the dropdown
     lv_dropdown_get_selected_str(ui_WiFi_Networks, ssid, sizeof(ssid));
@@ -212,25 +246,49 @@ void connect_wifi(lv_event_t *e) {
 
     ESP_LOGI(TAG, "Connecting to SSID: %s", ssid);
 
+    // xSemaphoreTake(wifi_mux, portMAX_DELAY);
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_connect());
+    // xSemaphoreGive(wifi_mux);
 }
 
+// Task used to initiate retry
+void retry_saved_connection(void *param) {
+    // Wait for either timeout or notification
+    while (true)
+    {
+        ESP_LOGI(TAG, "Retry saved Wi-Fi connection...");
+        connect_to_saved_wifi();
+        if (ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(10000))) {
+            // If we received a notification, exit the task
+            break;
+        }
+    }
+    vTaskDelete(retry_saved_connection_handle);
+}
 
 // ---------------------------------------------------
 // Functions to scan Wi-Fi networks
 // ---------------------------------------------------
 void start_scan_task(lv_event_t *e) {
-    if (wifi_scan_task_handle != NULL)
+    ESP_LOGE(TAG, "Starting Wi-Fi scan task...");
+    if (wifi_scan_task_handle != NULL) {
+        ESP_LOGE(TAG, "Wi-Fi task was already started...");
         return;
+    }
 
+    if (retry_saved_connection_handle != NULL) {
+        xTaskNotifyGive(retry_saved_connection_handle);
+    }
     xTaskCreate(wifi_scan_task, "wifi_scan_task", 8192, NULL, 5, &wifi_scan_task_handle);
 }
 
 void stop_scan_task(lv_event_t *e) {
     if (wifi_scan_task_handle != NULL) {
-        ESP_LOGI(TAG, "Stopping Wi-Fi scan task...");
+        ESP_LOGE(TAG, "Stopping Wi-Fi scan task...");
         xTaskNotifyGive(wifi_scan_task_handle);
+    } else {
+        ESP_LOGE(TAG, "Wi-Fi task was already stopped...");
     }
 }
 
@@ -267,12 +325,14 @@ char *generate_wifi_list() {
 
 void wifi_scan_task(void *param) {
     while (true) {
+        // xSemaphoreTake(wifi_mux, portMAX_DELAY);
         wifi_scan_config_t scan_config = {
             .ssid = NULL,
             .bssid = NULL,
             .channel = 0,
             .show_hidden = false
         };
+
         is_scanning = true; // Update scanning state
         ESP_ERROR_CHECK(esp_wifi_scan_start(&scan_config, true));
 
@@ -283,6 +343,7 @@ void wifi_scan_task(void *param) {
             give_ui_mutex("wifi_scan_task");
             free(dropdown_options);
         }
+        // xSemaphoreGive(wifi_mux);
 
         // Wait for either timeout or notification
         if (ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(10000))) {
@@ -290,8 +351,9 @@ void wifi_scan_task(void *param) {
             break;
         }
     }
+    vTaskDelete(wifi_scan_task_handle);
     wifi_scan_task_handle = NULL;
-    vTaskDelete(NULL);
+
 }
 
 // ---------------------------------------------------

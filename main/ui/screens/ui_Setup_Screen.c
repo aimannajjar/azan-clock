@@ -143,6 +143,7 @@ void ui_Setup_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_Connection_Failed_Label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Connection_Failed_Label, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    lv_obj_add_event_cb(ui_Background1, ui_event_Background1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_WiFi_Password, ui_event_WiFi_Password, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Label10, ui_event_Label10, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ConnectButton, ui_event_ConnectButton, LV_EVENT_ALL, NULL);

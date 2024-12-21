@@ -46,13 +46,14 @@ extern lv_obj_t * ui_Weather_Condition_Panel;
 extern lv_obj_t * ui_Weather_Image;
 extern lv_obj_t * ui_Weather_Condition_Panel1;
 extern lv_obj_t * ui_Current_Date;
-extern lv_obj_t * ui_LeftPanel_Main;
+extern lv_obj_t * ui_Left_Panel_Main;
 // CUSTOM VARIABLES
 
 // SCREEN: ui_Setup_Screen
 void ui_Setup_Screen_screen_init(void);
 void ui_event_Setup_Screen(lv_event_t * e);
 extern lv_obj_t * ui_Setup_Screen;
+void ui_event_Background1(lv_event_t * e);
 extern lv_obj_t * ui_Background1;
 extern lv_obj_t * ui_Panel_Header1;
 extern lv_obj_t * ui_WiFi_Networks;

@@ -149,11 +149,11 @@ void ui_Main_Screen_screen_init(void)
     lv_obj_set_style_text_align(ui_Current_Date, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Current_Date, &lv_font_montserrat_30, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_LeftPanel_Main = ui_LeftPanel_create(ui_Main_Screen);
-    lv_obj_set_x(ui_LeftPanel_Main, 0);
-    lv_obj_set_y(ui_LeftPanel_Main, 0);
+    ui_Left_Panel_Main = ui_LeftPanel_create(ui_Main_Screen);
+    lv_obj_set_x(ui_Left_Panel_Main, -1);
+    lv_obj_set_y(ui_Left_Panel_Main, 0);
 
-    lv_obj_add_state(ui_comp_get_child(ui_LeftPanel_Main, UI_COMP_LEFTPANEL_MAIN_BUTTON),
+    lv_obj_add_state(ui_comp_get_child(ui_Left_Panel_Main, UI_COMP_LEFTPANEL_MAIN_BUTTON),
                      LV_STATE_FOCUSED);       /// States
 
 

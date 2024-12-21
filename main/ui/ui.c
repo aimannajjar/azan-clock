@@ -38,7 +38,7 @@ lv_obj_t * ui_Weather_Condition_Panel;
 lv_obj_t * ui_Weather_Image;
 lv_obj_t * ui_Weather_Condition_Panel1;
 lv_obj_t * ui_Current_Date;
-lv_obj_t * ui_LeftPanel_Main;
+lv_obj_t * ui_Left_Panel_Main;
 // CUSTOM VARIABLES
 
 
@@ -46,6 +46,7 @@ lv_obj_t * ui_LeftPanel_Main;
 void ui_Setup_Screen_screen_init(void);
 void ui_event_Setup_Screen(lv_event_t * e);
 lv_obj_t * ui_Setup_Screen;
+void ui_event_Background1(lv_event_t * e);
 lv_obj_t * ui_Background1;
 lv_obj_t * ui_Panel_Header1;
 lv_obj_t * ui_WiFi_Networks;
@@ -295,6 +296,15 @@ void ui_event_Setup_Screen(lv_event_t * e)
 
     if(event_code == LV_EVENT_SCREEN_UNLOADED) {
         _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+    }
+}
+
+void ui_event_Background1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_SCREEN_UNLOAD_START) {
+        stop_scan_task(e);
     }
 }
 
