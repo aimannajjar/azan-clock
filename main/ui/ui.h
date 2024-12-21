@@ -145,6 +145,9 @@ extern lv_obj_t * ui_LocatorQR;
 void ui_event_Keypad(lv_event_t * e);
 extern lv_obj_t * ui_Keypad;
 extern lv_obj_t * ui_Left_Panel_Settings;
+extern lv_obj_t * ui_No_Wifi_Settings;
+extern lv_obj_t * ui_Image1;
+extern lv_obj_t * ui_Label1;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -154,6 +157,7 @@ extern lv_obj_t * ui____initial_actions0;
 LV_IMG_DECLARE(ui_img_minaret_bg_png);    // assets/minaret_bg.png
 LV_IMG_DECLARE(ui_img_no_wifi_png);    // assets/no_wifi.png
 LV_IMG_DECLARE(ui_img_locatorqr_png);    // assets/locatorqr.png
+LV_IMG_DECLARE(ui_img_no_wifi_large_png);    // assets/no_wifi_large.png
 LV_IMG_DECLARE(ui_img_day_clear_png);    // assets/day_clear.png
 LV_IMG_DECLARE(ui_img_day_fog_png);    // assets/day_fog.png
 LV_IMG_DECLARE(ui_img_day_heavy_rain_png);    // assets/day_heavy_rain.png

@@ -259,6 +259,39 @@ void ui_Settings_Screen_screen_init(void)
 
 
 
+    ui_No_Wifi_Settings = lv_obj_create(ui_Settings_Screen);
+    lv_obj_remove_style_all(ui_No_Wifi_Settings);
+    lv_obj_set_width(ui_No_Wifi_Settings, 725);
+    lv_obj_set_height(ui_No_Wifi_Settings, lv_pct(100));
+    lv_obj_set_x(ui_No_Wifi_Settings, 75);
+    lv_obj_set_y(ui_No_Wifi_Settings, 0);
+    lv_obj_add_flag(ui_No_Wifi_Settings, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_clear_flag(ui_No_Wifi_Settings, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_No_Wifi_Settings, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_No_Wifi_Settings, 220, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Image1 = lv_img_create(ui_No_Wifi_Settings);
+    lv_img_set_src(ui_Image1, &ui_img_no_wifi_large_png);
+    lv_obj_set_width(ui_Image1, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Image1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Image1, -17);
+    lv_obj_set_y(ui_Image1, -100);
+    lv_obj_set_align(ui_Image1, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_Label1 = lv_label_create(ui_No_Wifi_Settings);
+    lv_obj_set_width(ui_Label1, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Label1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Label1, 0);
+    lv_obj_set_y(ui_Label1, 25);
+    lv_obj_set_align(ui_Label1, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label1, "Please Reconnect to your Wi-Fi Network \nto Update the Settings");
+    lv_obj_set_style_text_letter_space(ui_Label1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_line_space(ui_Label1, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_Label1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Label1, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     lv_obj_add_event_cb(ui_Save_Button, ui_event_Save_Button, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Latitude, ui_event_Latitude, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Longitude, ui_event_Longitude, LV_EVENT_ALL, NULL);

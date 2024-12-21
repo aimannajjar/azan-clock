@@ -32,7 +32,6 @@ void ui_event_comp_LeftPanel_Setup_Button(lv_event_t * e)
     lv_obj_t ** comp_LeftPanel = lv_event_get_user_data(e);
 
     if(event_code == LV_EVENT_CLICKED) {
-        start_scan_task(e);
         change_screen(e);
     }
 }

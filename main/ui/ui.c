@@ -140,6 +140,9 @@ lv_obj_t * ui_LocatorQR;
 void ui_event_Keypad(lv_event_t * e);
 lv_obj_t * ui_Keypad;
 lv_obj_t * ui_Left_Panel_Settings;
+lv_obj_t * ui_No_Wifi_Settings;
+lv_obj_t * ui_Image1;
+lv_obj_t * ui_Label1;
 // CUSTOM VARIABLES
 
 // EVENTS
@@ -296,6 +299,10 @@ void ui_event_Setup_Screen(lv_event_t * e)
 
     if(event_code == LV_EVENT_SCREEN_UNLOADED) {
         _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+        stop_scan_task(e);
+    }
+    if(event_code == LV_EVENT_SCREEN_LOAD_START) {
+        start_scan_task(e);
     }
 }
 

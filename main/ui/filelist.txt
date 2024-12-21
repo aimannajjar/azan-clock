@@ -11,6 +11,7 @@ ui_helpers.c
 images/ui_img_minaret_bg_png.c
 images/ui_img_no_wifi_png.c
 images/ui_img_locatorqr_png.c
+images/ui_img_no_wifi_large_png.c
 images/ui_img_day_clear_png.c
 images/ui_img_day_fog_png.c
 images/ui_img_day_heavy_rain_png.c

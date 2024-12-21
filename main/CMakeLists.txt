@@ -28,6 +28,7 @@ else()
     string(REGEX REPLACE "\n" ";" UI_SOURCES "${file_content}")
     list(TRANSFORM UI_SOURCES PREPEND "ui/")
     message(UI_SOURCES="${UI_SOURCES}")
+
     idf_component_register(
         SRCS "timezones.c"
              "settings.c"

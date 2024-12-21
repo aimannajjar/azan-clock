@@ -2343,44 +2343,6 @@
               "InheritedType": 10
             },
             {
-              "nid": 1000468,
-              "strtype": "_event/action",
-              "strval": "CALL FUNCTION",
-              "childs": [
-                {
-                  "nid": 1000469,
-                  "strtype": "CALL FUNCTION/Name",
-                  "strval": "CALL FUNCTION",
-                  "InheritedType": 10
-                },
-                {
-                  "nid": 1000470,
-                  "strtype": "CALL FUNCTION/Call",
-                  "strval": "<{Function_name}>( event_struct )",
-                  "InheritedType": 10
-                },
-                {
-                  "nid": 1000471,
-                  "strtype": "CALL FUNCTION/CallC",
-                  "strval": "<{Function_name}>( e );",
-                  "InheritedType": 10
-                },
-                {
-                  "nid": 1000472,
-                  "strtype": "CALL FUNCTION/Function_name",
-                  "strval": "start_scan_task",
-                  "InheritedType": 10
-                },
-                {
-                  "nid": 1000473,
-                  "strtype": "CALL FUNCTION/Dont_export_function",
-                  "strval": "True",
-                  "InheritedType": 2
-                }
-              ],
-              "InheritedType": 10
-            },
-            {
               "nid": 1000701,
               "strtype": "_event/action",
               "strval": "CALL FUNCTION",
