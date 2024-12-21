@@ -6,6 +6,7 @@
 #include "systime.h"
 #include "freertos/semphr.h"
 #include "ui/components/ui_comp_leftpanel.h"
+#include <sys/time.h>
 
 #define TAG "WiFi"
 #define MAX_NETWORKS 20
@@ -42,13 +43,16 @@ static void connect_to_saved_wifi();
 static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data);
 static void show_disconnected_icon();
 static void hide_disconnected_icon();
+static void take_wifi_semaphore(const char *caller);
+static void give_wifi_semaphore(const char *caller);
 
 void wifi_init() {
     take_ui_mutex("wifi_init");
     lv_label_set_text(ui_Loading_Status_Text, "Connecting to Wi-Fi...");
     give_ui_mutex("wifi_init");
 
-    wifi_mux = xSemaphoreCreateMutex();
+    wifi_mux = xSemaphoreCreateBinary();
+    give_wifi_semaphore("wifi_init -> Initial Release");
 
     // Initialize WiFI stack
     esp_netif_create_default_wifi_sta();
@@ -108,9 +112,10 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
                 give_ui_mutex("wifi_event_handler");
             }
         }
+        give_wifi_semaphore("wifi_event_handler -> WIFI_EVENT_STA_CONNECTED");
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         ESP_LOGE(TAG, "Wi-Fi connection disconnected.");
-
+        give_wifi_semaphore("wifi_event_handler -> WIFI_EVENT_STA_DISCONNECTED");
         if (lv_scr_act() != ui_Setup_Screen && !is_wifi_initialized()) {
             // If we are not on the setup screen already and system has not been initialized
             // this means we failed to connect during boot, so show the setup screen after exhausting retries
@@ -142,6 +147,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
     } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_SCAN_DONE) {
         is_scanning = false; // Update scanning state
         ESP_LOGI(TAG, "Wi-Fi scan complete.");
+        // Lock is released in wifi_scan_task
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         // Whenever we get a new IP address, (re-)initialize the system time
         ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
@@ -172,6 +178,20 @@ static void hide_disconnected_icon() {
     lv_obj_add_flag(ui_comp_get_child(ui_Left_Panel_Setup, UI_COMP_LEFTPANEL_WIFI_DISCONNECTED), LV_OBJ_FLAG_HIDDEN);
 }
 
+static void take_wifi_semaphore(const char *caller) {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    ESP_LOGE(TAG, "[%lld.%06ld] Wi-Fi Semaphore: Taking from %s", (long long)tv.tv_sec, (long)tv.tv_usec, caller);
+    xSemaphoreTake(wifi_mux, portMAX_DELAY);
+}
+
+static void give_wifi_semaphore(const char *caller) {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    ESP_LOGE(TAG, "[%lld.%06ld] Wi-Fi Semaphore: Giving from %s", (long long)tv.tv_sec, (long)tv.tv_usec, caller);
+    xSemaphoreGive(wifi_mux);
+}
+
 // ---------------------------------------------------
 // Helper Function to connect to saved Wi-Fi
 // ---------------------------------------------------
@@ -186,11 +206,11 @@ static void connect_to_saved_wifi() {
     strncpy((char *)wifi_config.sta.password, password, sizeof(wifi_config.sta.password));
 
     ESP_LOGI(TAG, "Using saved Wi-Fi parameters to connect...");
-    // xSemaphoreTake(wifi_mux, portMAX_DELAY);
+    take_wifi_semaphore("connect_to_saved_wifi");
+    ESP_LOGI(TAG, "Start connection...");
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
     ESP_ERROR_CHECK(esp_wifi_connect());
-    // xSemaphoreGive(wifi_mux);
 }
 
 // ---------------------------------------------------
@@ -211,11 +231,6 @@ void connect_wifi(lv_event_t *e) {
     lv_obj_clear_flag(ui_Connecting_Modal, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_Connection_Failed_Label, LV_OBJ_FLAG_HIDDEN);
 
-    // Disconnect from any existing connection first
-    // xSemaphoreTake(wifi_mux, portMAX_DELAY);
-    esp_wifi_disconnect();
-    // xSemaphoreGive(wifi_mux);
-
     // This gets called when the "Connect" button is pressed
     // Get the selected Wi-Fi SSID from the dropdown
     lv_dropdown_get_selected_str(ui_WiFi_Networks, ssid, sizeof(ssid));
@@ -235,6 +250,7 @@ void connect_wifi(lv_event_t *e) {
         vTaskDelay(pdMS_TO_TICKS(500));
     }
 
+    take_wifi_semaphore("connect_wifi -> connect");
     // Configure Wi-Fi connection
     wifi_config_t wifi_config = {
         .sta = {
@@ -245,11 +261,8 @@ void connect_wifi(lv_event_t *e) {
     strncpy((char *)wifi_config.sta.password, password, sizeof(wifi_config.sta.password));
 
     ESP_LOGI(TAG, "Connecting to SSID: %s", ssid);
-
-    // xSemaphoreTake(wifi_mux, portMAX_DELAY);
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_connect());
-    // xSemaphoreGive(wifi_mux);
 }
 
 // Task used to initiate retry
@@ -271,7 +284,7 @@ void retry_saved_connection(void *param) {
 // Functions to scan Wi-Fi networks
 // ---------------------------------------------------
 void start_scan_task(lv_event_t *e) {
-    ESP_LOGE(TAG, "Starting Wi-Fi scan task...");
+    ESP_LOGI(TAG, "Starting Wi-Fi scan task...");
     if (wifi_scan_task_handle != NULL) {
         ESP_LOGE(TAG, "Wi-Fi task was already started...");
         return;
@@ -285,7 +298,7 @@ void start_scan_task(lv_event_t *e) {
 
 void stop_scan_task(lv_event_t *e) {
     if (wifi_scan_task_handle != NULL) {
-        ESP_LOGE(TAG, "Stopping Wi-Fi scan task...");
+        ESP_LOGI(TAG, "Stopping Wi-Fi scan task...");
         xTaskNotifyGive(wifi_scan_task_handle);
     } else {
         ESP_LOGE(TAG, "Wi-Fi task was already stopped...");
@@ -325,7 +338,7 @@ char *generate_wifi_list() {
 
 void wifi_scan_task(void *param) {
     while (true) {
-        // xSemaphoreTake(wifi_mux, portMAX_DELAY);
+        take_wifi_semaphore("wifi_scan_task");
         wifi_scan_config_t scan_config = {
             .ssid = NULL,
             .bssid = NULL,
@@ -343,7 +356,7 @@ void wifi_scan_task(void *param) {
             give_ui_mutex("wifi_scan_task");
             free(dropdown_options);
         }
-        // xSemaphoreGive(wifi_mux);
+        give_wifi_semaphore("wifi_scan_task");
 
         // Wait for either timeout or notification
         if (ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(10000))) {
