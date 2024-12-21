@@ -24,6 +24,8 @@ extern lv_obj_t *ui_Calculation_Method_Dropdown;
 extern lv_obj_t *ui_Keypad;
 extern lv_obj_t *ui_Settings_Screen;
 
+char tz[64];
+
 void first_time_settings() {
     take_ui_mutex("first_time_settings");
     lv_scr_load(ui_Settings_Screen);
@@ -145,7 +147,8 @@ esp_err_t load_settings(void) {
     err = nvs_get_u16(handle, "timezone", &tz_index);
     if (err == ESP_OK) {
         lv_dropdown_set_selected(ui_Timezone_Dropdown, tz_index);
-        ESP_LOGI(TAG, "Loaded timezone index: %d", tz_index);
+        get_timezone_posix_from_index(tz_index, tz);
+        ESP_LOGI(TAG, "Loaded timezone index: %d, posix: %s", tz_index, tz);
     }
 
     // Load calculation method
@@ -252,7 +255,9 @@ void update_azan_clock() {
     set_current_city(city_name);
     set_current_timezone(tz_index);
     set_current_calculation_method(calc_method);
-    set_settings_initialized();
+    setenv("TZ", tz, 1);
+    tzset();
+
     if (is_prayers_initialized()) {
         notify_prayers();
     } else {
@@ -363,7 +368,8 @@ void get_user_location(lv_event_t *e) {
                 lv_textarea_set_text(ui_Latitude, lat_str);
                 lv_textarea_set_text(ui_Longitude, lon_str);
                 lv_label_set_text(ui_Location_Name, city->valuestring);
-                lv_dropdown_set_selected(ui_Timezone_Dropdown, get_timezone_index(time_zone_id->valuestring));
+                int idx = get_timezone_posix(time_zone_id->valuestring, tz);
+                lv_dropdown_set_selected(ui_Timezone_Dropdown, idx);
             } else {
                 ESP_LOGE(TAG, "Failed to extract location data from JSON");
             }

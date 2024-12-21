@@ -43,10 +43,6 @@ void systime_task(void *pvParameters)
     esp_sntp_config_t config = ESP_NETIF_SNTP_DEFAULT_CONFIG_MULTIPLE(5,
                                 ESP_SNTP_SERVER_LIST("time.nist.gov", "time.cloudflare.com", "time.aws.com", "pool.ntp.org", "time.google.com" ) );
 
-    // TODO: Move to settings init
-    setenv("TZ", "EST5EDT,M3.2.0/2,M11.1.0", 1);
-    tzset();
-
     // sync with sntp
     esp_netif_sntp_init(&config);
     print_servers();
