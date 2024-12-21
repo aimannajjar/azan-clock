@@ -257,6 +257,7 @@ void update_azan_clock() {
     set_current_calculation_method(calc_method);
     setenv("TZ", tz, 1);
     tzset();
+    ESP_LOGI(TAG, "Set timezone to: %s", tz);
 
     if (is_prayers_initialized()) {
         notify_prayers();

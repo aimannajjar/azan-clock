@@ -1,0 +1,277 @@
+[0;32mI (582) esp_image: segment 1: paddr=003561dc vaddr=3fca2100 size=057d8h ( 22488) load[0m
+[0;32mI (586) esp_image: segment 2: paddr=0035b9bc vaddr=40374000 size=0465ch ( 18012) load[0m
+[0;32mI (591) esp_image: segment 3: paddr=00360020 vaddr=42000020 size=dbbcch (900044) map[0m
+[0;32mI (721) esp_image: segment 4: paddr=0043bbf4 vaddr=4037865c size=199b4h (104884) load[0m
+[0;32mI (751) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (751) boot: Disabling RNG early entropy source...[0m
+[0;33mW (763) flash HPM: HPM mode is optional feature that depends on flash model. Read Docs First![0m
+[0;33mW (763) flash HPM: HPM mode with DC adjustment is disabled. Some flash models may not be supported. Read Docs First![0m
+[0;33mW (772) flash HPM: High performance mode of this flash model hasn't been supported.[0m
+[0;32mI (781) MSPI Timing: Flash timing tuning index: 2[0m
+[0;32mI (786) octal_psram: vendor id    : 0x0d (AP)[0m
+[0;32mI (791) octal_psram: dev id       : 0x02 (generation 3)[0m
+[0;32mI (797) octal_psram: density      : 0x03 (64 Mbit)[0m
+[0;32mI (802) octal_psram: good-die     : 0x01 (Pass)[0m
+[0;32mI (808) octal_psram: Latency      : 0x01 (Fixed)[0m
+[0;32mI (813) octal_psram: VCC          : 0x01 (3V)[0m
+[0;32mI (818) octal_psram: SRF          : 0x01 (Fast Refresh)[0m
+[0;32mI (824) octal_psram: BurstType    : 0x01 (Hybrid Wrap)[0m
+[0;32mI (830) octal_psram: BurstLen     : 0x01 (32 Byte)[0m
+[0;32mI (835) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)[0m
+[0;32mI (841) octal_psram: DriveStrength: 0x00 (1/1)[0m
+[0;32mI (855) MSPI Timing: PSRAM timing tuning index: 6[0m
+[0;32mI (855) esp_psram: Found 8MB PSRAM device[0m
+[0;32mI (857) esp_psram: Speed: 120MHz[0m
+[0;32mI (999) mmu_psram: Read only data copied and mapped to SPIRAM[0m
+[0;32mI (1045) mmu_psram: Instructions copied and mapped to SPIRAM[0m
+[0;32mI (1045) cpu_start: Multicore app[0m
+[0;32mI (1166) esp_psram: SPI SRAM memory test OK[0m
+[0;32mI (1174) cpu_start: Pro cpu start user code[0m
+[0;32mI (1175) cpu_start: cpu freq: 240000000 Hz[0m
+[0;32mI (1175) app_init: Application information:[0m
+[0;32mI (1178) app_init: Project name:     lvgl_porting[0m
+[0;32mI (1183) app_init: App version:      7eeb320-dirty[0m
+[0;32mI (1189) app_init: Compile time:     Dec 20 2024 22:53:43[0m
+[0;32mI (1195) app_init: ELF file SHA256:  eae24d9eb...[0m
+[0;32mI (1200) app_init: ESP-IDF:          v5.3.1[0m
+[0;32mI (1205) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (1210) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (1215) efuse_init: Chip rev:         v0.2[0m
+[0;32mI (1220) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (1227) heap_init: At 3FCACBC8 len 0003CB48 (242 KiB): RAM[0m
+[0;32mI (1233) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM[0m
+[0;32mI (1239) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM[0m
+[0;32mI (1246) heap_init: At 600FE100 len 00001EE8 (7 KiB): RTCRAM[0m
+[0;32mI (1252) esp_psram: Adding pool of 3904K of PSRAM memory to heap allocator[0m
+[0;32mI (1260) spi_flash: detected chip: gd[0m
+[0;32mI (1264) spi_flash: flash io: qio[0m
+[0;33mW (1268) i2c: This driver is an old driver, please migrate your application code to adapt `driver/i2c_master.h`[0m
+[0;32mI (1279) sleep: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (1286) sleep: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (1293) main_task: Started on CPU0[0m
+[0;32mI (1303) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations[0m
+[0;32mI (1306) main_task: Calling app_main()[0m
+[0;32mI (1310) waveshare_rgb_lcd_port: Install RGB LCD panel driver[0m
+[0;32mI (1339) waveshare_rgb_lcd_port: Initialize RGB LCD panel[0m
+[0;32mI (1340) waveshare_rgb_lcd_port: Initialize I2C bus[0m
+[0;32mI (1340) waveshare_rgb_lcd_port: Initialize GPIO[0m
+[0;32mI (1345) gpio: GPIO[4]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 [0m
+[0;32mI (1354) waveshare_rgb_lcd_port: Initialize Touch LCD[0m
+[0;32mI (1760) waveshare_rgb_lcd_port: Initialize I2C panel IO[0m
+[0;32mI (1761) waveshare_rgb_lcd_port: Initialize touch controller GT911[0m
+[0;33mW (1762) GT911: Unable to initialize the I2C address[0m
+[0;32mI (1768) GT911: TouchPad_ID:0x39,0x31,0x31[0m
+[0;32mI (1773) GT911: TouchPad_Config_Version:88[0m
+[0;32mI (1780) lv_port: Create LVGL task[0m
+[Error]	(0.018, +18)	 _lv_inv_area: detected modifying dirty areas in render 	(in lv_refr.c line #212)
+[Error]	(0.018, +0)	 _lv_inv_area: detected modifying dirty areas in render 	(in lv_refr.c line #212)
+[0;32mI (1992) Main: [0.817864] UI Mutex: Taking from wifi_init[0m
+[0;32mI (1993) Main: [0.818303] UI Mutex: Giving from wifi_init[0m
+[0;31mE (1993) WiFi: [0.819148] Wi-Fi Semaphore: Giving from wifi_init -> Initial Release[0m
+[0;32mI (2002) pp: pp rom version: e7ae62f[0m
+[0;32mI (2006) net80211: net80211 rom version: e7ae62f[0m
+[0;32mI (2012) wifi:wifi driver task: 3fcd38ac, prio:23, stack:6656, core=0[0m
+[0;32mI (2022) wifi:wifi firmware version: ccaebfa[0m
+[0;32mI (2022) wifi:wifi certification version: v7.0[0m
+[0;32mI (2026) wifi:config NVS flash: enabled[0m
+[0;32mI (2029) wifi:config nano formating: disabled[0m
+[0;32mI (2033) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (2038) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (2042) wifi:Init management short buffer num: 32[0m
+[0;32mI (2047) wifi:Init static tx buffer num: 16[0m
+[0;32mI (2051) wifi:Init tx cache buffer num: 32[0m
+[0;32mI (2055) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (2059) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (2063) wifi:Init static rx buffer num: 10[0m
+[0;32mI (2067) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (2071) wifi_init: rx ba win: 6[0m
+[0;32mI (2075) wifi_init: accept mbox: 6[0m
+[0;32mI (2079) wifi_init: tcpip mbox: 32[0m
+[0;32mI (2083) wifi_init: udp mbox: 6[0m
+[0;32mI (2087) wifi_init: tcp mbox: 6[0m
+[0;32mI (2090) wifi_init: tcp tx win: 5760[0m
+[0;32mI (2095) wifi_init: tcp rx win: 5760[0m
+[0;32mI (2099) wifi_init: tcp mss: 1440[0m
+[0;32mI (2103) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (2108) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (2113) phy_init: phy_version 680,a6008b2,Jun  4 2024,16:41:10[0m
+[0;32mI (2159) wifi:mode : sta (24:ec:4a:01:8d:ec)[0m
+[0;32mI (2159) wifi:enable tsf[0m
+[0;32mI (2161) WiFi: Loaded Wi-Fi parameters from NVS: SSID=Pixel_2540[0m
+[0;32mI (2161) WiFi: Using saved Wi-Fi parameters to connect...[0m
+[0;31mE (2167) WiFi: [0.992905] Wi-Fi Semaphore: Taking from start_wifi_conn_task[0m
+[0;32mI (2175) WiFi: Connecting to SSID: Pixel_2540[0m
+[0;32mI (2183) main_task: Returned from app_main()[0m
+[0;32mI (2193) wifi:new:<2,0>, old:<1,0>, ap:<255,255>, sta:<2,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (2195) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (2784) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (2793) wifi:Association refused temporarily time 1269, comeback time 1369 (TUs)[0m
+[0;32mI (4196) wifi:state: assoc -> auth (0xb0)[0m
+[0;32mI (4791) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (4796) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (4831) wifi:connected with Pixel_2540, aid = 1, channel 2, BW20, bssid = 7a:b2:b2:23:53:a3[0m
+[0;32mI (4832) wifi:security: WPA3-SAE, phy: bgn, rssi: -35[0m
+[0;32mI (4834) wifi:pm start, type: 1[0m
+
+[0;32mI (4836) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (4844) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000[0m
+[0;32mI (4853) WiFi: Wi-Fi connected to the network.[0m
+[0;32mI (4858) WiFi: Connection parameters saved to NVS (Pixel_2540, 12345678)[0m
+[0;32mI (4865) Main: [3.690713] UI Mutex: Taking from wifi_event_handler[0m
+[0;32mI (4875) wifi:dp: 2, bi: 102400, li: 4, scale listen interval from 307200 us to 409600 us[0m
+[0;32mI (4880) wifi:AP's beacon interval = 102400 us, DTIM period = 2[0m
+[0;32mI (4886) Main: [3.711679] UI Mutex: Giving from wifi_event_handler[0m
+[0;31mE (4892) WiFi: [3.717919] Wi-Fi Semaphore: Giving from wifi_event_handler -> WIFI_EVENT_STA_CONNECTED[0m
+[0;32mI (6353) esp_netif_handlers: sta ip: 192.168.212.212, mask: 255.255.255.0, gw: 192.168.212.147[0m
+[0;32mI (6353) WiFi: Got IP Address: 192.168.212.212[0m
+[0;32mI (6357) Main: [5.182496] UI Mutex: Taking from systime_init[0m
+[0;32mI (6363) Main: [5.188927] UI Mutex: Giving from systime_init[0m
+[0;32mI (6369) SYSTIME: Initializing and starting SNTP[0m
+sntp_init: SNTP initialised
+[0;32mI (6377) SYSTIME: List of configured NTP servers:[0m
+[0;32mI (6383) SYSTIME: server 0: time.nist.gov[0m
+[0;32mI (6387) SYSTIME: server 1: time.cloudflare.com[0m
+[0;32mI (6392) SYSTIME: server 2: time.aws.com[0m
+[0;32mI (6397) SYSTIME: server 3: pool.ntp.org[0m
+[0;32mI (6402) SYSTIME: server 4: time.google.com[0m
+sntp_request: Waiting for server address to be resolved.
+sntp_dns_found: Server address resolved, sending request
+sntp_send_request: Sending request to server
+[0;32mI (7406) SYSTIME: Waiting for system time to be set... (1/30)[0m
+[0;32mI (8406) SYSTIME: Waiting for system time to be set... (2/30)[0m
+[0;32mI (9406) SYSTIME: Waiting for system time to be set... (3/30)[0m
+[0;32mI (10406) SYSTIME: Waiting for system time to be set... (4/30)[0m
+[0;32mI (11406) SYSTIME: Waiting for system time to be set... (5/30)[0m
+[0;32mI (12406) SYSTIME: Waiting for system time to be set... (6/30)[0m
+[0;32mI (13406) SYSTIME: Waiting for system time to be set... (7/30)[0m
+[0;32mI (14406) SYSTIME: Waiting for system time to be set... (8/30)[0m
+[0;32mI (15406) SYSTIME: Waiting for system time to be set... (9/30)[0m
+[0;32mI (16406) SYSTIME: Waiting for system time to be set... (10/30)[0m
+[0;32mI (17406) SYSTIME: Waiting for system time to be set... (11/30)[0m
+[0;32mI (18406) SYSTIME: Waiting for system time to be set... (12/30)[0m
+[0;32mI (19406) SYSTIME: Waiting for system time to be set... (13/30)[0m
+[0;32mI (20406) SYSTIME: Waiting for system time to be set... (14/30)[0m
+[0;32mI (21406) SYSTIME: Waiting for system time to be set... (15/30)[0m
+sntp_try_next_server: Sending request to server 1
+sntp_request: Waiting for server address to be resolved.
+sntp_dns_found: Server address resolved, sending request
+sntp_send_request: Sending request to server
+[0;32mI (22215) wifi:sntp_process: Sat Dec 21 03:55:13 2024[0m
+, 938027 us
+<ba-add>idx:0 (ifx:0, 7a:b2:b2:23:53:a3), tid:0, ssn:8, winSize:64sntp_recv: Scheduled next time request: 3600000 ms
+
+[0;32mI (22220) Settings: Initializing settings[0m
+[0;32mI (22225) Settings: Loading settings from NVS[0m
+[0;32mI (22230) Main: [1734753313.953226] UI Mutex: Taking from load_settings[0m
+[0;32mI (22241) Settings: Loaded latitude: 39.990330[0m
+[0;32mI (22244) Settings: Loaded longitude: -74.784660[0m
+[0;32mI (22248) Settings: Loaded city name: Willingboro[0m
+[0;32mI (22253) Settings: Loaded timezone index: 153, posix: EST5EDT,M3.2.0,M11.1.0[0m
+[0;32mI (22261) Settings: Loaded calculation method: 0[0m
+[0;32mI (22266) Main: [1734753313.989405] UI Mutex: Giving from load_settings[0m
+[0;32mI (22273) Settings: Settings loaded successfully[0m
+[0;32mI (22279) Settings: Set timezone to: EST5EDT,M3.2.0,M11.1.0[0m
+[0;32mI (22285) Main: [1734753314.008279] UI Mutex: Taking from prayers_init[0m
+[0;32mI (22285) Prayers: Prayer times service initialized successfully[0m
+[0;32mI (22292) Main: [1734753314.015656] UI Mutex: Giving from prayers_init[0m
+[0;32mI (22299) Weather: Weather initialized successfully[0m
+[0;32mI (22306) Prayers: Requesting prayer times from: https://prayers.hurranet.net/prod/prayers?latitude=39.990330&longitude=-74.784660&method=3[0m
+[0;32mI (22312) Settings: Updated application state with saved settings[0m
+[0;32mI (22325) Prayers: Initializing HTTP client[0m
+[0;32mI (22337) Prayers: Performing HTTP request. Free HEAP size: 2492096[0m
+[0;31mE (22494) esp-tls-mbedtls: mbedtls_ssl_setup returned -0x7F00[0m
+[0;31mE (22494) esp-tls: create_ssl_handle failed[0m
+[0;31mE (22495) esp-tls: Failed to open new connection[0m
+[0;31mE (22500) transport_base: Failed to open a new connection[0m
+[0;31mE (22506) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;31mE (22511) Prayers: HTTP_EVENT_ERROR[0m
+[0;31mE (22515) Prayers: HTTP request failed: ESP_ERR_HTTP_CONNECT[0m
+[0;32mI (22522) Prayers: Cleaning up HTTP client[0m
+[0;32mI (22526) Prayers: HTTP_EVENT_DISCONNECTED[0m
+[0;33mW (22531) Prayers: Prayer times update failed, retrying in 1000 ms[0m
+[0;32mI (22695) Weather: HTTP_EVENT_ON_CONNECTED[0m
+[0;32mI (22697) Weather: HTTP_EVENT_HEADER_SENT[0m
+[0;32mI (23538) Prayers: Requesting prayer times from: https://prayers.hurranet.net/prod/prayers?latitude=39.990330&longitude=-74.784660&method=3[0m
+[0;32mI (23540) Prayers: Initializing HTTP client[0m
+[0;32mI (23545) Prayers: Performing HTTP request. Free HEAP size: 2486280[0m
+[0;32mI (23824) Weather: HTTP_EVENT_ON_HEADER, key=Content-Type, value=application/json; charset=utf-8[0m
+[0;32mI (23825) Weather: HTTP_EVENT_ON_HEADER, key=Content-Length, value=475[0m
+[0;31mE (23825) esp-tls-mbedtls: mbedtls_ssl_setup returned -0x7F00[0m
+[0;32mI (23830) Weather: HTTP_EVENT_ON_HEADER, key=Connection, value=keep-alive[0m
+[0;31mE (23837) esp-tls: create_ssl_handle failed[0m
+[0;32mI (23844) Weather: HTTP_EVENT_ON_HEADER, key=Date, value=Sat, 21 Dec 2024 03:55:15 GMT[0m
+[0;31mE (23849) esp-tls: Failed to open new connection[0m
+[0;32mI (23858) Weather: HTTP_EVENT_ON_HEADER, key=x-amzn-Remapped-Date, value=Sat, 21 Dec 2024 03:55:15 GMT[0m
+[0;31mE (23863) transport_base: Failed to open a new connection[0m
+[0;32mI (23873) Weather: HTTP_EVENT_ON_HEADER, key=x-amzn-RequestId, value=f3f5337e-b06e-4a94-b79f-1eed087279c1[0m
+[0;31mE (23879) HTTP_CLIENT: Connection failed, sock < 0[0m
+[0;32mI (23889) Weather: HTTP_EVENT_ON_HEADER, key=x-amzn-Remapped-Connection, value=keep-alive[0m
+[0;31mE (23895) Prayers: HTTP_EVENT_ERROR[0m
+[0;32mI (23904) Weather: HTTP_EVENT_ON_HEADER, key=x-amz-apigw-id, value=DH5VcFbtIAMEVRw=[0m
+[0;31mE (23908) Prayers: HTTP request failed: ESP_ERR_HTTP_CONNECT[0m
+[0;32mI (23916) Weather: HTTP_EVENT_ON_HEADER, key=X-Cache, value=Miss from cloudfront[0m
+[0;32mI (23922) Prayers: Cleaning up HTTP client[0m
+[0;32mI (23930) Weather: HTTP_EVENT_ON_HEADER, key=Via, value=1.1 e328ac0201f987aaffe67063ed27028c.cloudfront.net (CloudFront)[0m
+[0;32mI (23935) Prayers: HTTP_EVENT_DISCONNECTED[0m
+[0;32mI (23947) Weather: HTTP_EVENT_ON_HEADER, key=X-Amz-Cf-Pop, value=JFK52-P1[0m
+[0;33mW (23952) Prayers: Prayer times update failed, retrying in 2000 ms[0m
+[0;32mI (23959) Weather: HTTP_EVENT_ON_HEADER, key=X-Amz-Cf-Id, value=B8AysP52mZ2kP2EUkLty8LTDhnmRr21-9E7h8wDkUanAYVQUNQV60Q==[0m
+[0;32mI (23977) Weather: HTTP_EVENT_ON_DATA, len=475[0m
+[0;32mI (23982) Weather: HTTP_EVENT_ON_FINISH[0m
+[0;32mI (23987) Weather: HTTP GET Status = 200, content_length = 475[0m
+[0;32mI (23993) Weather: Weather JSON response: {"latitude":40.710335,"longitude":-73.99309,"generationtime_ms":0.11098384857177734,"utc_offset_seconds":0,"timezone":"GMT","timezone_abbreviation":"GMT","elevation":32.0,"current_weather_units":{"time":"iso8601","interval":"seconds","temperature":"°C","windspeed":"km/h","winddirection":"°","is_day":"","weathercode":"wmo code"},"current_weather":{"time":"2024-12-21T03:45","interval":900,"temperature":0.6,"windspeed":11.9,"winddirection":357,"is_day":0,"weathercode":3}}[0m
+[0;32mI (24040) Weather: Current temperature: 0.60°C[0m
+[0;32mI (24045) Weather: Current windspeed: 11.90 km/h[0m
+[0;32mI (24050) Weather: Current weathercode: 3[0m
+[0;32mI (24055) Weather: Current is_day: 0[0m
+[0;32mI (24059) Main: [1734753315.782244] UI Mutex: Taking from get_weather_forecast[0m
+[0;32mI (24067) Main: [1734753315.790267] UI Mutex: Giving from get_weather_forecast[0m
+[0;32mI (24075) Weather: HTTP_EVENT_DISCONNECTED[0m
+[0;32mI (25966) Prayers: Requesting prayer times from: https://prayers.hurranet.net/prod/prayers?latitude=39.990330&longitude=-74.784660&method=3[0m
+[0;32mI (25968) Prayers: Initializing HTTP client[0m
+[0;32mI (25973) Prayers: Performing HTTP request. Free HEAP size: 2498172[0m
+[0;32mI (26642) Prayers: HTTP_EVENT_ON_CONNECTED[0m
+[0;32mI (26643) Prayers: HTTP_EVENT_HEADER_SENT[0m
+[0;32mI (26895) Prayers: HTTP_EVENT_ON_HEADER: Content-Type: application/json[0m
+[0;32mI (26896) Prayers: HTTP_EVENT_ON_HEADER: Content-Length: 211[0m
+[0;32mI (26898) Prayers: HTTP_EVENT_ON_HEADER: Connection: keep-alive[0m
+[0;32mI (26905) Prayers: HTTP_EVENT_ON_HEADER: Date: Sat, 21 Dec 2024 03:55:18 GMT[0m
+[0;32mI (26912) Prayers: HTTP_EVENT_ON_HEADER: X-Amzn-Trace-Id: Root=1-67663c26-0e4a85ee05adff296b0d8c1d;Parent=106b7001657a21fc;Sampled=0;Lineage=1:7e830143:0[0m
+[0;32mI (26927) Prayers: HTTP_EVENT_ON_HEADER: x-amzn-RequestId: 7e15695d-9a76-4997-8d69-8ea1fdbf6a78[0m
+[0;32mI (26936) Prayers: HTTP_EVENT_ON_HEADER: x-amz-apigw-id: DH5WEFBWoAMEvYQ=[0m
+[0;32mI (26944) Prayers: HTTP_EVENT_ON_HEADER: X-Cache: Miss from cloudfront[0m
+[0;32mI (26951) Prayers: HTTP_EVENT_ON_HEADER: Via: 1.1 69b5dbefd76c92e64a93f1d3eb7e22a8.cloudfront.net (CloudFront)[0m
+[0;32mI (26961) Prayers: HTTP_EVENT_ON_HEADER: X-Amz-Cf-Pop: JFK52-P6[0m
+[0;32mI (26968) Prayers: HTTP_EVENT_ON_HEADER: X-Amz-Cf-Id: mKijQQId7-n3VkCZadwHBk5xXYrT_j45ugUmSMWWSBjrPNPlY3Ojeg==[0m
+[0;32mI (26979) Prayers: Received data chunk: 211 bytes[0m
+[0;32mI (26984) Prayers: HTTP_EVENT_ON_FINISH[0m
+[0;32mI (26989) Prayers: HTTP request completed: Status = 200, Content-Length = 211[0m
+[0;32mI (26996) Prayers: Response body: {"Fajr": "05:56", "Sunrise": "07:17", "Dhuhr": "11:57", "Asr": "14:19", "Sunset": "16:37", "Maghrib": "16:37", "Isha": "17:58", "Imsak": "05:46", "Midnight": "23:57", "Firstthird": "21:30", "Lastthird": "02:24"}[0m
+[0;32mI (27019) Prayers: Parsing JSON response[0m
+[0;32mI (27024) Prayers: Prayer time Fajr: 5:56 AM (converted from 05:56)[0m
+[0;32mI (27030) Prayers: Prayer time Sunrise: 7:17 AM (converted from 07:17)[0m
+[0;32mI (27038) Prayers: Prayer time Dhuhr: 11:57 AM (converted from 11:57)[0m
+[0;32mI (27045) Prayers: Prayer time Asr: 2:19 PM (converted from 14:19)[0m
+[0;32mI (27052) Prayers: Prayer time Maghrib: 4:37 PM (converted from 16:37)[0m
+[0;32mI (27059) Prayers: Prayer time Isha: 5:58 PM (converted from 17:58)[0m
+[0;32mI (27066) Main: [1734753318.789242] UI Mutex: Taking from time_update_task[0m
+[0;32mI (27066) Clock: Clock initialized successfully[0m
+[0;32mI (27078) Prayers: Cleaning up HTTP client[0m
+[0;32mI (27083) Prayers: HTTP_EVENT_DISCONNECTED[0m
+[0;32mI (27092) Main: [1734753318.815462] UI Mutex: Giving from time_update_task[0m
+[0;32mI (27095) Main: [1734753318.818845] UI Mutex: Taking from time_update_task[0m
+[0;32mI (27104) Main: [1734753318.827444] UI Mutex: Giving from time_update_task[0m
+[0;32mI (28111) Main: [1734753319.833892] UI Mutex: Taking from time_update_task[0m
+[0;32mI (28112) Main: [1734753319.835495] UI Mutex: Giving from time_update_task[0m
+[0;32mI (29115) Main: [1734753320.837892] UI Mutex: Taking from time_update_task[0m
+[0;32mI (29116) Main: [1734753320.839491] UI Mutex: Giving from time_update_task[0m
+[0;32mI (30119) Main: [1734753321.841893] UI Mutex: Taking from time_update_task[0m
+[0;32mI (30120) Main: [1734753321.843489] UI Mutex: Giving from time_update_task[0m
+[0;32mI (31123) Main: [1734753322.845892] UI Mutex: Taking from time_update_task[0m
+[0;32mI (31124) Main: [1734753322.847478] UI Mutex: Giving from time_update_task[0m
+[0;32mI (32127) Main: [1734753323.849893] UI Mutex: Taking from time_update_task[0m
+[0;32mI (32128) Main: [1734753323.851473] UI Mutex: Giving from time_update_task[0m
+[0;32mI (33131) Main: [1734753324.853892] UI Mutex: Taking from time_update_task[0m
+[0;32mI (33132) Main: [1734753324.855477] UI Mutex: Giving from time_update_task[0m
+[0;32mI (34135) Main: [1734753325.857892] UI Mutex: Taking from time_update_task[0m
+[0;32mI (34136) Main: [1734753325.859474] UI Mutex: Giving from time_update_task[0m
